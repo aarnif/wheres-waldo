@@ -1,6 +1,7 @@
 import indexRouter from "./routes/index.js";
+import apiRouter from "./routes/api.js";
+import config from "./utils/config.js";
 
-import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
@@ -9,11 +10,10 @@ import morgan from "morgan";
 const app = express();
 
 mongoose.set("strictQuery", false);
-const mongoDB = `mongodb+srv://${process.env.DATABASE_USERNAME}:${process.env.DATABASE_PASSWORD}@cluster0.xorb2be.mongodb.net/games?retryWrites=true&w=majority`;
 
 main().catch((err) => console.log(err));
 async function main() {
-  await mongoose.connect(mongoDB);
+  await mongoose.connect(config.MONGO_URI);
 }
 
 app.use(morgan("dev"));
