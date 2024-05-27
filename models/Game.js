@@ -13,6 +13,14 @@ gameSchema.virtual("url").get(function () {
   return `/api/games/${this._id}`;
 });
 
+gameSchema.set("toJSON", {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id.toString();
+    delete returnedObject._id;
+    delete returnedObject.__v;
+  },
+});
+
 const Game = mongoose.model("Game", gameSchema);
 
 export default Game;

@@ -31,6 +31,14 @@ characterSchema.virtual("url").get(function () {
   return `/api/games/:gameId/characters/${this._id}`;
 });
 
+characterSchema.set("toJSON", {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id.toString();
+    delete returnedObject._id;
+    delete returnedObject.__v;
+  },
+});
+
 const Character = mongoose.model("Character", characterSchema);
 
 export default Character;
