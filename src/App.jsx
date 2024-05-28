@@ -2,6 +2,7 @@ import gameService from "./services/gameService";
 
 import Header from "./components/Header";
 import Hero from "./Hero";
+import Games from "./components/Games/index.jsx";
 import Footer from "./components/Footer";
 
 import { useState, useEffect } from "react";
@@ -21,9 +22,7 @@ const App = () => {
       <Header />
       <Hero />
       <div className="w-full flex-grow flex justify-center items-center">
-        {games.map((game) => (
-          <div key={game.id}>{game.title}</div>
-        ))}
+        <Games games={games} />
       </div>
       <Footer />
     </div>
