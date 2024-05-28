@@ -1,9 +1,16 @@
-function App() {
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+
+const App = () => {
   return (
-    <h1 className="text-3xl font-bold text-red-600">
-      This is a Vite + React + Tailwind CSS app!
-    </h1>
+    <div className="min-h-screen flex flex-col">
+      <Header />
+      <div className="w-full flex-grow flex justify-center items-center">
+        Content
+      </div>
+      <Footer />
+    </div>
   );
-}
+};
 
 export default App;
