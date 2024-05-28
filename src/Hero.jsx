@@ -1,19 +1,34 @@
-import { motion } from "framer-motion";
-
 const Hero = () => {
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 1 }}
+    <div
       key={"hero"}
-      className="w-full flex-grow min-h-[700px] mt-[60px] flex justify-center items-center bg-red-400"
+      className="w-full flex-grow min-h-[700px] mt-[60px] flex justify-center items-center bg-red-400 text-white"
       style={{
         backgroundImage: "none",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
-    ></motion.div>
+    >
+      <div className="flex-grow max-w-[1200px] flex justify-center items-center">
+        <div className="flex-grow basis-3/5">
+          <h1 className="w-full text-5xl font-extrabold text-center">
+            Where's Waldo
+          </h1>
+          <h1 className="mt-4 w-full text-3xl font-extrabold text-center">
+            (A Photo Tagging App)
+          </h1>
+        </div>
+        <div
+          className="h-[400px] flex-grow basis-2/5"
+          style={{
+            backgroundImage: "url('images/hero.png')",
+            backgroundSize: "contain",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+          }}
+        ></div>
+      </div>
+    </div>
   );
 };
 
