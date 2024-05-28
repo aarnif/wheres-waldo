@@ -1,6 +1,7 @@
 import baseUrl from "../../../baseUrl";
 
 import { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { AnimatePresence, motion, useInView } from "framer-motion";
 
 const GameCharacter = ({ gameId, character }) => {
@@ -83,6 +84,7 @@ const GameContent = ({ game }) => {
 };
 
 const GameCard = ({ game, gameStyleColors }) => {
+  const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
   const ref = useRef(null);
   const isInView = useInView(ref, {
@@ -92,6 +94,7 @@ const GameCard = ({ game, gameStyleColors }) => {
 
   const handleClick = () => {
     console.log(`Start game titled ${game.title}`);
+    navigate(`/games/${game.id}`);
   };
 
   useEffect(() => {

@@ -1,14 +1,16 @@
 import gameService from "./services/gameService";
 
-import Header from "./components/Header";
-import Hero from "./Hero";
-import Games from "./components/Games/index.jsx";
-import Footer from "./components/Footer";
+import Home from "./components/Home";
+import Game from "./components/Game";
 
 import { useState, useEffect } from "react";
+import { Routes, Route, useMatch } from "react-router-dom";
 
 const App = () => {
+  const match = useMatch("/games/:id");
   const [games, setGames] = useState([]);
+
+  const game = match ? games.find((game) => game.id === match.params.id) : null;
 
   useEffect(() => {
     console.log("Fetching games...");
@@ -19,12 +21,10 @@ const App = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Header />
-      <Hero />
-      <div className="w-full flex-grow flex justify-center items-center">
-        <Games games={games} />
-      </div>
-      <Footer />
+      <Routes>
+        <Route path="/" element={<Home games={games} />} />
+        <Route path="/games/:id" element={<Game game={game} />} />
+      </Routes>
     </div>
   );
 };
