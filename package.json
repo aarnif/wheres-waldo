@@ -1,7 +1,8 @@
 {
-  "name": "react-app",
+  "name": "odin-wheres-waldo-server",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "The Odin Project's Full Stack JavaScript Course Project: Where's Waldo (A Photo Tagging App) (View)",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -11,9 +12,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fortawesome/free-brands-svg-icons": "^6.5.2",
+    "@fortawesome/react-fontawesome": "^0.2.2",
+    "@mdi/js": "^7.4.47",
+    "@mdi/react": "^1.6.1",
+    "axios": "^1.7.2",
+    "framer-motion": "^11.2.6",
     "jsdom": "^24.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.23.1",
     "vitest": "^1.5.0"
   },
   "devDependencies": {
