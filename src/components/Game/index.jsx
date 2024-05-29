@@ -3,6 +3,7 @@ import utils from "../../utils";
 import GameStartModal from "./GameStartModal";
 import GameHeader from "./GameHeader";
 import AimCursor from "./AimCursor";
+import DropDownMenu from "./DropDownMenu";
 
 import { useState, useEffect, useRef } from "react";
 
@@ -14,6 +15,12 @@ const Game = ({ game }) => {
 
   const [showAimCursor, setShowAimCursor] = useState(false);
   const [aimCordinates, setAimCordinates] = useState({ x: 0, y: 0 });
+
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [dropDownCoordinates, setDropDownCoordinates] = useState({
+    x: 0,
+    y: 0,
+  });
 
   const startTimer = () => {
     timer.current = setInterval(() => {
@@ -40,6 +47,9 @@ const Game = ({ game }) => {
 
   const handleCanvasClick = (event) => {
     console.log("Clicked canvas at:", event.pageX, event.pageY);
+    console.log("Showing dropdown menu");
+    setShowDropdown(!showDropdown);
+    setDropDownCoordinates({ x: event.pageX, y: event.pageY });
   };
 
   const moveAimCursor = (event) => {
@@ -84,6 +94,12 @@ const Game = ({ game }) => {
         onClick={handleCanvasClick}
       >
         {showAimCursor && <AimCursor aimCordinates={aimCordinates} />}
+        {showDropdown && (
+          <DropDownMenu
+            dropDownCoordinates={dropDownCoordinates}
+            gameCharacters={game.characters}
+          />
+        )}
       </div>
     </>
   );
