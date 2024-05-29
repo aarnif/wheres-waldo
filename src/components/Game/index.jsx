@@ -2,6 +2,7 @@ import baseUrl from "../../../baseUrl";
 import utils from "../../utils";
 import GameStartModal from "./GameStartModal";
 import GameHeader from "./GameHeader";
+import AimCursor from "./AimCursor";
 
 import { useState, useEffect, useRef } from "react";
 
@@ -10,6 +11,9 @@ const Game = ({ game }) => {
 
   const [time, setTime] = useState(timer.current);
   const [hasGameStarted, setHasGameStarted] = useState(false);
+
+  const [showAimCursor, setShowAimCursor] = useState(false);
+  const [aimCordinates, setAimCordinates] = useState({ x: 0, y: 0 });
 
   const startTimer = () => {
     timer.current = setInterval(() => {
@@ -34,6 +38,25 @@ const Game = ({ game }) => {
     startTimer();
   };
 
+  const handleCanvasClick = (event) => {
+    console.log("Clicked canvas at:", event.pageX, event.pageY);
+  };
+
+  const moveAimCursor = (event) => {
+    console.log(`Moving aim cursor to: ${event.pageX}, ${event.pageY}`);
+    setAimCordinates({ x: event.pageX, y: event.pageY });
+  };
+
+  const handleMouseOver = () => {
+    console.log("Mouse over aim cursor");
+    setShowAimCursor(true);
+  };
+
+  const handleMouseOut = () => {
+    console.log("Mouse out of aim cursor");
+    setShowAimCursor(false);
+  };
+
   if (!hasGameStarted) {
     return (
       <main
@@ -55,7 +78,13 @@ const Game = ({ game }) => {
           backgroundPosition: "center",
         }}
         className="mt-[150px] flex-grow flex flex-col justify-center items-center bg-red-500"
-      ></div>
+        onMouseOver={handleMouseOver}
+        onMouseOut={handleMouseOut}
+        onMouseMove={moveAimCursor}
+        onClick={handleCanvasClick}
+      >
+        {showAimCursor && <AimCursor aimCordinates={aimCordinates} />}
+      </div>
     </>
   );
 };
