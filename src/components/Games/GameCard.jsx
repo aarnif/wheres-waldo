@@ -1,4 +1,5 @@
 import baseUrl from "../../../baseUrl";
+import GameCharacters from "./GameCharacters";
 
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -70,15 +71,7 @@ const GameContent = ({ game }) => {
           Find the following characters:
         </h2>
       </div>
-      <div className="flex-grow w-full flex justify-center items-start">
-        {game.characters.map((character) => (
-          <GameCharacter
-            key={character.id}
-            gameId={game.id}
-            character={character}
-          />
-        ))}
-      </div>
+      <GameCharacters game={game} location={"gameCard"} />
     </motion.div>
   );
 };
