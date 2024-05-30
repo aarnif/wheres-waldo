@@ -7,8 +7,9 @@ import GameHeader from "./GameHeader";
 import GameMessageDisplay from "./GameMessageDisplay";
 import AimCursor from "./AimCursor";
 import DropDownMenu from "./DropDownMenu";
+import GameMark from "./GameMark";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 
 const Game = ({ game }) => {
   const timer = useRef(0);
@@ -31,6 +32,11 @@ const Game = ({ game }) => {
   });
 
   const [clickedCoordinates, setClickedCoordinates] = useState({ x: 0, y: 0 });
+  const [gameMarkCoordinates, setGameMarkCoordinates] = useState({
+    x: 0,
+    y: 0,
+  });
+  const [gameMarks, setGameMarks] = useState([]);
 
   const startTimer = () => {
     timer.current = setInterval(() => {
@@ -68,6 +74,10 @@ const Game = ({ game }) => {
     setShowDropdown(!showDropdown);
     setDropDownCoordinates({ x: event.pageX, y: event.pageY });
     setClickedCoordinates({ x: Number(normalisedX), y: Number(normalisedY) });
+    setGameMarkCoordinates({
+      x: event.pageX,
+      y: event.pageY,
+    });
   };
 
   const moveAimCursor = (event) => {
@@ -97,6 +107,7 @@ const Game = ({ game }) => {
   };
 
   const handleDropDownClick = (event) => {
+    console.log("GameMARKS:", gameMarks);
     const chosenCharacter = game.characters.find(
       (character) => character.id === event.target.id
     );
@@ -110,6 +121,13 @@ const Game = ({ game }) => {
     ) {
       chosenCharacter.isFound = true;
       setGameMessage(`You found ${chosenCharacter.name}!`);
+      setGameMarks([
+        ...gameMarks,
+        {
+          x: gameMarkCoordinates.x,
+          y: gameMarkCoordinates.y,
+        },
+      ]);
     } else {
       setGameMessage(`That is not ${chosenCharacter.name}!`);
     }
@@ -126,6 +144,7 @@ const Game = ({ game }) => {
       setIsGameOver(true);
       setHasGameStarted(false);
       setGameMessage("");
+      setGameMarks([]);
     }
   };
 
@@ -179,6 +198,9 @@ const Game = ({ game }) => {
           />
         )}
         {showGameMessage && <GameMessageDisplay gameMessage={gameMessage} />}
+        {gameMarks.map((mark, index) => (
+          <GameMark key={index} aimCordinates={mark} />
+        ))}
       </div>
     </>
   );
