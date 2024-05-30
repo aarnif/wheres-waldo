@@ -23,4 +23,8 @@ route.get(
   apiController.getCharacterImage
 );
 
+route.get("/users", apiController.getAllUsers);
+
+route.get("/users/:userId", apiController.getUserById);
+
 export default route;

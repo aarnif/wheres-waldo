@@ -1,4 +1,5 @@
 import asyncHandler from "express-async-handler";
+import User from "../models/User.js";
 import Game from "../models/Game.js";
 import Character from "../models/Character.js"; // You need to import the Character model despite not using it directly in this file
 
@@ -7,7 +8,10 @@ const index = (req, res) => {
 };
 
 const getAllGames = asyncHandler(async (req, res) => {
-  const allGames = await Game.find({}).populate("characters").exec();
+  const allGames = await Game.find({})
+    .populate("characters")
+    .populate("leaderboard")
+    .exec();
 
   res.json(allGames);
 });
@@ -15,15 +19,14 @@ const getAllGames = asyncHandler(async (req, res) => {
 const getGameById = asyncHandler(async (req, res) => {
   const gameById = await Game.findById(req.params.gameId)
     .populate("characters")
+    .populate("leaderboard")
     .exec();
 
   res.json(gameById);
 });
 
 const getGameImage = asyncHandler(async (req, res) => {
-  const gameById = await Game.findById(req.params.gameId)
-    .populate("characters")
-    .exec();
+  const gameById = await Game.findById(req.params.gameId).exec();
 
   res.sendFile(
     `/Users/aarnif/coding/github-repos/odin-wheres-waldo/odin-wheres-waldo-server/assets/images/${gameById.image}`
@@ -64,6 +67,20 @@ const getCharacterImage = asyncHandler(async (req, res) => {
   );
 });
 
+const getAllUsers = asyncHandler(async (req, res) => {
+  const users = await User.find({}).populate("gameScores").exec();
+
+  res.json(users);
+});
+
+const getUserById = asyncHandler(async (req, res) => {
+  const userById = await User.findById(req.params.userId)
+    .populate("gameScores")
+    .exec();
+
+  res.json(userById);
+});
+
 export default {
   index,
   getAllGames,
@@ -72,4 +89,6 @@ export default {
   getAllGameCharacters,
   getCharacterById,
   getCharacterImage,
+  getAllUsers,
+  getUserById,
 };
