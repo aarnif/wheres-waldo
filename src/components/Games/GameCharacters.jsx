@@ -1,26 +1,35 @@
 import baseUrl from "../../../baseUrl";
 
 const GameCharacter = ({ gameId, character, location }) => {
-  const classStyles = {
+  const classStylesName = {
     gameCard:
       "mt-2 w-[100px] h-[100px] flex justify-center items-start text-xl font-bold text-center",
     header:
-      "mt-2 w-[200px] h-[20px] flex justify-center items-start text-xl font-bold text-center",
+      "mt-2 w-[200px] h-[20px] flex justify-center items-start text-lg font-bold text-center",
     modal:
       "mt-2 w-[100px] h-[100px] flex justify-center items-start text-xl font-bold text-center",
   };
 
+  const classStylesImage = {
+    gameCard: "w-[100px] h-[100px] bg-red-400 rounded-xl",
+    header: "w-[70px] h-[70px] bg-red-400 rounded-xl",
+    modal: "w-[100px] h-[100px] bg-red-400 rounded-xl",
+  };
+
   return (
-    <div className="m-4 flex flex-col items-center">
+    <div
+      style={{ opacity: character.isFound ? 0.4 : 1 }}
+      className="m-4 flex flex-col items-center"
+    >
       <div
         style={{
           backgroundImage: `url(${baseUrl}/games/${gameId}/characters/${character.id}/image)`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
-        className="w-[100px] h-[100px] bg-red-400 rounded-xl"
+        className={classStylesImage[location]}
       ></div>
-      <h3 className={classStyles[location]}>{character.name}</h3>
+      <h3 className={classStylesName[location]}>{character.name}</h3>
     </div>
   );
 };

@@ -1,4 +1,8 @@
-const DropDownMenu = ({ dropDownCoordinates, gameCharacters }) => {
+const DropDownMenu = ({
+  dropDownCoordinates,
+  gameCharacters,
+  handleDropDownClick,
+}) => {
   return (
     <div
       style={{
@@ -8,13 +12,20 @@ const DropDownMenu = ({ dropDownCoordinates, gameCharacters }) => {
       className="absolute p-4 flex flex-col justify-center items-center bg-slate-800 rounded-xl text-slate-100 z-10"
     >
       <ul>
-        {gameCharacters.map((character) => (
-          <li key={character.id} className="my-2">
-            <button className="w-full p-2 flex justify-start items-center rounded-xl hover:bg-slate-900 transition">
-              <h3 className="text-xl font-semibold">{character.name}</h3>
-            </button>
-          </li>
-        ))}
+        {gameCharacters.map(
+          (character) =>
+            !character.isFound && (
+              <li key={character.id} className="my-2">
+                <button
+                  id={character.id}
+                  className="w-full p-2 flex justify-start items-center rounded-xl ext-xl font-semibold hover:bg-slate-900 transition"
+                  onClick={handleDropDownClick}
+                >
+                  {character.name}
+                </button>
+              </li>
+            )
+        )}
       </ul>
     </div>
   );
