@@ -4,6 +4,7 @@ import utils from "../../utils";
 import GameOverModal from "./GameOverModal";
 import GameStartModal from "./GameStartModal";
 import GameHeader from "./GameHeader";
+import GameMessageDisplay from "./GameMessageDisplay";
 import AimCursor from "./AimCursor";
 import DropDownMenu from "./DropDownMenu";
 
@@ -13,8 +14,12 @@ const Game = ({ game }) => {
   const timer = useRef(0);
 
   const [time, setTime] = useState(timer.current);
+
   const [hasGameStarted, setHasGameStarted] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
+
+  const [gameMessage, setGameMessage] = useState("");
+  const [showGameMessage, setShowGameMessage] = useState(false);
 
   const [showAimCursor, setShowAimCursor] = useState(false);
   const [aimCordinates, setAimCordinates] = useState({ x: 0, y: 0 });
@@ -81,9 +86,14 @@ const Game = ({ game }) => {
   };
 
   const checkIfGameOver = () => {
-    return game.characters.every((character) => {
-      return character.isFound;
-    });
+    return game.characters.every((character) => character.isFound);
+  };
+
+  const handleShowGameMessage = () => {
+    setShowGameMessage(true);
+    setTimeout(() => {
+      setShowGameMessage(false);
+    }, 3000);
   };
 
   const handleDropDownClick = (event) => {
@@ -92,7 +102,6 @@ const Game = ({ game }) => {
     );
     console.log("Clicked on character:", chosenCharacter);
     console.log("Clicked coordinates:", clickedCoordinates);
-    let gameMessage = "";
     if (
       clickedCoordinates.x >= chosenCharacter.coordinates.a.x &&
       clickedCoordinates.x <= chosenCharacter.coordinates.b.x &&
@@ -100,11 +109,12 @@ const Game = ({ game }) => {
       clickedCoordinates.y <= chosenCharacter.coordinates.c.y
     ) {
       chosenCharacter.isFound = true;
-      gameMessage = `You found ${chosenCharacter.name}!`;
+      setGameMessage(`You found ${chosenCharacter.name}!`);
     } else {
-      gameMessage = `That is not ${chosenCharacter.name}!`;
+      setGameMessage(`That is not ${chosenCharacter.name}!`);
     }
-    console.log(gameMessage);
+
+    handleShowGameMessage();
     // console.log("All characters:", game.characters);
 
     if (checkIfGameOver()) {
@@ -115,6 +125,7 @@ const Game = ({ game }) => {
       stopTimer();
       setIsGameOver(true);
       setHasGameStarted(false);
+      setGameMessage("");
     }
   };
 
@@ -167,6 +178,7 @@ const Game = ({ game }) => {
             handleDropDownClick={handleDropDownClick}
           />
         )}
+        {showGameMessage && <GameMessageDisplay gameMessage={gameMessage} />}
       </div>
     </>
   );
