@@ -4,6 +4,7 @@ import Character from "../models/Character.js"; // You need to import the Charac
 
 import asyncHandler from "express-async-handler";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 const index = (req, res) => {
   res.send("Welcome to the Wheres Waldo API!\n");
@@ -103,6 +104,29 @@ const createUser = asyncHandler(async (req, res) => {
   res.status(201).json(savedUser);
 });
 
+const loginUser = asyncHandler(async (request, response) => {
+  const { username, password } = request.body;
+
+  const user = await User.findOne({ username });
+  const passwordCorrect =
+    user === null ? false : await bcrypt.compare(password, user.passwordHash);
+
+  if (!(user && passwordCorrect)) {
+    const error = new Error("invalid username or password!");
+    error.name = "LoginError";
+    throw error;
+  }
+
+  const userForToken = {
+    username: user.username,
+    id: user._id,
+  };
+
+  const token = jwt.sign(userForToken, process.env.SESSION_SECRET);
+
+  response.status(200).send({ token, username: user.username });
+});
+
 export default {
   index,
   getAllGames,
@@ -114,4 +138,5 @@ export default {
   getAllUsers,
   getUserById,
   createUser,
+  loginUser,
 };

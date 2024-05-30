@@ -29,4 +29,6 @@ route.get("/users/:userId", apiController.getUserById);
 
 route.post("/users", apiController.createUser);
 
+route.post("/login", apiController.loginUser);
+
 export default route;

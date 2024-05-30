@@ -10,6 +10,8 @@ const errorHandler = (error, req, res, next) => {
     error.message.includes("E11000 duplicate key error")
   ) {
     return res.status(400).json({ error: "Username already exists" });
+  } else if (error.name === "LoginError") {
+    return res.status(401).json({ error: error.message });
   }
   next(error);
 };
