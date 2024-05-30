@@ -1,7 +1,9 @@
-import asyncHandler from "express-async-handler";
 import User from "../models/User.js";
 import Game from "../models/Game.js";
 import Character from "../models/Character.js"; // You need to import the Character model despite not using it directly in this file
+
+import asyncHandler from "express-async-handler";
+import bcrypt from "bcrypt";
 
 const index = (req, res) => {
   res.send("Welcome to the Wheres Waldo API!\n");
@@ -81,6 +83,26 @@ const getUserById = asyncHandler(async (req, res) => {
   res.json(userById);
 });
 
+const createUser = asyncHandler(async (req, res) => {
+  const { username, password } = req.body;
+
+  if (password.length < 6) {
+    const error = new Error("Password must be at least 6 characters long");
+    error.name = "ValidationError";
+    throw error;
+  }
+
+  const user = new User({
+    username,
+    passwordHash: await bcrypt.hash(password, 10),
+    gameScores: [],
+  });
+
+  const savedUser = await user.save();
+
+  res.status(201).json(savedUser);
+});
+
 export default {
   index,
   getAllGames,
@@ -91,4 +113,5 @@ export default {
   getCharacterImage,
   getAllUsers,
   getUserById,
+  createUser,
 };
