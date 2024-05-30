@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const characterSchema = new Schema({
   name: { type: String, required: true },
   image: { type: String, required: true },
-  cordinates: {
+  coordinates: {
     a: {
       x: { type: Number, required: true },
       y: { type: Number, required: true },

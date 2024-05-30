@@ -6,6 +6,12 @@ const gameSchema = new Schema({
   title: { type: String, required: true },
   image: { type: String, required: true },
   characters: [{ type: Schema.Types.ObjectId, ref: "Character" }],
+  leaderboard: [
+    {
+      user: { type: Schema.Types.ObjectId, ref: "User" },
+      score: { type: String, required: true },
+    },
+  ],
 });
 
 gameSchema.virtual("url").get(function () {
