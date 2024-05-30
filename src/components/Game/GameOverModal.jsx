@@ -1,12 +1,4 @@
-import { useNavigate } from "react-router-dom";
-
-const GameOverModal = ({ time, startNewGame }) => {
-  const navigate = useNavigate();
-  const handleChangeGame = () => {
-    console.log("Change game");
-    navigate("/");
-  };
-
+const GameOverModal = ({ time, startNewGame, handleChangeGame }) => {
   return (
     <div className="fixed inset-0 flex justify-center items-center bg-black z-10">
       <div className="overflow-auto w-[600px] h-[350px] p-12 flex flex-col justify-center items-center bg-slate-800 rounded-xl text-slate-100 z-100">

@@ -9,9 +9,12 @@ import AimCursor from "./AimCursor";
 import DropDownMenu from "./DropDownMenu";
 import GameMark from "./GameMark";
 
+import { useNavigate } from "react-router-dom";
 import { useState, useRef } from "react";
 
 const Game = ({ game }) => {
+  const navigate = useNavigate();
+
   const timer = useRef(0);
 
   const [time, setTime] = useState(timer.current);
@@ -56,10 +59,26 @@ const Game = ({ game }) => {
 
   const startNewGame = async () => {
     console.log("Start new game");
+    resetGame();
     setHasGameStarted(true);
     setIsGameOver(false);
-    resetTimer();
     startTimer();
+  };
+
+  const resetGame = () => {
+    console.log("Reset game");
+    game.characters.forEach((character) => {
+      character.isFound = false;
+    });
+    resetTimer();
+    setGameMarks([]);
+    setGameMessage("");
+  };
+
+  const handleChangeGame = () => {
+    console.log("Change game");
+    resetGame();
+    navigate("/");
   };
 
   const handleCanvasClick = (event) => {
@@ -133,18 +152,12 @@ const Game = ({ game }) => {
     }
 
     handleShowGameMessage();
-    // console.log("All characters:", game.characters);
 
     if (checkIfGameOver()) {
       console.log("Game over!");
-      game.characters.forEach((character) => {
-        character.isFound = false;
-      });
       stopTimer();
       setIsGameOver(true);
       setHasGameStarted(false);
-      setGameMessage("");
-      setGameMarks([]);
     }
   };
 
@@ -157,6 +170,7 @@ const Game = ({ game }) => {
         <GameOverModal
           time={utils.formatTime(time)}
           startNewGame={startNewGame}
+          handleChangeGame={handleChangeGame}
         />
       </main>
     );
@@ -175,7 +189,11 @@ const Game = ({ game }) => {
 
   return (
     <>
-      <GameHeader game={game} time={utils.formatTime(time)} />
+      <GameHeader
+        game={game}
+        time={utils.formatTime(time)}
+        handleChangeGame={handleChangeGame}
+      />
       <div
         id="game-canvas"
         className="mt-[120px] flex-grow flex justify-center items-start bg-red-500"
