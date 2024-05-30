@@ -1,6 +1,7 @@
 import indexRouter from "./routes/index.js";
 import apiRouter from "./routes/api.js";
 import config from "./utils/config.js";
+import errorHandler from "./errorHandler.js";
 
 import express from "express";
 import cors from "cors";
@@ -23,5 +24,7 @@ app.use(cors());
 
 app.use("/", indexRouter);
 app.use("/api", apiRouter);
+
+app.use(errorHandler);
 
 export default app;
