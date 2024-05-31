@@ -1,37 +1,93 @@
+import loggingService from "../../services/loggingService.js";
 import useField from "../../hooks/useField";
 
 import Header from "../Header/index.jsx";
 import Footer from "../Footer/index.jsx";
 
-const Login = () => {
-  const userName = useField("text", "username");
-  const password = useField("password", "password");
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+const Login = ({ setUser }) => {
+  const navigate = useNavigate();
+  const userName = useField("text", "Enter your username here...");
+  const password = useField("password", "Enter your password here...");
+
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  const handleDisplayErrorMessage = (message) => {
+    setErrorMessage(message);
+    setTimeout(() => {
+      setErrorMessage(null);
+    }, 3000);
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    if (userName.value.length === 0 || password.value.length === 0) {
+      handleDisplayErrorMessage("Please enter your username and password!");
+      return;
+    }
+
     console.log("Logging in...");
+    loggingService
+      .logIn({
+        username: userName.value,
+        password: password.value,
+      })
+      .then((user) => {
+        console.log("Logged in:", user);
+        loggingService.setToken(user.token);
+        setUser(user);
+        window.localStorage.setItem("loggedUser", JSON.stringify(user));
+        navigate("/");
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        handleDisplayErrorMessage(error.response.data.error);
+      });
+
+    event.target.reset();
   };
 
   return (
     <>
       <Header />
-      <div className="w-full flex-grow flex flex-col justify-center items-center">
-        <div className="flex-grow max-w-[600px] min-w-[360px] max-h-[400px] p-8 flex justify-center items-center border border-red-500 rounded-xl">
-          <form onSubmit={handleSubmit} className="w-full h-full flex flex-col">
-            <h1 className="text-2xl font-bold">Sign In</h1>
+      <div className="w-full flex-grow flex flex-col justify-center items-center bg-red-500">
+        <div
+          className="flex-grow max-w-[600px] min-w-[420px] max-h-[450px] p-8 flex justify-center items-center
+         bg-red-100 border border-red-500 rounded-xl"
+        >
+          <form
+            onSubmit={handleSubmit}
+            className="flex-grow h-full flex flex-col"
+          >
+            <h1 className="text-2xl font-bold text-red-500">Sign In</h1>
             <ul>
+              {errorMessage && (
+                <li className="p-2 flex justify-center items-center bg-red-400 rounded-lg">
+                  <span className="text-md text-red-700">{errorMessage}</span>
+                </li>
+              )}
+
               <li className="my-4 w-full flex-grow flex flex-col">
-                <label className="text-md font-medium text-slate-600">
+                <label className="text-md font-medium text-red-600">
                   USERNAME:
                 </label>
                 <input
                   className="w-full flex-grow p-2 rounded-lg border border-slate-500 
-              hover:bg-slate-100 focus:outline-none focus:ring-1 focus:ring-slate-500 focus:bg-slate-100 placeholder:text-slate-500 transition"
+                  hover:bg-slate-100 focus:outline-none focus:ring-1 focus:ring-slate-500 focus:bg-slate-100 placeholder:text-slate-500 transition"
                   {...userName}
                 />
+                {userName.value.length === 0 && (
+                  <span className="text-sm text-red-500">
+                    Please enter your username
+                  </span>
+                )}
               </li>
+
               <li className="my-4 w-full flex-grow flex flex-col">
-                <label className="text-md font-medium text-slate-600">
+                <label className="text-md font-medium text-red-600">
                   PASSWORD:
                 </label>
                 <input
@@ -39,7 +95,13 @@ const Login = () => {
                   hover:bg-slate-100 focus:outline-none focus:ring-1 focus:ring-slate-500 focus:bg-slate-100 placeholder:text-slate-500 transition"
                   {...password}
                 />
+                {password.value.length === 0 && (
+                  <span className="text-sm text-red-500">
+                    Please enter your password
+                  </span>
+                )}
               </li>
+
               <li className="flex justify-center items-center">
                 <button
                   type="submit"

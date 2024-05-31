@@ -1,3 +1,4 @@
+import loggingService from "./services/loggingService";
 import gameService from "./services/gameService";
 
 import Home from "./components/Home";
@@ -20,7 +21,21 @@ const App = () => {
     gameService.getAllGames().then((games) => setGames(games));
   }, []);
 
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem("loggedUser");
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON);
+      setUser(user);
+      loggingService.setToken(user.token);
+    }
+  }, []);
+
+  console.log("User:", user);
   console.log("Games:", games);
+
+  if (!games.length) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -28,11 +43,15 @@ const App = () => {
         <Route
           path="/"
           element={
-            user ? <Home games={games} /> : <Navigate replace to="/login" />
+            user ? (
+              <Home user={user} games={games} />
+            ) : (
+              <Navigate replace to="/login" />
+            )
           }
         />
         <Route path="/games/:id" element={<Game game={game} />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login setUser={setUser} />} />
       </Routes>
     </div>
   );

@@ -1,8 +1,11 @@
+import loggingService from "../../services/loggingService";
+
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useScroll, useMotionValueEvent, motion } from "framer-motion";
 
-const Header = () => {
-  // const navigate = useNavigate();
+const Header = ({ user }) => {
+  const navigate = useNavigate();
   const { scrollY, scrollYProgress } = useScroll();
   const [showHeader, setShowHeader] = useState(0);
   const headerHeightInPixels = 80;
@@ -32,8 +35,10 @@ const Header = () => {
     }
   });
 
-  const handleClickHeader = () => {
-    console.log("Header title clicked");
+  const handleLogOut = () => {
+    console.log(`Logging out user ${user.username}`);
+    window.localStorage.removeItem("loggedUser");
+    navigate("/login");
   };
 
   return (
@@ -44,12 +49,26 @@ const Header = () => {
         translateY: showHeader,
       }}
     >
-      <div className="w-full flex-grow basis-3/5 flex justify-around items-center border-b border-b-slate-300">
-        <button className="flex-grow" onClick={handleClickHeader}>
-          <h1 className="text-center font-title text-2xl font-bold">
+      <div className="w-full flex-grow basis-3/5 flex justify-center items-center border-b border-b-slate-300">
+        <div className="flex-grow flex justify-around items-center">
+          <h1 className="flex-grow basis-2/3 text-center font-title text-2xl font-bold">
             Where's Waldo
           </h1>
-        </button>
+          {user && (
+            <div className="flex-grow basis-1/3 flex justify-around items-center">
+              <h2 className="text-center font-title text-lg font-bold">
+                Logged in as: {user.username}
+              </h2>
+              <button
+                onClick={handleLogOut}
+                className="flex-grow max-w-[200px] h-[60px] bg-red-700 rounded-xl text-xl font-bold text-white
+                hover:bg-red-800 active:scale-95 transition"
+              >
+                Log out
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </motion.header>
   );
