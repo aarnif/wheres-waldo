@@ -1,4 +1,4 @@
-import loggingService from "../../services/loggingService.js";
+import signingService from "../../services/signingService";
 import useField from "../../hooks/useField";
 
 import Header from "../Header/index.jsx";
@@ -30,14 +30,14 @@ const Login = ({ setUser }) => {
     }
 
     console.log("Logging in...");
-    loggingService
+    signingService
       .logIn({
         username: userName.value,
         password: password.value,
       })
       .then((user) => {
         console.log("Logged in:", user);
-        loggingService.setToken(user.token);
+        signingService.setToken(user.token);
         setUser(user);
         window.localStorage.setItem("loggedUser", JSON.stringify(user));
         navigate("/");
@@ -50,12 +50,16 @@ const Login = ({ setUser }) => {
     event.target.reset();
   };
 
+  const handleClickSignUp = () => {
+    navigate("/signup");
+  };
+
   return (
     <>
       <Header />
       <div className="w-full flex-grow flex flex-col justify-center items-center bg-red-500">
         <div
-          className="flex-grow max-w-[600px] min-w-[420px] max-h-[450px] p-8 flex justify-center items-center
+          className="flex-grow max-w-[600px] min-w-[420px] max-h-[500px] p-8 flex justify-center items-center
          bg-red-100 border border-red-500 rounded-xl"
         >
           <form
@@ -102,13 +106,27 @@ const Login = ({ setUser }) => {
                 )}
               </li>
 
-              <li className="flex justify-center items-center">
+              <li className="my-4 flex justify-center items-center">
                 <button
                   type="submit"
                   className="flex-grow h-[70px] bg-red-600 rounded-xl text-xl font-bold text-white
                 hover:bg-red-700 active:scale-95 transition"
                 >
                   Sign In
+                </button>
+              </li>
+
+              <li className="my-4 flex flex-col justify-center items-center">
+                <span className="text-md text-slate-700 font-bold">
+                  Don't have an account?
+                </span>
+                <button
+                  onClick={handleClickSignUp}
+                  type="button"
+                  className="w-full flex-grow h-[70px] bg-red-100 border border-red-600 rounded-xl text-xl font-bold text-red-600
+                hover:bg-red-400 active:scale-95 transition"
+                >
+                  Sign Up Here
                 </button>
               </li>
             </ul>

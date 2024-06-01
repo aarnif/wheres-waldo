@@ -13,4 +13,9 @@ const logIn = async (credentials) => {
   return response.data;
 };
 
-export default { setToken, logIn };
+const createUser = async (newUser) => {
+  const response = await axios.post(`${baseUrl}/users`, newUser);
+  return response.data;
+};
+
+export default { setToken, logIn, createUser };

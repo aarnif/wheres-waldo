@@ -1,9 +1,10 @@
-import loggingService from "./services/loggingService";
+import signingService from "./services/signingService";
 import gameService from "./services/gameService";
 
 import Home from "./components/Home";
 import Game from "./components/Game";
 import Login from "./components/Auth/Login";
+import SignUp from "./components/Auth/SignUp";
 
 import { useState, useEffect } from "react";
 import { Routes, Route, Navigate, useMatch } from "react-router-dom";
@@ -26,7 +27,7 @@ const App = () => {
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON);
       setUser(user);
-      loggingService.setToken(user.token);
+      signingService.setToken(user.token);
     }
   }, []);
 
@@ -52,6 +53,7 @@ const App = () => {
         />
         <Route path="/games/:id" element={<Game game={game} />} />
         <Route path="/login" element={<Login setUser={setUser} />} />
+        <Route path="/signup" element={<SignUp setUser={setUser} />} />
       </Routes>
     </div>
   );

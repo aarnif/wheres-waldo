@@ -1,5 +1,3 @@
-import loggingService from "../../services/loggingService";
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useScroll, useMotionValueEvent, motion } from "framer-motion";
