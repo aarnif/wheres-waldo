@@ -4,6 +4,11 @@ const Schema = mongoose.Schema;
 
 const gameSchema = new Schema({
   title: { type: String, required: true },
+  difficulty: {
+    type: String,
+    required: true,
+    enum: ["easy", "medium", "hard"],
+  },
   image: { type: String, required: true },
   characters: [{ type: Schema.Types.ObjectId, ref: "Character" }],
 
@@ -12,6 +17,7 @@ const gameSchema = new Schema({
     gameCardBackground: { type: String, required: true },
     gameCard: { type: String, required: true },
     gameCardHover: { type: String, required: true },
+    gameIcons: { type: String, required: true },
     gameCanvas: { type: String, required: true },
     gameModal: { type: String, required: true },
     gameButton: { type: String, required: true },
