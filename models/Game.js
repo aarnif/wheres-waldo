@@ -10,7 +10,31 @@ const gameSchema = new Schema({
     enum: ["easy", "medium", "hard"],
   },
   image: { type: String, required: true },
-  characters: [{ type: Schema.Types.ObjectId, ref: "Character" }],
+  characters: [
+    {
+      name: { type: String, required: true },
+      image: { type: String, required: true },
+      coordinates: {
+        a: {
+          x: { type: Number, required: true },
+          y: { type: Number, required: true },
+        },
+        b: {
+          x: { type: Number, required: true },
+          y: { type: Number, required: true },
+        },
+        c: {
+          x: { type: Number, required: true },
+          y: { type: Number, required: true },
+        },
+        d: {
+          x: { type: Number, required: true },
+          y: { type: Number, required: true },
+        },
+      },
+      isFound: { type: Boolean, required: true, default: false },
+    },
+  ],
 
   colorTheme: {
     body: { type: String, required: true },
@@ -43,6 +67,10 @@ gameSchema.set("toJSON", {
     returnedObject.id = returnedObject._id.toString();
     delete returnedObject._id;
     delete returnedObject.__v;
+    returnedObject.characters.forEach((character) => {
+      character.id = character._id.toString();
+      delete character._id;
+    });
   },
 });
 

@@ -11,17 +11,13 @@ const index = (req, res) => {
 };
 
 const getAllGames = asyncHandler(async (req, res) => {
-  const allGames = await Game.find({})
-    .populate("characters")
-    .populate("leaderboard")
-    .exec();
+  const allGames = await Game.find({}).populate("leaderboard").exec();
 
   res.json(allGames);
 });
 
 const getGameById = asyncHandler(async (req, res) => {
   const gameById = await Game.findById(req.params.gameId)
-    .populate("characters")
     .populate("leaderboard")
     .exec();
 

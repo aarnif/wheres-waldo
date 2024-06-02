@@ -5,25 +5,25 @@ const Schema = mongoose.Schema;
 const characterSchema = new Schema({
   name: { type: String, required: true },
   image: { type: String, required: true },
-  coordinates: {
-    a: {
-      x: { type: Number, required: true },
-      y: { type: Number, required: true },
-    },
-    b: {
-      x: { type: Number, required: true },
-      y: { type: Number, required: true },
-    },
-    c: {
-      x: { type: Number, required: true },
-      y: { type: Number, required: true },
-    },
-    d: {
-      x: { type: Number, required: true },
-      y: { type: Number, required: true },
-    },
-  },
-  isFound: { type: Boolean, default: false },
+  // coordinates: {
+  //   a: {
+  //     x: { type: Number, required: true },
+  //     y: { type: Number, required: true },
+  //   },
+  //   b: {
+  //     x: { type: Number, required: true },
+  //     y: { type: Number, required: true },
+  //   },
+  //   c: {
+  //     x: { type: Number, required: true },
+  //     y: { type: Number, required: true },
+  //   },
+  //   d: {
+  //     x: { type: Number, required: true },
+  //     y: { type: Number, required: true },
+  //   },
+  // },
+  // isFound: { type: Boolean, default: false },
 });
 
 characterSchema.virtual("url").get(function () {
