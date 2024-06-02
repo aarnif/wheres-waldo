@@ -196,7 +196,8 @@ const Game = ({ game }) => {
       />
       <div
         id="game-canvas"
-        className="mt-[120px] flex-grow flex justify-center items-start bg-red-500"
+        style={{ backgroundColor: game.colorTheme.gameCanvas }}
+        className="mt-[120px] flex-grow flex justify-center items-start bg-zinc-600"
         onMouseOver={handleMouseOver}
         onMouseOut={handleMouseOut}
         onMouseMove={moveAimCursor}

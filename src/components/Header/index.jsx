@@ -41,13 +41,13 @@ const Header = ({ user }) => {
 
   return (
     <motion.header
-      className="z-10 fixed w-full flex flex-col justify-center items-center shadow-lg bg-red-600 text-white"
+      className="z-10 fixed w-full flex flex-col justify-center items-center shadow-lg bg-zinc-700 text-white"
       style={{
         height: headerHeightInPixels,
         translateY: showHeader,
       }}
     >
-      <div className="w-full flex-grow basis-3/5 flex justify-center items-center border-b border-b-slate-300">
+      <div className="w-full flex-grow basis-3/5 flex justify-center items-center">
         <div className="flex-grow flex justify-around items-center">
           <h1 className="flex-grow basis-2/3 text-center font-title text-2xl font-bold">
             Where's Waldo
@@ -59,8 +59,8 @@ const Header = ({ user }) => {
               </h2>
               <button
                 onClick={handleLogOut}
-                className="flex-grow max-w-[200px] h-[60px] bg-red-700 rounded-xl text-xl font-bold text-white
-                hover:bg-red-800 active:scale-95 transition"
+                className="flex-grow max-w-[200px] h-[60px] bg-zinc-600 rounded-xl text-xl font-bold text-white
+                hover:bg-zinc-800 active:scale-95 transition"
               >
                 Log out
               </button>

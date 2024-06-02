@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 const Signature = () => {
   return (
     <>
-      <h3 className="text-xl px-2">Created By aarnif</h3>
+      <h3 className="px-2 text-xl font-semibold">Created By aarnif</h3>
       <motion.div
         whileHover={{
           scale: 1.5,

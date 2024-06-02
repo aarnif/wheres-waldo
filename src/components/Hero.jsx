@@ -2,7 +2,7 @@ const Hero = () => {
   return (
     <div
       key={"hero"}
-      className="w-full flex-grow min-h-[700px] mt-[60px] flex justify-center items-center bg-red-400 text-white"
+      className="w-full flex-grow min-h-[700px] mt-[60px] flex justify-center items-center bg-zinc-600 text-white"
       style={{
         backgroundImage: "none",
         backgroundSize: "cover",

@@ -6,7 +6,7 @@
 
 @layer base {
   body {
-    @apply m-0 box-border font-[Inter];
+    @apply m-0 box-border font-[Inter] bg-zinc-700;
   }
   .transition {
     @apply transition-all duration-300 ease-in-out;

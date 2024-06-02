@@ -5,24 +5,6 @@ import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AnimatePresence, motion, useInView } from "framer-motion";
 
-const GameCharacter = ({ gameId, character }) => {
-  return (
-    <div className="m-4 flex flex-col items-center">
-      <div
-        style={{
-          backgroundImage: `url(${baseUrl}/games/${gameId}/characters/${character.id}/image)`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-        className="w-[100px] h-[100px] bg-red-400 rounded-xl"
-      ></div>
-      <h3 className="mt-2 w-[100px] h-[100px] flex justify-center items-start text-xl font-bold text-center">
-        {character.name}
-      </h3>
-    </div>
-  );
-};
-
 const GameImage = ({ gameId }) => {
   return (
     <AnimatePresence>
@@ -65,18 +47,22 @@ const GameContent = ({ game }) => {
           {game.title.toUpperCase()}
         </h1>
         <h3 className="mb-4 flex-grow w-full text-xl font-bold text-center">
-          Difficulty: Medium
+          Difficulty:{" "}
+          {game.difficulty[0].toUpperCase() + game.difficulty.slice(1)}
         </h3>
         <h2 className="mt-16 mb-2 flex-grow w-full text-2xl font-bold text-center">
           Find the following characters:
         </h2>
       </div>
       <GameCharacters game={game} location={"gameCard"} />
+      <h1 className="mt-4 flex-grow w-full text-3xl font-extrabold text-center">
+        Click to play!
+      </h1>
     </motion.div>
   );
 };
 
-const GameCard = ({ game, gameStyleColors }) => {
+const GameCard = ({ game }) => {
   const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
   const ref = useRef(null);
@@ -98,9 +84,9 @@ const GameCard = ({ game, gameStyleColors }) => {
     <div
       ref={ref}
       style={{
-        backgroundColor: gameStyleColors.background,
+        backgroundColor: game.colorTheme.gameCardBackground,
       }}
-      className="flex-grow min-h-[600px] p-16 flex justify-center items-center text-white"
+      className="w-full flex-grow min-h-[600px] p-16 flex justify-center items-center text-white"
     >
       <AnimatePresence mode="wait">
         {isInView && (
@@ -116,8 +102,8 @@ const GameCard = ({ game, gameStyleColors }) => {
               opacity: 0,
               y: 50,
               backgroundColor: isHovered
-                ? gameStyleColors.hover
-                : gameStyleColors.gameCard,
+                ? game.colorTheme.gameCardHover
+                : game.colorTheme.gameCard,
               transition: "background-color 0.3s ease-in-out",
             }}
             onMouseEnter={() => setIsHovered(true)}

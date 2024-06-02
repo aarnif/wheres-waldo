@@ -7,7 +7,8 @@ const GameHeader = ({ game, time, handleChangeGame }) => {
   return (
     <header
       id="game-header"
-      className="z-10 fixed w-full h-[120px] flex justify-center items-center shadow-lg bg-red-600 text-white"
+      style={{ backgroundColor: game.colorTheme.gameHeader }}
+      className="z-10 fixed w-full h-[120px] flex justify-center items-center shadow-lg bg-zinc-600 text-white"
     >
       <div className="ml-8 flex-grow max-w-[400px] min-w-[300px]">
         <h1 className="font-title text-4xl font-bold text-center">

@@ -1,9 +1,14 @@
 import baseUrl from "../../../baseUrl";
 
-const GameCharacter = ({ gameId, character, location }) => {
+const GameCharacter = ({
+  gameId,
+  character,
+  location,
+  iconBackgroundColor,
+}) => {
   const classStylesName = {
     gameCard:
-      "mt-2 w-[100px] h-[100px] flex justify-center items-start text-xl font-bold text-center",
+      "mt-2 w-[100px] h-[20px] flex justify-center items-start text-xl font-bold text-center",
     header:
       "mt-2 w-[200px] h-[20px] flex justify-center items-start text-lg font-bold text-center",
     modal:
@@ -11,9 +16,9 @@ const GameCharacter = ({ gameId, character, location }) => {
   };
 
   const classStylesImage = {
-    gameCard: "w-[100px] h-[100px] bg-red-400 rounded-xl",
-    header: "w-[70px] h-[70px] bg-red-400 rounded-xl",
-    modal: "w-[100px] h-[100px] bg-red-400 rounded-xl",
+    gameCard: "w-[100px] h-[100px] rounded-xl",
+    header: "w-[70px] h-[70px] rounded-xl",
+    modal: "w-[100px] h-[100px] rounded-xl",
   };
 
   return (
@@ -26,6 +31,7 @@ const GameCharacter = ({ gameId, character, location }) => {
           backgroundImage: `url(${baseUrl}/games/${gameId}/characters/${character.id}/image)`,
           backgroundSize: "cover",
           backgroundPosition: "center",
+          backgroundColor: iconBackgroundColor,
         }}
         className={classStylesImage[location]}
       ></div>
@@ -49,6 +55,7 @@ const GameCharacters = ({ game, location }) => {
           gameId={game.id}
           character={character}
           location={location}
+          iconBackgroundColor={game.colorTheme.gameIcons}
         />
       ))}
     </div>

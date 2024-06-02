@@ -39,7 +39,10 @@ const App = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div
+      style={{ backgroundColor: game && game.colorTheme.body }}
+      className="min-h-screen flex flex-col"
+    >
       <Routes>
         <Route
           path="/"
