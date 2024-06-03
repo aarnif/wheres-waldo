@@ -1,3 +1,4 @@
+import baseUrl from "../../../baseUrl.js";
 import signingService from "../../services/signingService";
 import useField from "../../hooks/useField";
 
@@ -7,7 +8,7 @@ import Footer from "../Footer/index.jsx";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const SignUp = ({ setUser }) => {
+const SignUp = ({ setUser, randomGameId }) => {
   const [errorMessage, setErrorMessage] = useState(null);
 
   const navigate = useNavigate();
@@ -73,96 +74,107 @@ const SignUp = ({ setUser }) => {
   };
 
   return (
-    <>
-      <Header />
-      <div className="w-full flex-grow flex flex-col justify-center items-center">
-        <div
-          className="flex-grow max-w-[600px] min-w-[420px] max-h-[500px] p-8 flex justify-center items-center
-          bg-zinc-700 bg-opacity-70 rounded-xl text-white shadow-xl"
-        >
-          <form
-            id="sign-up-form"
-            onSubmit={handleSubmit}
-            onChange={handleFormChange}
-            className="flex-grow h-full flex flex-col"
+    <div
+      className="w-full flex-grow flex flex-col justify-center items-center"
+      style={{
+        backgroundImage: `url(${baseUrl}/games/${randomGameId}/image)`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        backgroundBlur: "10px",
+      }}
+    >
+      <div className="w-full flex-grow flex flex-col backdrop-blur-sm">
+        <Header />
+        <div className="flex-grow w-full flex justify-center items-center">
+          <div
+            className="flex-grow max-w-[500px] max-h-[600px] p-8 flex justify-center items-center
+         bg-zinc-700 bg-opacity-90 rounded-xl text-white shadow-xl"
           >
-            <h1 className="text-2xl font-bold">Sign Up</h1>
-            <ul>
-              {errorMessage && (
-                <li className="p-2 flex justify-center items-center bg-red-400 rounded-lg">
-                  <span className="text-md text-red-700">{errorMessage}</span>
+            <form
+              id="sign-up-form"
+              onSubmit={handleSubmit}
+              onChange={handleFormChange}
+              className="flex-grow h-full flex flex-col"
+            >
+              <h1 className="text-2xl font-bold">Sign Up</h1>
+              <ul>
+                {errorMessage && (
+                  <li className="p-2 flex justify-center items-center bg-red-400 rounded-lg">
+                    <span className="text-md text-red-700">{errorMessage}</span>
+                  </li>
+                )}
+
+                <li className="my-4 w-full flex-grow flex flex-col">
+                  <label className="text-md font-medium text-slate-200">
+                    USERNAME:
+                  </label>
+                  <input
+                    id="username"
+                    name="username"
+                    className="w-full flex-grow p-2 rounded-lg bg-zinc-500
+          focus:outline-none focus:ring-2 focus:ring-sky-400 placeholder:text-slate-200 transition"
+                    {...userName}
+                  />
+                  {userName.value.length === 0 && (
+                    <span className="text-sm text-red-500">
+                      Please enter username of at least 4 characters
+                    </span>
+                  )}
                 </li>
-              )}
 
-              <li className="my-4 w-full flex-grow flex flex-col">
-                <label className="text-md font-medium text-slate-200">
-                  USERNAME:
-                </label>
-                <input
-                  id="username"
-                  name="username"
-                  className="w-full flex-grow p-2 rounded-lg bg-zinc-500
+                <li className="my-4 w-full flex-grow flex flex-col">
+                  <label className="text-md font-medium text-slate-200">
+                    PASSWORD:
+                  </label>
+                  <input
+                    id="password"
+                    name="password"
+                    className="w-full flex-grow p-2 rounded-lg bg-zinc-500
           focus:outline-none focus:ring-2 focus:ring-sky-400 placeholder:text-slate-200 transition"
-                  {...userName}
-                />
-                {userName.value.length === 0 && (
-                  <span className="text-sm text-red-500">
-                    Please enter username of at least 4 characters
-                  </span>
-                )}
-              </li>
+                    {...password}
+                  />
+                  {password.value.length === 0 && (
+                    <span className="text-sm text-red-500">
+                      Please enter password of at least 6 characters
+                    </span>
+                  )}
+                </li>
 
-              <li className="my-4 w-full flex-grow flex flex-col">
-                <label className="text-md font-medium text-slate-200">
-                  PASSWORD:
-                </label>
-                <input
-                  id="password"
-                  name="password"
-                  className="w-full flex-grow p-2 rounded-lg bg-zinc-500
+                <li className="my-4 w-full flex-grow flex flex-col">
+                  <label className="text-md font-medium text-slate-200">
+                    CONFIRM PASSWORD:
+                  </label>
+                  <input
+                    id="confirm-password"
+                    name="confirm-password"
+                    className="w-full flex-grow p-2 rounded-lg bg-zinc-500
           focus:outline-none focus:ring-2 focus:ring-sky-400 placeholder:text-slate-200 transition"
-                  {...password}
-                />
-                {password.value.length === 0 && (
-                  <span className="text-sm text-red-500">
-                    Please enter password of at least 6 characters
-                  </span>
-                )}
-              </li>
+                    {...confirmPassword}
+                  />
+                  {confirmPassword.value.length === 0 && (
+                    <span className="text-sm text-red-500">
+                      Please re-enter password
+                    </span>
+                  )}
+                </li>
 
-              <li className="my-4 w-full flex-grow flex flex-col">
-                <label className="text-md font-medium text-slate-200">
-                  CONFIRM PASSWORD:
-                </label>
-                <input
-                  id="confirm-password"
-                  name="confirm-password"
-                  className="w-full flex-grow p-2 rounded-lg bg-zinc-500
-          focus:outline-none focus:ring-2 focus:ring-sky-400 placeholder:text-slate-200 transition"
-                  {...confirmPassword}
-                />
-                {confirmPassword.value.length === 0 && (
-                  <span className="text-sm text-red-500">
-                    Please re-enter password
-                  </span>
-                )}
-              </li>
-
-              <li className="my-4 flex justify-center items-center">
-                <button
-                  type="submit"
-                  className="flex-grow h-[70px] bg-green-500 border border-green-500 rounded-xl text-xl font-bold text-white
+                <li className="my-4 flex justify-center items-center">
+                  <button
+                    type="submit"
+                    className="flex-grow h-[70px] bg-green-500 border-2 border-green-500 rounded-xl text-xl font-bold text-white
                 hover:bg-green-600 focus:bg-green-600 focus:outline-none focus:ring-2 focus:ring-sky-400 active:scale-95 transition"
-                >
-                  Sign Up
-                </button>
-              </li>
-            </ul>
-          </form>
+                  >
+                    Sign Up
+                  </button>
+                </li>
+              </ul>
+            </form>
+          </div>
         </div>
+        <Footer />
       </div>
-      <Footer />
-    </>
+    </div>
   );
 };
 

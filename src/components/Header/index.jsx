@@ -41,7 +41,7 @@ const Header = ({ user }) => {
 
   return (
     <motion.header
-      className="z-10 fixed w-full flex flex-col justify-center items-center shadow-lg bg-zinc-700 text-white"
+      className="z-10 fixed w-full flex flex-col justify-center items-center shadow-lg bg-zinc-700 bg-opacity-90 text-white"
       style={{
         height: headerHeightInPixels,
         translateY: showHeader,

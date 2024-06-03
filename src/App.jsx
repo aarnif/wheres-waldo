@@ -14,12 +14,16 @@ const App = () => {
 
   const [user, setUser] = useState(null);
   const [games, setGames] = useState([]);
+  const [randomGameId, setRandomGameId] = useState(null);
 
   const game = match ? games.find((game) => game.id === match.params.id) : null;
 
   useEffect(() => {
     console.log("Fetching games...");
-    gameService.getAllGames().then((games) => setGames(games));
+    gameService.getAllGames().then((games) => {
+      setGames(games);
+      setRandomGameId(games[Math.floor(Math.random() * games.length)].id);
+    });
   }, []);
 
   useEffect(() => {
@@ -38,6 +42,8 @@ const App = () => {
     return <div>Loading...</div>;
   }
 
+  console.log("Random game ID:", randomGameId);
+
   return (
     <div className="min-h-screen flex flex-col bg-zinc-600">
       <Routes>
@@ -52,8 +58,14 @@ const App = () => {
           }
         />
         <Route path="/games/:id" element={<Game game={game} />} />
-        <Route path="/login" element={<Login setUser={setUser} />} />
-        <Route path="/signup" element={<SignUp setUser={setUser} />} />
+        <Route
+          path="/login"
+          element={<Login setUser={setUser} randomGameId={randomGameId} />}
+        />
+        <Route
+          path="/signup"
+          element={<SignUp setUser={setUser} randomGameId={randomGameId} />}
+        />
       </Routes>
     </div>
   );
