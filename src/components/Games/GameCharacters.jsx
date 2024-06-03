@@ -1,5 +1,8 @@
 import baseUrl from "../../../baseUrl";
 
+import Icon from "@mdi/react";
+import { mdiCheck } from "@mdi/js";
+
 const GameCharacter = ({
   gameId,
   character,
@@ -22,20 +25,31 @@ const GameCharacter = ({
   };
 
   return (
-    <div
-      style={{ opacity: character.isFound ? 0.4 : 1 }}
-      className="m-4 flex flex-col items-center"
-    >
+    <div className="m-4 flex flex-col items-center">
       <div
         style={{
           backgroundImage: `url(${baseUrl}/games/${gameId}/characters/${character.id}/image)`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundColor: iconBackgroundColor,
+          opacity: character.isFound ? 0.4 : 1,
         }}
         className={classStylesImage[location]}
       ></div>
-      <h3 className={classStylesName[location]}>{character.name}</h3>
+      <h3
+        className={classStylesName[location]}
+        style={{ opacity: character.isFound ? 0.4 : 1 }}
+      >
+        {character.name}
+      </h3>
+      {character.isFound && (
+        <Icon
+          path={mdiCheck}
+          title="Check"
+          size={3.8}
+          className="absolute top-1 fill-current text-green-500"
+        />
+      )}
     </div>
   );
 };

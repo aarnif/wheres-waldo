@@ -23,7 +23,7 @@ const GameImage = ({ gameId }) => {
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
-        className="w-full h-[600px] bg-red-400 rounded-xl"
+        className="w-full h-[600px] bg-red-400 rounded-xl blur-sm"
       ></motion.div>
     </AnimatePresence>
   );
