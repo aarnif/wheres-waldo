@@ -3,11 +3,16 @@ import Hero from "./Hero.jsx";
 import Games from "./Games/index.jsx";
 import Footer from "./Footer/index.jsx";
 
+import { useState } from "react";
+
 const Home = ({ user, games }) => {
+  const [randomGameId, setRandomGameId] = useState(
+    games[Math.floor(Math.random() * games.length)].id
+  );
   return (
     <>
       <Header user={user} />
-      <Hero />
+      <Hero randomGameId={randomGameId} />
       <div
         style={{
           backgroundColor: games[0].colorTheme.gameCanvas,
