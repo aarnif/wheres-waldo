@@ -11,7 +11,7 @@ const Home = ({ user, games }) => {
   );
   return (
     <>
-      <Header user={user} />
+      <Header user={user} games={games} />
       <Hero randomGameId={randomGameId} />
       <div
         style={{

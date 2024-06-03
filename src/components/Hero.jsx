@@ -3,6 +3,7 @@ import baseUrl from "../../baseUrl";
 const Hero = ({ randomGameId }) => {
   return (
     <div
+      id={"hero"}
       key={"hero"}
       className="w-full flex-grow min-h-[700px] mt-[80px] flex flex-col justify-center items-center bg-zinc-600 text-white"
       style={{

@@ -1,11 +1,15 @@
+import GameDropDownMenu from "./GameDropDownMenu";
+
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useScroll, useMotionValueEvent, motion } from "framer-motion";
 
-const Header = ({ user }) => {
+const Header = ({ user, games }) => {
   const navigate = useNavigate();
   const { scrollY, scrollYProgress } = useScroll();
   const [showHeader, setShowHeader] = useState(0);
+  const [showDropdown, setShowDropdown] = useState(false);
+
   const headerHeightInPixels = 80;
   const headerBufferPixels = 5;
   const headerScrollAmount = 10;
@@ -39,6 +43,10 @@ const Header = ({ user }) => {
     navigate("/login");
   };
 
+  const handleShowDropdown = () => {
+    setShowDropdown(!showDropdown);
+  };
+
   return (
     <motion.header
       className="z-10 fixed w-full flex flex-col justify-center items-center shadow-lg bg-zinc-700 bg-opacity-90 text-white"
@@ -49,21 +57,44 @@ const Header = ({ user }) => {
     >
       <div className="w-full flex-grow basis-3/5 flex justify-center items-center">
         <div className="flex-grow flex justify-around items-center">
-          <h1 className="flex-grow basis-2/3 text-center font-title text-2xl font-bold">
-            Where's Waldo
-          </h1>
           {user && (
             <div className="flex-grow basis-1/3 flex justify-around items-center">
               <h2 className="text-center font-title text-lg font-bold">
-                Logged in as: {user.username}
+                Dashboard: {user.username}
               </h2>
-              <button
-                onClick={handleLogOut}
-                className="flex-grow max-w-[200px] h-[60px] bg-zinc-600 rounded-xl text-xl font-bold text-white
+            </div>
+          )}
+          <h1 className="flex-grow basis-2/3 text-center font-title text-2xl font-bold">
+            <Link to="/#hero">Where's Waldo</Link>
+          </h1>
+          {user && (
+            <div className="flex-grow basis-1/3 flex justify-center items-center">
+              <ul className="flex-grow flex">
+                <li>
+                  <button
+                    onClick={handleShowDropdown}
+                    className="flex-grow mr-2 min-w-[200px] h-[60px] bg-zinc-600 rounded-xl text-xl font-bold text-white
                 hover:bg-zinc-800 active:scale-95 transition"
-              >
-                Log out
-              </button>
+                  >
+                    Games
+                  </button>
+                  {showDropdown && (
+                    <GameDropDownMenu
+                      games={games}
+                      setShowDropdown={setShowDropdown}
+                    />
+                  )}
+                </li>
+                <li>
+                  <button
+                    onClick={handleLogOut}
+                    className="flex-grow ml-2 min-w-[200px] h-[60px] bg-zinc-600 rounded-xl text-xl font-bold text-white
+                hover:bg-zinc-800 active:scale-95 transition"
+                  >
+                    Log out
+                  </button>
+                </li>
+              </ul>
             </div>
           )}
         </div>

@@ -6,6 +6,8 @@ import Game from "./components/Game";
 import Login from "./components/Auth/Login";
 import SignUp from "./components/Auth/SignUp";
 
+import ScrollToHashElement from "./ScrollToHashElement.jsx";
+
 import { useState, useEffect } from "react";
 import { Routes, Route, Navigate, useMatch } from "react-router-dom";
 
@@ -37,6 +39,7 @@ const App = () => {
 
   console.log("User:", user);
   console.log("Games:", games);
+  3;
 
   if (!games.length) {
     return <div>Loading...</div>;
@@ -46,6 +49,7 @@ const App = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-zinc-600">
+      <ScrollToHashElement />
       <Routes>
         <Route
           path="/"

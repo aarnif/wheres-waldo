@@ -89,27 +89,28 @@ const GameCard = ({ game }) => {
       className="w-full flex-grow min-h-[600px] p-16 flex justify-center items-center text-white"
     >
       <AnimatePresence mode="wait">
-        {isInView && (
-          <motion.button
-            onClick={handleClick}
-            whileTap={{ scale: 0.95 }}
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 0.3,
-            }}
-            style={{
-              opacity: 0,
-              y: 50,
-              backgroundColor: isHovered
-                ? game.colorTheme.gameCardHover
-                : game.colorTheme.gameCard,
-              transition: "background-color 0.3s ease-in-out",
-            }}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-            className="flex-grow max-w-[1400px] p-8 flex justify-between items-center rounded-xl shadow-xl"
-          >
+        <motion.button
+          id={game.title}
+          onClick={handleClick}
+          whileTap={{ scale: 0.95 }}
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            duration: 0.3,
+          }}
+          style={{
+            opacity: 0,
+            y: 50,
+            backgroundColor: isHovered
+              ? game.colorTheme.gameCardHover
+              : game.colorTheme.gameCard,
+            transition: "background-color 0.3s ease-in-out",
+          }}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          className="flex-grow max-w-[1400px] min-h-[600px] p-8 flex justify-between items-center rounded-xl shadow-xl"
+        >
+          {isInView && (
             <div className="flex-grow min-h-[600px] flex justify-between items-center">
               <div className="flex-grow basis-2/5 min-h-[600px]">
                 <GameContent game={game} />
@@ -118,8 +119,8 @@ const GameCard = ({ game }) => {
                 <GameImage gameId={game.id} />
               </div>
             </div>
-          </motion.button>
-        )}
+          )}
+        </motion.button>
       </AnimatePresence>
     </div>
   );
