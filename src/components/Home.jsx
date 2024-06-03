@@ -8,7 +8,12 @@ const Home = ({ user, games }) => {
     <>
       <Header user={user} />
       <Hero />
-      <div className="w-full flex-grow flex justify-center items-center">
+      <div
+        style={{
+          backgroundColor: games[0].colorTheme.gameCanvas,
+        }}
+        className="w-full flex-grow flex flex-col justify-center items-center"
+      >
         <Games games={games} />
       </div>
       <Footer />

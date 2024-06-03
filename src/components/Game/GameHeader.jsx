@@ -1,9 +1,12 @@
 import GameCharacters from "../Games/GameCharacters";
 
+import { useState } from "react";
+
 import Icon from "@mdi/react";
 import { mdiArrowLeftCircle } from "@mdi/js";
 
 const GameHeader = ({ game, time, handleChangeGame }) => {
+  const [hovered, setHovered] = useState(false);
   return (
     <header
       id="game-header"
@@ -27,7 +30,12 @@ const GameHeader = ({ game, time, handleChangeGame }) => {
           <Icon
             path={mdiArrowLeftCircle}
             size={2}
-            className="fill-current text-white hover:text-red-300 active:scale-95 transition"
+            style={{
+              color: hovered && game.colorTheme.goBackButtonHover,
+            }}
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
+            className="fill-current text-white active:scale-95 transition"
           />
         </button>
       </div>

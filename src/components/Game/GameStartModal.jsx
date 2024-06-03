@@ -1,12 +1,21 @@
 import GameCharacters from "../Games/GameCharacters";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
 
 const GameStartModal = ({ game, startNewGame }) => {
   const [isHovered, setIsHovered] = useState(false);
   return (
-    <div className="fixed inset-0 flex justify-center items-center bg-black z-10">
-      <div
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3 }}
+      className="fixed inset-0 flex justify-center items-center bg-black z-10"
+    >
+      <motion.div
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0, transition: { delay: 0.3 } }}
+        transition={{ duration: 0.3 }}
         style={{ backgroundColor: game.colorTheme.gameModal }}
         className="overflow-auto w-[700px] h-[460px] p-12 flex flex-col justify-center items-center bg-slate-800 rounded-xl text-slate-100 z-100"
       >
@@ -30,8 +39,8 @@ const GameStartModal = ({ game, startNewGame }) => {
             Start Game
           </button>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

@@ -11,6 +11,7 @@ import GameMark from "./GameMark";
 
 import { useNavigate } from "react-router-dom";
 import { useState, useRef } from "react";
+import { AnimatePresence } from "framer-motion";
 
 const Game = ({ game }) => {
   const navigate = useNavigate();
@@ -40,6 +41,8 @@ const Game = ({ game }) => {
     y: 0,
   });
   const [gameMarks, setGameMarks] = useState([]);
+
+  const gameMessageDuration = 1000;
 
   const startTimer = () => {
     timer.current = setInterval(() => {
@@ -122,7 +125,7 @@ const Game = ({ game }) => {
     setShowGameMessage(true);
     setTimeout(() => {
       setShowGameMessage(false);
-    }, 3000);
+    }, gameMessageDuration);
   };
 
   const handleDropDownClick = (event) => {
@@ -168,6 +171,7 @@ const Game = ({ game }) => {
         style={{ flexGrow: 1 }}
       >
         <GameOverModal
+          game={game}
           time={utils.formatTime(time)}
           startNewGame={startNewGame}
           handleChangeGame={handleChangeGame}
@@ -211,15 +215,17 @@ const Game = ({ game }) => {
         {showAimCursor && <AimCursor aimCordinates={aimCordinates} />}
         {showDropdown && (
           <DropDownMenu
+            game={game}
             dropDownCoordinates={dropDownCoordinates}
-            gameCharacters={game.characters}
             handleDropDownClick={handleDropDownClick}
           />
         )}
-        {showGameMessage && <GameMessageDisplay gameMessage={gameMessage} />}
         {gameMarks.map((mark, index) => (
           <GameMark key={index} aimCordinates={mark} />
         ))}
+        <AnimatePresence mode="wait">
+          {showGameMessage && <GameMessageDisplay gameMessage={gameMessage} />}
+        </AnimatePresence>
       </div>
     </>
   );

@@ -57,16 +57,16 @@ const Login = ({ setUser }) => {
   return (
     <>
       <Header />
-      <div className="w-full flex-grow flex flex-col justify-center items-center bg-zinc-600">
+      <div className="w-full flex-grow flex flex-col justify-center items-center">
         <div
           className="flex-grow max-w-[600px] min-w-[420px] max-h-[500px] p-8 flex justify-center items-center
-         bg-zinc-100 bg-opacity-50 rounded-xl"
+         bg-zinc-700 bg-opacity-70 rounded-xl text-white shadow-xl"
         >
           <form
             onSubmit={handleSubmit}
             className="flex-grow h-full flex flex-col"
           >
-            <h1 className="text-2xl font-bold text-zinc-800">Sign In</h1>
+            <h1 className="text-2xl font-bold">Sign In</h1>
             <ul>
               {errorMessage && (
                 <li className="p-2 flex justify-center items-center bg-red-400 rounded-lg">
@@ -75,12 +75,12 @@ const Login = ({ setUser }) => {
               )}
 
               <li className="my-4 w-full flex-grow flex flex-col">
-                <label className="text-md font-medium text-zinc-700">
+                <label className="text-md font-medium text-slate-200">
                   USERNAME:
                 </label>
                 <input
-                  className="w-full flex-grow p-2 rounded-lg
-                  focus:outline-none focus:ring-2 focus:ring-sky-400 placeholder:text-zinc-500 transition"
+                  className="w-full flex-grow p-2 rounded-lg bg-zinc-500
+                  focus:outline-none focus:ring-2 focus:ring-sky-400 placeholder:text-slate-200 transition"
                   {...userName}
                 />
                 {userName.value.length === 0 && (
@@ -91,12 +91,12 @@ const Login = ({ setUser }) => {
               </li>
 
               <li className="my-4 w-full flex-grow flex flex-col">
-                <label className="text-md font-medium text-zinc-700">
+                <label className="text-md font-medium text-slate-200">
                   PASSWORD:
                 </label>
                 <input
-                  className="w-full flex-grow p-2 rounded-lg
-                  focus:outline-none focus:ring-2 focus:ring-sky-400 placeholder:text-zinc-500 transition"
+                  className="w-full flex-grow p-2 rounded-lg bg-zinc-500
+          focus:outline-none focus:ring-2 focus:ring-sky-400 placeholder:text-slate-200 transition"
                   {...password}
                 />
                 {password.value.length === 0 && (
@@ -109,22 +109,22 @@ const Login = ({ setUser }) => {
               <li className="my-4 flex justify-center items-center">
                 <button
                   type="submit"
-                  className="flex-grow h-[70px] bg-green-600 rounded-xl text-xl font-bold text-white
-                hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-sky-400 active:scale-95 transition"
+                  className="flex-grow h-[70px] bg-green-500 border border-green-500 rounded-xl text-xl font-bold text-white
+                hover:bg-green-600 focus:bg-green-600 focus:outline-none focus:ring-2 focus:ring-sky-400 active:scale-95 transition"
                 >
                   Sign In
                 </button>
               </li>
 
               <li className="my-4 flex flex-col justify-center items-center">
-                <span className="text-md text-zinc-800 font-bold">
+                <span className="text-md font-bold text-slate-200">
                   Don't have an account?
                 </span>
                 <button
                   onClick={handleClickSignUp}
                   type="button"
-                  className="w-full flex-grow h-[70px] border border-zinc-600 rounded-xl text-xl font-bold text-zinc-800
-                hover:bg-zinc-500 focus:outline-none focus:ring-2 focus:ring-sky-400 active:scale-95 transition"
+                  className="w-full flex-grow h-[70px] border border-slate-200 rounded-xl text-xl font-bold text-slate-200
+                hover:bg-zinc-500 focus:bg-zinc-500 focus:outline-none focus:ring-2 focus:ring-sky-400 active:scale-95 transition"
                 >
                   Sign Up Here
                 </button>
