@@ -47,12 +47,16 @@ const gameSchema = new Schema({
     gameButton: { type: String, required: true },
     gameButtonHover: { type: String, required: true },
     gameHeader: { type: String, required: true },
+    goBackButtonHover: { type: String, required: true },
+    dropDownMenu: { type: String, required: true },
+    dropDownMenuItem: { type: String, required: true },
+    dropDownMenuItemHover: { type: String, required: true },
   },
 
   leaderboard: [
     {
-      user: { type: Schema.Types.ObjectId, ref: "User" },
-      score: { type: String, required: true },
+      username: { type: String, required: true },
+      time: { type: String, required: true },
     },
   ],
 });

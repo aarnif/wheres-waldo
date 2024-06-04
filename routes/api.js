@@ -23,6 +23,10 @@ route.get(
   apiController.getCharacterImage
 );
 
+route.get("/games/:gameId/leaderboard", apiController.getGameLeaderboard);
+
+route.post("/games/:gameId", apiController.addScoreToLeaderboard);
+
 route.get("/users", apiController.getAllUsers);
 
 route.get("/users/:userId", apiController.getUserById);

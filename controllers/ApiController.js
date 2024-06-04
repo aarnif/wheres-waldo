@@ -1,6 +1,6 @@
 import User from "../models/User.js";
 import Game from "../models/Game.js";
-import Character from "../models/Character.js"; // You need to import the Character model despite not using it directly in this file
+import Character from "../models/Character.js"; // You need to import the Character model despite not using it directly in this file;
 
 import asyncHandler from "express-async-handler";
 import bcrypt from "bcrypt";
@@ -11,7 +11,7 @@ const index = (req, res) => {
 };
 
 const getAllGames = asyncHandler(async (req, res) => {
-  const allGames = await Game.find({}).populate("leaderboard").exec();
+  const allGames = await Game.find({}).exec();
 
   res.json(allGames);
 });
@@ -64,6 +64,42 @@ const getCharacterImage = asyncHandler(async (req, res) => {
   res.sendFile(
     `/Users/aarnif/coding/github-repos/odin-wheres-waldo/odin-wheres-waldo-server/assets/images/${characterById.image}`
   );
+});
+
+const getGameLeaderboard = asyncHandler(async (req, res) => {
+  const gameById = await Game.findById(req.params.gameId).exec();
+
+  res.json(gameById.leaderboard);
+});
+
+const addScoreToLeaderboard = asyncHandler(async (req, res) => {
+  const gameById = await Game.findById(req.params.gameId).exec();
+
+  const { username, time } = req.body;
+
+  const findUserFromLeaderboard = gameById.leaderboard.find(
+    (user) => user.username === username
+  );
+
+  if (findUserFromLeaderboard) {
+    if (findUserFromLeaderboard.time < time) {
+      res.json(gameById);
+    } else {
+      const updateLeaderboard = gameById.leaderboard.map((user) =>
+        user.username === username ? { ...user, time: time } : user
+      );
+      gameById.leaderboard = updateLeaderboard;
+    }
+  } else {
+    gameById.leaderboard.push({
+      username,
+      time,
+    });
+  }
+
+  const updatedGame = await gameById.save();
+
+  res.json(updatedGame);
 });
 
 const getAllUsers = asyncHandler(async (req, res) => {
@@ -131,6 +167,8 @@ export default {
   getAllGameCharacters,
   getCharacterById,
   getCharacterImage,
+  getGameLeaderboard,
+  addScoreToLeaderboard,
   getAllUsers,
   getUserById,
   createUser,
