@@ -5,7 +5,7 @@ import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AnimatePresence, motion, useInView } from "framer-motion";
 
-const GameImage = ({ gameId }) => {
+const GameImage = ({ game, user, checkIfUserPlayed }) => {
   return (
     <AnimatePresence>
       <motion.div
@@ -19,17 +19,33 @@ const GameImage = ({ gameId }) => {
         style={{
           opacity: 0,
           x: 50,
-          backgroundImage: `url(${baseUrl}/games/${gameId}/image)`,
+          backgroundImage: `url(${baseUrl}/games/${game.id}/image)`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
-        className="w-full h-[600px] bg-red-400 rounded-xl blur-sm"
-      ></motion.div>
+        className="w-full h-[600px] flex justify-center items-center bg-red-400 rounded-xl"
+      >
+        {checkIfUserPlayed ? (
+          <div className="w-full h-full flex flex-col justify-center items-center rounded-xl bg-black bg-opacity-50">
+            <h2 className="mb-4 text-5xl font-bold">Completed!</h2>
+            <h2 className="text-5xl font-bold">
+              Your time:{" "}
+              {
+                game.leaderboard.find(
+                  (entry) => user.username === entry.username
+                ).time
+              }
+            </h2>
+          </div>
+        ) : (
+          <div className="w-full h-full flex flex-col justify-center items-center rounded-xl backdrop-blur-sm"></div>
+        )}
+      </motion.div>
     </AnimatePresence>
   );
 };
 
-const GameContent = ({ game }) => {
+const GameContent = ({ game, user, checkIfUserPlayed }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: -20 }}
@@ -56,11 +72,20 @@ const GameContent = ({ game }) => {
       </div>
       <GameCharacters game={game} location={"gameCard"} />
       <div className="mt-4 flex-grow w-full text-xl font-semibold">
-        <h1 className="mb-4 text-2xl font-bold">Leader Board:</h1>
+        <h1 className="my-8 text-2xl font-bold">Leader Board:</h1>
         <ul>
-          {game.leaderboard.map((entry, index) => (
-            <li key={index}>
-              {entry.username} - {entry.time}
+          {game.leaderboard.slice(0, 3).map((entry, index) => (
+            <li
+              key={index}
+              style={{
+                fontSize: user.username === entry.username && "1.5rem",
+                fontWeight: user.username === entry.username && "bold",
+              }}
+              className="mb-2 text-xl font-semibold"
+            >
+              {index + 1}.{" "}
+              {entry.username === user.username ? "You" : entry.username} -{" "}
+              {entry.time}
             </li>
           ))}
           {game.leaderboard.length === 0 && <li>No entries yet.</li>}
@@ -70,7 +95,7 @@ const GameContent = ({ game }) => {
   );
 };
 
-const GameCard = ({ game }) => {
+const GameCard = ({ user, game }) => {
   const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
   const ref = useRef(null);
@@ -87,6 +112,10 @@ const GameCard = ({ game }) => {
   useEffect(() => {
     console.log("Element is in view: ", isInView);
   }, [isInView]);
+
+  const checkIfUserPlayed = game.leaderboard.find(
+    (entry) => entry.username === user.username
+  );
 
   return (
     <div
@@ -116,15 +145,23 @@ const GameCard = ({ game }) => {
           }}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          className="flex-grow max-w-[1400px] min-h-[600px] p-8 flex justify-between items-center rounded-xl shadow-xl"
+          className="flex-grow max-w-[1400px] min-h-[600px] my-12 p-8 flex justify-between items-center rounded-xl shadow-xl"
         >
           {isInView && (
             <div className="flex-grow min-h-[600px] flex justify-between items-center">
               <div className="flex-grow basis-2/5 min-h-[600px]">
-                <GameContent game={game} />
+                <GameContent
+                  game={game}
+                  user={user}
+                  checkIfUserPlayed={checkIfUserPlayed}
+                />
               </div>
               <div className="flex-grow basis-3/5 min-h-[600px]">
-                <GameImage gameId={game.id} />
+                <GameImage
+                  game={game}
+                  user={user}
+                  checkIfUserPlayed={checkIfUserPlayed}
+                />
               </div>
             </div>
           )}

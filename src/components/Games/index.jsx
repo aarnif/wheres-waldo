@@ -5,7 +5,7 @@ import { mdiChevronDoubleDown } from "@mdi/js";
 
 import { motion, AnimatePresence } from "framer-motion";
 
-const Games = ({ games }) => {
+const Games = ({ user, games }) => {
   return (
     <div
       className="w-full flex-grow flex flex-col justify-center items-center bg-red-500"
@@ -18,7 +18,7 @@ const Games = ({ games }) => {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
         exit={{ opacity: 0, y: -50 }}
-        className="w-full flex-grow min-h-[500px] flex flex-col justify-center items-center text-white"
+        className="w-full flex-grow mt-32 flex flex-col justify-center items-center text-white"
       >
         <h1 className="mb-8 text-5xl font-bold">Scroll Down To Play</h1>
         <motion.div
@@ -30,7 +30,7 @@ const Games = ({ games }) => {
         </motion.div>
       </motion.div>
       {games.map((game, index) => (
-        <GameCard key={game.id} game={game} />
+        <GameCard key={game.id} user={user} game={game} />
       ))}
     </div>
   );

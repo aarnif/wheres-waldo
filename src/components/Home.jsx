@@ -19,7 +19,7 @@ const Home = ({ user, games }) => {
         }}
         className="w-full flex-grow flex flex-col justify-center items-center"
       >
-        <Games games={games} />
+        <Games user={user} games={games} />
       </div>
       <Footer />
     </>
