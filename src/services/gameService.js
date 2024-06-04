@@ -7,4 +7,12 @@ const getAllGames = async () => {
   return response.data;
 };
 
-export default { getAllGames };
+const addScoreToGame = async (gameId, user, time) => {
+  const response = await axios.post(`${baseUrl}/games/${gameId}`, {
+    username: user.username,
+    time,
+  });
+  return response.data;
+};
+
+export default { getAllGames, addScoreToGame };

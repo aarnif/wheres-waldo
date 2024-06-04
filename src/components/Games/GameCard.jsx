@@ -55,9 +55,17 @@ const GameContent = ({ game }) => {
         </h2>
       </div>
       <GameCharacters game={game} location={"gameCard"} />
-      <h1 className="mt-4 flex-grow w-full text-3xl font-extrabold text-center">
-        Click to play!
-      </h1>
+      <div className="mt-4 flex-grow w-full text-xl font-semibold">
+        <h1 className="mb-4 text-2xl font-bold">Leader Board:</h1>
+        <ul>
+          {game.leaderboard.map((entry, index) => (
+            <li key={index}>
+              {entry.username} - {entry.time}
+            </li>
+          ))}
+          {game.leaderboard.length === 0 && <li>No entries yet.</li>}
+        </ul>
+      </div>
     </motion.div>
   );
 };

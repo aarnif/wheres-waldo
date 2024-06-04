@@ -1,5 +1,6 @@
 import baseUrl from "../../../baseUrl";
 import utils from "../../utils";
+import gameService from "../../services/gameService";
 
 import GameOverModal from "./GameOverModal";
 import GameStartModal from "./GameStartModal";
@@ -13,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useRef } from "react";
 import { AnimatePresence } from "framer-motion";
 
-const Game = ({ game }) => {
+const Game = ({ user, game, setGames }) => {
   const navigate = useNavigate();
 
   const timer = useRef(0);
@@ -128,6 +129,17 @@ const Game = ({ game }) => {
     }, gameMessageDuration);
   };
 
+  const updateLeaderboard = () => {
+    gameService
+      .addScoreToGame(game.id, user, utils.formatTime(time))
+      .then((response) => {
+        console.log("Leaderboard updated:");
+        setGames((games) =>
+          games.map((game) => (game.id === response.id ? response : game))
+        );
+      });
+  };
+
   const handleDropDownClick = (event) => {
     console.log("GameMARKS:", gameMarks);
     const chosenCharacter = game.characters.find(
@@ -161,6 +173,7 @@ const Game = ({ game }) => {
       stopTimer();
       setIsGameOver(true);
       setHasGameStarted(false);
+      updateLeaderboard();
     }
   };
 
