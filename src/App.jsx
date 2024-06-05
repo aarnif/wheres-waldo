@@ -1,6 +1,9 @@
 import signingService from "./services/signingService";
 import gameService from "./services/gameService";
 
+import Header from "./components/Header";
+import LoadingIcon from "./LoadingIcon.jsx";
+import Footer from "./components/Footer/index.jsx";
 import Home from "./components/Home";
 import Game from "./components/Game";
 import Login from "./components/Auth/Login";
@@ -39,10 +42,17 @@ const App = () => {
 
   console.log("User:", user);
   console.log("Games:", games);
-  3;
 
   if (!games.length) {
-    return <div>Loading...</div>;
+    return (
+      <div className="min-h-screen flex flex-col bg-zinc-600">
+        <Header />
+        <div className="flex-grow flex justify-center items-center">
+          <LoadingIcon />
+        </div>
+        <Footer />
+      </div>
+    );
   }
 
   console.log("Random game ID:", randomGameId);
