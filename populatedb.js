@@ -74,151 +74,15 @@ const createUsers = async () => {
 
 const createCharacters = async () => {
   await Promise.all([
-    createCharacter(
-      0,
-      "Waldo",
-      "waldo.png"
-      // {
-      //   a: { x: 0.4, y: 0.615 },
-      //   b: { x: 0.41, y: 0.615 },
-      //   c: { x: 0.41, y: 0.65 },
-      //   d: { x: 0.4, y: 0.65 },
-      // },
-      // false
-    ),
-    createCharacter(
-      1,
-      "Odlaw",
-      "odlaw.png"
-      // {
-      //   a: { x: 0.065, y: 0.68 },
-      //   b: { x: 0.075, y: 0.68 },
-      //   c: { x: 0.075, y: 0.71 },
-      //   d: { x: 0.065, y: 0.71 },
-      // },
-      // false
-    ),
-    createCharacter(
-      2,
-      "Wizard Whitebeard",
-      "wizard-whitebeard.png"
-      // {
-      //   a: { x: 0.775, y: 0.565 },
-      //   b: { x: 0.785, y: 0.565 },
-      //   c: { x: 0.785, y: 0.605 },
-      //   d: { x: 0.775, y: 0.605 },
-      // },
-      // false
-    ),
+    createCharacter(0, "Waldo", "waldo.png"),
+    createCharacter(1, "Wenda", "wenda.png"),
+    createCharacter(2, "Wizard Whitebeard", "wizard-whitebeard.png"),
+    createCharacter(3, "Odlaw", "odlaw.png"),
   ]);
 };
 
 const createGames = async () => {
   // The color themes are based on the Tailwind CSS color palette
-  await createGame(
-    0,
-    "Beach",
-    "easy",
-    "beach.jpg",
-    [
-      {
-        name: "Waldo",
-        coordinates: {
-          a: { x: 0.612, y: 0.362 },
-          b: { x: 0.627, y: 0.362 },
-          c: { x: 0.627, y: 0.414 },
-          d: { x: 0.612, y: 0.414 },
-        },
-      },
-      {
-        name: "Odlaw",
-        coordinates: {
-          a: { x: 0.103, y: 0.346 },
-          b: { x: 0.113, y: 0.346 },
-          c: { x: 0.113, y: 0.389 },
-          d: { x: 0.103, y: 0.389 },
-        },
-      },
-      {
-        name: "Wizard Whitebeard",
-        coordinates: {
-          a: { x: 0.264, y: 0.341 },
-          b: { x: 0.283, y: 0.341 },
-          c: { x: 0.283, y: 0.386 },
-          d: { x: 0.264, y: 0.386 },
-        },
-      },
-    ],
-    {
-      body: "#a78bfa", // purple-400
-      gameCardBackground: "#8b5cf6", // purple-500
-      gameCard: "#a78bfa", // purple-400
-      gameCardHover: "#7c3aed", // purple-600
-      gameIcons: "#a78bfa", // purple-400
-      gameCanvas: "#8b5cf6", // purple-500
-      gameModal: "#7c3aed", // purple-600
-      gameButton: "#8b5cf6", // purple-500
-      gameButtonHover: "#6d28d9", // purple-700
-      gameHeader: "#8b5cf6", // purple-500
-      gameMessageBox: "#a78bfa", // purple-400
-      goBackButtonHover: "#d8b4fe", // purple-300
-      dropDownMenu: "#8b5cf6", // purple-500
-      dropDownMenuItem: "#8b5cf6", // purple-500
-      dropDownMenuItemHover: "#6d28d9", // purple-700
-    }
-  );
-  await createGame(
-    1,
-    "Space",
-    "medium",
-    "space.png",
-    [
-      {
-        name: "Waldo",
-        coordinates: {
-          a: { x: 0.4, y: 0.615 },
-          b: { x: 0.41, y: 0.615 },
-          c: { x: 0.41, y: 0.65 },
-          d: { x: 0.4, y: 0.65 },
-        },
-      },
-      {
-        name: "Odlaw",
-        coordinates: {
-          a: { x: 0.065, y: 0.68 },
-          b: { x: 0.075, y: 0.68 },
-          c: { x: 0.075, y: 0.71 },
-          d: { x: 0.065, y: 0.71 },
-        },
-      },
-      {
-        name: "Wizard Whitebeard",
-        coordinates: {
-          a: { x: 0.775, y: 0.565 },
-          b: { x: 0.785, y: 0.565 },
-          c: { x: 0.785, y: 0.605 },
-          d: { x: 0.775, y: 0.605 },
-        },
-      },
-    ],
-    {
-      body: "#f87171", // red-400
-      gameCardBackground: "#ef4444", // red-500
-      gameCard: "#f87171", // red-400
-      gameCardHover: "#dc2626", // red-600
-      gameIcons: "#f87171", // red-400
-      gameCanvas: "#ef4444", // red-500
-      gameModal: "#dc2626", // red-600
-      gameButton: "#ef4444", // red-500
-      gameButtonHover: "#b91c1c", // red-700
-      gameHeader: "#ef4444", // red-500
-      gameMessageBox: "#f87171", // red-400
-      goBackButtonHover: "#fca5a5", // red-300
-      dropDownMenu: "#ef4444", // red-500
-      dropDownMenuItem: "#ef4444", // red-500
-      dropDownMenuItemHover: "#b91c1c", // red-700
-    }
-  );
   await createGame(
     0,
     "Ski-Resort",
@@ -232,6 +96,15 @@ const createGames = async () => {
           b: { x: 0.877, y: 0.738 },
           c: { x: 0.877, y: 0.807 },
           d: { x: 0.839, y: 0.807 },
+        },
+      },
+      {
+        name: "Wenda",
+        coordinates: {
+          a: { x: 0.483, y: 0.391 },
+          b: { x: 0.496, y: 0.391 },
+          c: { x: 0.496, y: 0.436 },
+          d: { x: 0.483, y: 0.436 },
         },
       },
       {
@@ -272,7 +145,129 @@ const createGames = async () => {
     }
   );
   await createGame(
-    0,
+    1,
+    "Beach",
+    "medium",
+    "beach.jpg",
+    [
+      {
+        name: "Waldo",
+        coordinates: {
+          a: { x: 0.612, y: 0.362 },
+          b: { x: 0.627, y: 0.362 },
+          c: { x: 0.627, y: 0.414 },
+          d: { x: 0.612, y: 0.414 },
+        },
+      },
+      {
+        name: "Wenda",
+        coordinates: {
+          a: { x: 0.767, y: 0.398 },
+          b: { x: 0.778, y: 0.398 },
+          c: { x: 0.778, y: 0.423 },
+          d: { x: 0.767, y: 0.423 },
+        },
+      },
+      {
+        name: "Odlaw",
+        coordinates: {
+          a: { x: 0.103, y: 0.346 },
+          b: { x: 0.113, y: 0.346 },
+          c: { x: 0.113, y: 0.389 },
+          d: { x: 0.103, y: 0.389 },
+        },
+      },
+      {
+        name: "Wizard Whitebeard",
+        coordinates: {
+          a: { x: 0.264, y: 0.341 },
+          b: { x: 0.283, y: 0.341 },
+          c: { x: 0.283, y: 0.386 },
+          d: { x: 0.264, y: 0.386 },
+        },
+      },
+    ],
+    {
+      body: "#a78bfa", // purple-400
+      gameCardBackground: "#8b5cf6", // purple-500
+      gameCard: "#a78bfa", // purple-400
+      gameCardHover: "#7c3aed", // purple-600
+      gameIcons: "#a78bfa", // purple-400
+      gameCanvas: "#8b5cf6", // purple-500
+      gameModal: "#7c3aed", // purple-600
+      gameButton: "#8b5cf6", // purple-500
+      gameButtonHover: "#6d28d9", // purple-700
+      gameHeader: "#8b5cf6", // purple-500
+      gameMessageBox: "#a78bfa", // purple-400
+      goBackButtonHover: "#d8b4fe", // purple-300
+      dropDownMenu: "#8b5cf6", // purple-500
+      dropDownMenuItem: "#8b5cf6", // purple-500
+      dropDownMenuItemHover: "#6d28d9", // purple-700
+    }
+  );
+  await createGame(
+    2,
+    "Space",
+    "medium",
+    "space.png",
+    [
+      {
+        name: "Waldo",
+        coordinates: {
+          a: { x: 0.4, y: 0.615 },
+          b: { x: 0.41, y: 0.615 },
+          c: { x: 0.41, y: 0.65 },
+          d: { x: 0.4, y: 0.65 },
+        },
+      },
+      {
+        name: "Wenda",
+        coordinates: {
+          a: { x: 0.289, y: 0.509 },
+          b: { x: 0.299, y: 0.509 },
+          c: { x: 0.299, y: 0.541 },
+          d: { x: 0.289, y: 0.541 },
+        },
+      },
+      {
+        name: "Odlaw",
+        coordinates: {
+          a: { x: 0.065, y: 0.68 },
+          b: { x: 0.075, y: 0.68 },
+          c: { x: 0.075, y: 0.71 },
+          d: { x: 0.065, y: 0.71 },
+        },
+      },
+      {
+        name: "Wizard Whitebeard",
+        coordinates: {
+          a: { x: 0.775, y: 0.565 },
+          b: { x: 0.785, y: 0.565 },
+          c: { x: 0.785, y: 0.605 },
+          d: { x: 0.775, y: 0.605 },
+        },
+      },
+    ],
+    {
+      body: "#f87171", // red-400
+      gameCardBackground: "#ef4444", // red-500
+      gameCard: "#f87171", // red-400
+      gameCardHover: "#dc2626", // red-600
+      gameIcons: "#f87171", // red-400
+      gameCanvas: "#ef4444", // red-500
+      gameModal: "#dc2626", // red-600
+      gameButton: "#ef4444", // red-500
+      gameButtonHover: "#b91c1c", // red-700
+      gameHeader: "#ef4444", // red-500
+      gameMessageBox: "#f87171", // red-400
+      goBackButtonHover: "#fca5a5", // red-300
+      dropDownMenu: "#ef4444", // red-500
+      dropDownMenuItem: "#ef4444", // red-500
+      dropDownMenuItemHover: "#b91c1c", // red-700
+    }
+  );
+  await createGame(
+    3,
     "Hollywood",
     "medium",
     "hollywood.jpeg",
@@ -284,6 +279,15 @@ const createGames = async () => {
           b: { x: 0.71, y: 0.412 },
           c: { x: 0.71, y: 0.443 },
           d: { x: 0.698, y: 0.443 },
+        },
+      },
+      {
+        name: "Wenda",
+        coordinates: {
+          a: { x: 0.587, y: 0.687 },
+          b: { x: 0.596, y: 0.687 },
+          c: { x: 0.596, y: 0.714 },
+          d: { x: 0.587, y: 0.714 },
         },
       },
       {
@@ -324,9 +328,9 @@ const createGames = async () => {
     }
   );
   await createGame(
-    0,
+    4,
     "Fruit-World",
-    "medium",
+    "hard",
     "fruit-world.jpeg",
     [
       {
@@ -336,6 +340,15 @@ const createGames = async () => {
           b: { x: 0.898, y: 0.681 },
           c: { x: 0.898, y: 0.701 },
           d: { x: 0.886, y: 0.701 },
+        },
+      },
+      {
+        name: "Wenda",
+        coordinates: {
+          a: { x: 0.129, y: 0.891 },
+          b: { x: 0.138, y: 0.891 },
+          c: { x: 0.138, y: 0.91 },
+          d: { x: 0.129, y: 0.91 },
         },
       },
       {
