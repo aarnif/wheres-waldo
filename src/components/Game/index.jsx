@@ -43,12 +43,16 @@ const Game = ({ user, game, setGames }) => {
   });
   const [gameMarks, setGameMarks] = useState([]);
 
+  const timeUnit = 10;
   const gameMessageDuration = 1000;
+  const gameHeaderElement = document.getElementById("game-header");
+  const gameImageElement = document.getElementById("game-image");
+  const imageUrl = `${baseUrl}/games/${game.id}/image`;
 
   const startTimer = () => {
     timer.current = setInterval(() => {
       setTime((time) => time + 1);
-    }, 100);
+    }, timeUnit);
   };
 
   const resetTimer = () => {
@@ -86,12 +90,10 @@ const Game = ({ user, game, setGames }) => {
   };
 
   const handleCanvasClick = (event) => {
-    const gameHeader = document.getElementById("game-header");
-    const gameImage = document.getElementById("game-image");
-    const normalisedX = (event.pageX / gameImage.offsetWidth).toFixed(3);
+    const normalisedX = (event.pageX / gameImageElement.offsetWidth).toFixed(3);
     const normalisedY = (
-      (event.pageY - gameHeader.offsetHeight) /
-      gameImage.offsetHeight
+      (event.pageY - gameHeaderElement.offsetHeight) /
+      gameImageElement.offsetHeight
     ).toFixed(3);
     console.log("Normalised coordinates:", normalisedX, normalisedY);
     setShowDropdown(!showDropdown);
@@ -220,12 +222,15 @@ const Game = ({ user, game, setGames }) => {
         onMouseMove={moveAimCursor}
         onClick={handleCanvasClick}
       >
-        <img
-          id="game-image"
-          src={`${baseUrl}/games/${game.id}/image`}
-          alt="Game"
-        />
-        {showAimCursor && <AimCursor aimCordinates={aimCordinates} />}
+        <img id="game-image" src={imageUrl} alt="Game" />
+        {showAimCursor && (
+          <AimCursor
+            gameHeaderElement={gameHeaderElement}
+            gameImageElement={gameImageElement}
+            imageUrl={imageUrl}
+            aimCordinates={aimCordinates}
+          />
+        )}
         {showDropdown && (
           <DropDownMenu
             game={game}
