@@ -16,7 +16,7 @@ const AimCursor = ({
 
   return (
     <button
-      className="absolute shadow-xl border-2 bg-white bg-opacity-30 border-lightgray border-dashed rounded-full opacity-70 z-10 cursor-none flex justify-center items-center"
+      className="absolute shadow-xl border-2 border-lightgray border-dashed rounded-full opacity-70 z-10 cursor-none flex justify-center items-center"
       style={{
         width: `${magnifierWidth}px`,
         height: `${magnifierHeight}px`,

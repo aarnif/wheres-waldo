@@ -9,4 +9,12 @@ export default defineConfig({
     globals: true,
     setupFiles: "./testSetup.js",
   },
+  server: {
+    proxy: {
+      "/api": {
+        target: "http://localhost:5000",
+        changeOrigin: true,
+      },
+    },
+  },
 });
