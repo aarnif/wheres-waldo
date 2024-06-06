@@ -14,8 +14,10 @@ mongoose.set("strictQuery", false);
 
 main().catch((err) => console.log(err));
 async function main() {
-  await mongoose.connect(config.MONGO_URI);
+  await mongoose.connect(config.MONGODB_URI);
 }
+
+app.use(express.static("dist"));
 
 app.use(morgan("dev"));
 app.use(express.json());
