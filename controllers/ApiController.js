@@ -27,9 +27,7 @@ const getGameById = asyncHandler(async (req, res) => {
 const getGameImage = asyncHandler(async (req, res) => {
   const gameById = await Game.findById(req.params.gameId).exec();
 
-  res.sendFile(
-    `/Users/aarnif/coding/github-repos/odin-wheres-waldo/odin-wheres-waldo-server/assets/images/${gameById.image}`
-  );
+  res.sendFile(`${gameById.image}`, { root: "./assets/images" });
 });
 
 const getAllGameCharacters = asyncHandler(async (req, res) => {
@@ -61,9 +59,7 @@ const getCharacterImage = asyncHandler(async (req, res) => {
     (character) => character.id == req.params.characterId
   );
 
-  res.sendFile(
-    `/Users/aarnif/coding/github-repos/odin-wheres-waldo/odin-wheres-waldo-server/assets/images/${characterById.image}`
-  );
+  res.sendFile(`${characterById.image}`, { root: "./assets/images" });
 });
 
 const getGameLeaderboard = asyncHandler(async (req, res) => {
