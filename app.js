@@ -17,8 +17,6 @@ async function main() {
   await mongoose.connect(config.MONGODB_URI);
 }
 
-app.use(express.static("dist"));
-
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
