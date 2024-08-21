@@ -81,6 +81,7 @@ const Game = ({ user, game, setGames }) => {
     resetTimer();
     setGameMarks([]);
     setGameMessage("");
+    setShowAimCursor(false);
   };
 
   const handleChangeGame = () => {
@@ -205,6 +206,8 @@ const Game = ({ user, game, setGames }) => {
       </main>
     );
   }
+
+  console.log("Game image element:", gameImageElement);
 
   return (
     <>
