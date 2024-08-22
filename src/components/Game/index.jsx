@@ -10,6 +10,10 @@ import AimCursor from "./AimCursor";
 import DropDownMenu from "./DropDownMenu";
 import GameMark from "./GameMark";
 
+import rightPick from "../../sounds/right_pick.mp3";
+import wrongPick from "../../sounds/wrong_pick.mp3";
+
+import useSound from "use-sound";
 import { useNavigate } from "react-router-dom";
 import { useState, useRef } from "react";
 import { AnimatePresence } from "framer-motion";
@@ -42,6 +46,15 @@ const Game = ({ user, game, setGames }) => {
     y: 0,
   });
   const [gameMarks, setGameMarks] = useState([]);
+  const [playSound, setPlaySound] = useState(true);
+
+  const [rightPickSound] = useSound(rightPick, {
+    volume: playSound ? 0.25 : 0,
+  });
+
+  const [wrongPickSound] = useSound(wrongPick, {
+    volume: playSound ? 0.25 : 0,
+  });
 
   const timeUnit = 10;
   const gameMessageDuration = 1000;
@@ -157,7 +170,8 @@ const Game = ({ user, game, setGames }) => {
       clickedCoordinates.y <= chosenCharacter.coordinates.c.y
     ) {
       chosenCharacter.isFound = true;
-      setGameMessage(`You found ${chosenCharacter.name}!`);
+      rightPickSound();
+      setGameMessage(`You found ${chosenCharacter.character.name}!`);
       setGameMarks([
         ...gameMarks,
         {
@@ -166,7 +180,8 @@ const Game = ({ user, game, setGames }) => {
         },
       ]);
     } else {
-      setGameMessage(`That is not ${chosenCharacter.name}!`);
+      wrongPickSound();
+      setGameMessage(`That is not ${chosenCharacter.character.name}!`);
     }
 
     handleShowGameMessage();
@@ -245,7 +260,12 @@ const Game = ({ user, game, setGames }) => {
           <GameMark key={index} aimCordinates={mark} />
         ))}
         <AnimatePresence mode="wait">
-          {showGameMessage && <GameMessageDisplay gameMessage={gameMessage} />}
+          {showGameMessage && (
+            <GameMessageDisplay
+              colorTheme={game.colorTheme}
+              gameMessage={gameMessage}
+            />
+          )}
         </AnimatePresence>
       </div>
     </>
