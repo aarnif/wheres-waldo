@@ -16,7 +16,7 @@ const DropDownMenuItem = ({ game, character, handleDropDownClick }) => {
         className="w-full p-2 flex justify-start items-center rounded-xl ext-xl font-semibold hover:bg-slate-900 transition"
         onClick={handleDropDownClick}
       >
-        {character.name}
+        {character.character.name}
       </button>
     </li>
   );

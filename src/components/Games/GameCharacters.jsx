@@ -40,7 +40,7 @@ const GameCharacter = ({
         className={classStylesName[location]}
         style={{ opacity: character.isFound ? 0.4 : 1 }}
       >
-        {character.name}
+        {character.character.name}
       </h3>
       {character.isFound && (
         <Icon
