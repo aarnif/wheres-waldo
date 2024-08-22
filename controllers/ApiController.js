@@ -27,7 +27,7 @@ const getGameById = asyncHandler(async (req, res) => {
 const getGameImage = asyncHandler(async (req, res) => {
   const gameById = await Game.findById(req.params.gameId).exec();
 
-  res.sendFile(`${gameById.image}`, { root: "./assets/images" });
+  res.sendFile(`${gameById.image}`, { root: "./assets/images/games" });
 });
 
 const getAllGameCharacters = asyncHandler(async (req, res) => {
@@ -59,7 +59,9 @@ const getCharacterImage = asyncHandler(async (req, res) => {
     (character) => character.id == req.params.characterId
   );
 
-  res.sendFile(`${characterById.image}`, { root: "./assets/images" });
+  res.sendFile(`${characterById.image}`, {
+    root: "./assets/images/characters",
+  });
 });
 
 const getGameLeaderboard = asyncHandler(async (req, res) => {
