@@ -11,14 +11,22 @@ const index = (req, res) => {
 };
 
 const getAllGames = asyncHandler(async (req, res) => {
-  const allGames = await Game.find({}).exec();
+  const allGames = await Game.find({})
+    .populate({
+      path: "characters",
+      populate: { path: "character" },
+    })
+    .exec();
 
   res.json(allGames);
 });
 
 const getGameById = asyncHandler(async (req, res) => {
   const gameById = await Game.findById(req.params.gameId)
-    .populate("leaderboard")
+    .populate({
+      path: "characters",
+      populate: { path: "character" },
+    })
     .exec();
 
   res.json(gameById);
@@ -32,7 +40,10 @@ const getGameImage = asyncHandler(async (req, res) => {
 
 const getAllGameCharacters = asyncHandler(async (req, res) => {
   const gameById = await Game.findById(req.params.gameId)
-    .populate("characters")
+    .populate({
+      path: "characters",
+      populate: { path: "character" },
+    })
     .exec();
 
   res.json(gameById.characters);
@@ -40,7 +51,10 @@ const getAllGameCharacters = asyncHandler(async (req, res) => {
 
 const getCharacterById = asyncHandler(async (req, res) => {
   const gameById = await Game.findById(req.params.gameId)
-    .populate("characters")
+    .populate({
+      path: "characters",
+      populate: { path: "character" },
+    })
     .exec();
 
   const characterById = gameById.characters.find(
@@ -52,14 +66,17 @@ const getCharacterById = asyncHandler(async (req, res) => {
 
 const getCharacterImage = asyncHandler(async (req, res) => {
   const gameById = await Game.findById(req.params.gameId)
-    .populate("characters")
+    .populate({
+      path: "characters",
+      populate: { path: "character" },
+    })
     .exec();
 
   const characterById = gameById.characters.find(
     (character) => character.id == req.params.characterId
   );
 
-  res.sendFile(`${characterById.image}`, {
+  res.sendFile(`${characterById.character.image}`, {
     root: "./assets/images/characters",
   });
 });

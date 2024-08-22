@@ -12,8 +12,7 @@ const gameSchema = new Schema({
   image: { type: String, required: true },
   characters: [
     {
-      name: { type: String, required: true },
-      image: { type: String, required: true },
+      character: { type: Schema.Types.ObjectId, ref: "Character" },
       coordinates: {
         a: {
           x: { type: Number, required: true },
@@ -51,6 +50,7 @@ const gameSchema = new Schema({
     dropDownMenu: { type: String, required: true },
     dropDownMenuItem: { type: String, required: true },
     dropDownMenuItemHover: { type: String, required: true },
+    gameMessageBox: { type: String, required: true },
   },
 
   leaderboard: [
