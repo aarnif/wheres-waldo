@@ -9,6 +9,10 @@ The project is part of the [The Odin Project's](https://www.theodinproject.com/)
 - Express
 - MongoDB
 
+## Live Preview
+
+[Where's Waldo API](https://odin-wheres-waldo.onrender.com/)
+
 Below are all the routes that the api supports.
 
 ```
