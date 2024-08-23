@@ -18,13 +18,14 @@ import { useNavigate } from "react-router-dom";
 import { useState, useRef } from "react";
 import { AnimatePresence } from "framer-motion";
 
-const Game = ({ user, game, setGames }) => {
+const Game = ({ user, currentGame, setGames }) => {
   const navigate = useNavigate();
 
   const timer = useRef(0);
 
   const [time, setTime] = useState(timer.current);
 
+  const [game, setGame] = useState(currentGame);
   const [hasGameStarted, setHasGameStarted] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
 
@@ -88,10 +89,14 @@ const Game = ({ user, game, setGames }) => {
 
   const resetGame = () => {
     console.log("Reset game");
-    game.characters.forEach((character) => {
-      character.isFound = false;
+    const resetGameCharacters = game.characters.map((character) => {
+      return {
+        ...character,
+        isFound: false,
+      };
     });
     resetTimer();
+    setGame((prevState) => ({ ...prevState, characters: resetGameCharacters }));
     setGameMarks([]);
     setGameMessage("");
     setShowAimCursor(false);

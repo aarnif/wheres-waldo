@@ -21,7 +21,9 @@ const App = () => {
   const [games, setGames] = useState([]);
   const [randomGameId, setRandomGameId] = useState(null);
 
-  const game = match ? games.find((game) => game.id === match.params.id) : null;
+  const currentGame = match
+    ? games.find((game) => game.id === match.params.id)
+    : null;
 
   useEffect(() => {
     console.log("Fetching games...");
@@ -73,7 +75,9 @@ const App = () => {
         />
         <Route
           path="/games/:id"
-          element={<Game user={user} game={game} setGames={setGames} />}
+          element={
+            <Game user={user} currentGame={currentGame} setGames={setGames} />
+          }
         />
         <Route
           path="/login"
