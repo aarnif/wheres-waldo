@@ -1,3 +1,3 @@
-const baseUrl = "https://odin-wheres-waldo.onrender.com/api";
+const baseUrl = "https://odin-wheres-waldo-server.onrender.com/api";
 
 export default baseUrl;
