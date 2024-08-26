@@ -13,6 +13,12 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
+  playedGames: [
+    {
+      game: { type: Schema.Types.ObjectId, ref: "Game" },
+      time: { type: String, required: true },
+    },
+  ],
 });
 
 userSchema.virtual("url").get(function () {
