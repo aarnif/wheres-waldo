@@ -77,7 +77,9 @@ const Login = ({ setUser, randomGameId }) => {
               onSubmit={handleSubmit}
               className="flex-grow h-full flex flex-col"
             >
-              <h1 className="text-2xl font-bold">Sign In</h1>
+              <h1 className="text-2xl font-bold" data-testid="sign-in-header">
+                Sign In
+              </h1>
               <ul>
                 {errorMessage && (
                   <li className="p-2 flex justify-center items-center bg-red-400 rounded-lg">
