@@ -77,7 +77,9 @@ const Login = ({ setUser, randomGameId }) => {
               onSubmit={handleSubmit}
               className="flex-grow h-full flex flex-col"
             >
-              <h1 className="text-2xl font-bold">Sign In</h1>
+              <h1 className="text-2xl font-bold" data-testid="sign-in-header">
+                Sign In
+              </h1>
               <ul>
                 {errorMessage && (
                   <li className="p-2 flex justify-center items-center bg-red-400 rounded-lg">
@@ -90,6 +92,7 @@ const Login = ({ setUser, randomGameId }) => {
                     USERNAME:
                   </label>
                   <input
+                    data-testid="username-input"
                     className="w-full flex-grow p-2 rounded-lg bg-zinc-500
                   focus:outline-none focus:ring-2 focus:ring-sky-400 placeholder:text-slate-200 transition"
                     {...userName}
@@ -106,6 +109,7 @@ const Login = ({ setUser, randomGameId }) => {
                     PASSWORD:
                   </label>
                   <input
+                    data-testid="password-input"
                     className="w-full flex-grow p-2 rounded-lg bg-zinc-500
           focus:outline-none focus:ring-2 focus:ring-sky-400 placeholder:text-slate-200 transition"
                     {...password}
@@ -119,6 +123,7 @@ const Login = ({ setUser, randomGameId }) => {
 
                 <li className="my-4 flex justify-center items-center">
                   <button
+                    data-testid="sign-in-button"
                     type="submit"
                     className="flex-grow h-[70px] bg-green-500 border-2 border-green-500 rounded-xl text-xl font-bold text-white
                 hover:bg-green-600 focus:bg-green-600 focus:outline-none focus:ring-2 focus:ring-sky-400 active:scale-95 transition"
