@@ -118,14 +118,14 @@ const addScoreToLeaderboard = asyncHandler(async (req, res) => {
 });
 
 const getAllUsers = asyncHandler(async (req, res) => {
-  const users = await User.find({}).populate("gameScores").exec();
+  const users = await User.find({}).populate("playedGames").exec();
 
   res.json(users);
 });
 
 const getUserById = asyncHandler(async (req, res) => {
   const userById = await User.findById(req.params.userId)
-    .populate("gameScores")
+    .populate("playedGames")
     .exec();
 
   res.json(userById);
