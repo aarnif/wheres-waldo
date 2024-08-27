@@ -1,7 +1,7 @@
-POST http://localhost:5000/api/games/665ee432d69fce16dfeeb3ff
+POST http://localhost:5000/api/games/66c735869b3ffb61c2978a89
 Content-Type: application/json
 
 {
-  "username": "pekka",
-  "time": "00:58:59"
+  "username": "aarnif",
+  "time": "00:20:00"
 }
