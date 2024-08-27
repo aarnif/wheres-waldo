@@ -25,7 +25,7 @@ route.get(
 
 route.get("/games/:gameId/leaderboard", apiController.getGameLeaderboard);
 
-route.post("/games/:gameId", apiController.addScoreToLeaderboard);
+route.post("/games/:gameId", apiController.addScoreToGameAndUser);
 
 route.get("/users", apiController.getAllUsers);
 

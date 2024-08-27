@@ -87,10 +87,12 @@ const getGameLeaderboard = asyncHandler(async (req, res) => {
   res.json(gameById.leaderboard);
 });
 
-const addScoreToLeaderboard = asyncHandler(async (req, res) => {
+const addScoreToGameAndUser = asyncHandler(async (req, res) => {
   const gameById = await Game.findById(req.params.gameId).exec();
 
   const { username, time } = req.body;
+
+  const findUser = await User.findOne({ username }).exec();
 
   const findUserFromLeaderboard = gameById.leaderboard.find(
     (user) => user.username === username
@@ -104,28 +106,42 @@ const addScoreToLeaderboard = asyncHandler(async (req, res) => {
         user.username === username ? { ...user, time: time } : user
       );
       gameById.leaderboard = updateLeaderboard;
+
+      const updateUserPlayedGames = findUser.playedGames.map((game) =>
+        game.game === gameById ? { ...game, time: time } : game
+      );
     }
   } else {
     gameById.leaderboard.push({
       username,
       time,
     });
+    findUser.playedGames.push({ game: gameById, time });
   }
 
   const updatedGame = await gameById.save();
+  const updatedUser = await findUser.save();
 
   res.json(updatedGame);
 });
 
 const getAllUsers = asyncHandler(async (req, res) => {
-  const users = await User.find({}).populate("playedGames").exec();
+  const users = await User.find({})
+    .populate({
+      path: "playedGames",
+      populate: { path: "game" },
+    })
+    .exec();
 
   res.json(users);
 });
 
 const getUserById = asyncHandler(async (req, res) => {
   const userById = await User.findById(req.params.userId)
-    .populate("playedGames")
+    .populate({
+      path: "playedGames",
+      populate: { path: "game" },
+    })
     .exec();
 
   res.json(userById);
@@ -185,7 +201,7 @@ export default {
   getCharacterById,
   getCharacterImage,
   getGameLeaderboard,
-  addScoreToLeaderboard,
+  addScoreToGameAndUser,
   getAllUsers,
   getUserById,
   createUser,
