@@ -1,3 +1,4 @@
+import helpers from "../utils/helpers.js";
 import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
@@ -75,6 +76,15 @@ gameSchema.set("toJSON", {
       character.id = character._id.toString();
       delete character._id;
     });
+    returnedObject.leaderboard = returnedObject.leaderboard
+      .sort((a, b) => a.time - b.time)
+      .map((score) => {
+        score.id = score._id.toString();
+        delete score._id;
+        score.time = helpers.formatTime(parseInt(score.time));
+
+        return score;
+      });
   },
 });
 

@@ -3,5 +3,5 @@ Content-Type: application/json
 
 {
   "username": "aarnif",
-  "time": "00:20:00"
+  "time": 996
 }
