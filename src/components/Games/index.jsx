@@ -3,7 +3,7 @@ import GameCard from "./GameCard.jsx";
 import Icon from "@mdi/react";
 import { mdiChevronDoubleDown } from "@mdi/js";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 const Games = ({ user, games }) => {
   return (
@@ -29,9 +29,12 @@ const Games = ({ user, games }) => {
           <Icon path={mdiChevronDoubleDown} size={5} className="fill-current" />
         </motion.div>
       </motion.div>
-      {games.map((game, index) => (
-        <GameCard key={game.id} user={user} game={game} />
-      ))}
+      {games.map((game, index) => {
+        if (index <= user.playedGames.length) {
+          console.log("Render game card titled:", game.title);
+          return <GameCard key={game.id} user={user} game={game} />;
+        }
+      })}
     </div>
   );
 };

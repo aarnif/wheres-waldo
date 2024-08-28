@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useRef } from "react";
 import { AnimatePresence } from "framer-motion";
 
-const Game = ({ user, currentGame, setGames }) => {
+const Game = ({ user, setUser, currentGame, setGames }) => {
   const navigate = useNavigate();
 
   const timer = useRef(0);
@@ -157,6 +157,10 @@ const Game = ({ user, currentGame, setGames }) => {
       setGames((games) =>
         games.map((game) => (game.id === response.id ? response : game))
       );
+      setUser((prevState) => ({
+        ...prevState,
+        playedGames: prevState.playedGames.concat(response.id),
+      }));
     });
   };
 
