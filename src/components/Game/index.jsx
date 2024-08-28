@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useRef } from "react";
 import { AnimatePresence } from "framer-motion";
 
-const Game = ({ user, currentGame, setGames }) => {
+const Game = ({ user, setUser, currentGame, setGames }) => {
   const navigate = useNavigate();
 
   const timer = useRef(0);
@@ -151,14 +151,17 @@ const Game = ({ user, currentGame, setGames }) => {
   };
 
   const updateLeaderboard = () => {
-    gameService
-      .addScoreToGame(game.id, user, utils.formatTime(time))
-      .then((response) => {
-        console.log("Leaderboard updated:");
-        setGames((games) =>
-          games.map((game) => (game.id === response.id ? response : game))
-        );
-      });
+    console.log("Final Score:", time);
+    gameService.addScoreToGame(game.id, user, time).then((response) => {
+      console.log("Leaderboard updated:");
+      setGames((games) =>
+        games.map((game) => (game.id === response.id ? response : game))
+      );
+      setUser((prevState) => ({
+        ...prevState,
+        playedGames: prevState.playedGames.concat(response.id),
+      }));
+    });
   };
 
   const handleDropDownClick = (event) => {
@@ -227,7 +230,7 @@ const Game = ({ user, currentGame, setGames }) => {
     );
   }
 
-  console.log("Game image element:", gameImageElement);
+  // console.log("Game image element:", gameImageElement);
 
   return (
     <>

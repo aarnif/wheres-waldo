@@ -76,7 +76,12 @@ const App = () => {
         <Route
           path="/games/:id"
           element={
-            <Game user={user} currentGame={currentGame} setGames={setGames} />
+            <Game
+              user={user}
+              setUser={setUser}
+              currentGame={currentGame}
+              setGames={setGames}
+            />
           }
         />
         <Route
