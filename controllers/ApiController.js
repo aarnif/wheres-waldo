@@ -170,7 +170,12 @@ const createUser = asyncHandler(async (req, res) => {
 const loginUser = asyncHandler(async (request, response) => {
   const { username, password } = request.body;
 
-  const user = await User.findOne({ username }).populate("playedGames").exec();
+  const user = await User.findOne({ username })
+    .populate({
+      path: "playedGames",
+      populate: { path: "game" },
+    })
+    .exec();
   const passwordCorrect =
     user === null ? false : await bcrypt.compare(password, user.passwordHash);
 
@@ -187,9 +192,11 @@ const loginUser = asyncHandler(async (request, response) => {
 
   const token = jwt.sign(userForToken, process.env.SESSION_SECRET);
 
-  response
-    .status(200)
-    .send({ token, username: user.username, playedGames: user.playedGames });
+  response.status(200).send({
+    token: token,
+    username: user.username,
+    playedGames: user.playedGames,
+  });
 });
 
 export default {
