@@ -1,5 +1,6 @@
 import baseUrl from "../../../baseUrl";
 import GameCharacters from "./GameCharacters";
+import utils from "../../utils";
 
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -104,6 +105,8 @@ const GameCard = ({ user, game }) => {
     once: true,
   });
 
+  const gameCardColorAlpha = 0.7;
+
   const handleClick = () => {
     console.log(`Start game titled ${game.title}`);
     navigate(`/games/${game.id}`);
@@ -120,10 +123,7 @@ const GameCard = ({ user, game }) => {
   return (
     <div
       ref={ref}
-      style={{
-        backgroundColor: game.colorTheme.gameCardBackground,
-      }}
-      className="w-full flex-grow min-h-[600px] p-16 flex justify-center items-center text-white"
+      className="flex-grow min-h-[600px] min-w-[1400px] flex justify-center items-center text-white"
     >
       <AnimatePresence mode="wait">
         <motion.button
@@ -139,8 +139,11 @@ const GameCard = ({ user, game }) => {
             opacity: 0,
             y: 50,
             backgroundColor: isHovered
-              ? game.colorTheme.gameCardHover
-              : game.colorTheme.gameCard,
+              ? utils.hexToRgba(
+                  game.colorTheme.gameCardHover,
+                  gameCardColorAlpha
+                )
+              : utils.hexToRgba(game.colorTheme.gameCard, gameCardColorAlpha),
             transition: "background-color 0.3s ease-in-out",
           }}
           onMouseEnter={() => setIsHovered(true)}
