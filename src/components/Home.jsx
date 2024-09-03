@@ -1,5 +1,6 @@
+import baseUrl from "../../baseUrl.js";
+
 import Header from "./Header/index.jsx";
-import Hero from "./Hero.jsx";
 import Games from "./Games/index.jsx";
 import Footer from "./Footer/index.jsx";
 
@@ -9,13 +10,15 @@ const Home = ({ user, games }) => {
   const [randomGameId, setRandomGameId] = useState(
     games[Math.floor(Math.random() * games.length)].id
   );
+
   return (
     <>
-      <Header user={user} games={games} />
-      <Hero randomGameId={randomGameId} />
+      <Header user={user} />
       <div
         style={{
-          backgroundColor: games[0].colorTheme.gameCanvas,
+          backgroundImage: `url(${baseUrl}/games/${randomGameId}/image)`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
         }}
         className="w-full flex-grow flex flex-col justify-center items-center"
       >
