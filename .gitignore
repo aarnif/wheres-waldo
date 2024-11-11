@@ -144,3 +144,6 @@ dist-ssr
 *.sln
 *.sw?
 
+# Mac-specific
+.DS_Store
+
