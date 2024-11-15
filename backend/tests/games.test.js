@@ -4,7 +4,9 @@ import characters from "../data/characters.js";
 import Game from "../models/Game.js";
 import games from "../data/games.js";
 
-import { test, beforeEach, after } from "node:test";
+import User from "../models/User.js";
+
+import { test, beforeEach, after, afterEach } from "node:test";
 import assert from "node:assert";
 import mongoose from "mongoose";
 import supertest from "supertest";
@@ -15,6 +17,7 @@ const api = supertest(app);
 beforeEach(async () => {
   await Character.deleteMany({});
   await Game.deleteMany({});
+  await User.deleteMany({});
 
   for (const character of characters) {
     const characterObject = new Character(character);
@@ -25,6 +28,10 @@ beforeEach(async () => {
     const gameObject = new Game(game);
     await gameObject.save();
   }
+});
+
+afterEach(async () => {
+  await User.deleteMany({});
 });
 
 test("games are returned as json", async () => {
