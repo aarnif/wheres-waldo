@@ -29,6 +29,7 @@ const Header = ({ user }) => {
                 <li>
                   <button
                     onClick={handleLogOut}
+                    data-testid="sign-out-button"
                     className="flex-grow ml-2 min-w-[200px] h-[60px] bg-zinc-600 rounded-xl text-xl font-bold text-white
                 hover:bg-zinc-800 active:scale-95 transition"
                   >

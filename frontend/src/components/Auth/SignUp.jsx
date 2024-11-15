@@ -112,6 +112,7 @@ const SignUp = ({ setUser, randomGameId }) => {
                   <input
                     id="username"
                     name="username"
+                    data-testid="username-input"
                     className="w-full flex-grow p-2 rounded-lg bg-zinc-500
           focus:outline-none focus:ring-2 focus:ring-sky-400 placeholder:text-slate-200 transition"
                     {...userName}
@@ -130,6 +131,7 @@ const SignUp = ({ setUser, randomGameId }) => {
                   <input
                     id="password"
                     name="password"
+                    data-testid="password-input"
                     className="w-full flex-grow p-2 rounded-lg bg-zinc-500
           focus:outline-none focus:ring-2 focus:ring-sky-400 placeholder:text-slate-200 transition"
                     {...password}
@@ -148,6 +150,7 @@ const SignUp = ({ setUser, randomGameId }) => {
                   <input
                     id="confirm-password"
                     name="confirm-password"
+                    data-testid="confirm-password-input"
                     className="w-full flex-grow p-2 rounded-lg bg-zinc-500
           focus:outline-none focus:ring-2 focus:ring-sky-400 placeholder:text-slate-200 transition"
                     {...confirmPassword}
@@ -162,6 +165,7 @@ const SignUp = ({ setUser, randomGameId }) => {
                 <li className="my-4 flex justify-center items-center">
                   <button
                     type="submit"
+                    data-testid="sign-up-submit-button"
                     className="flex-grow h-[70px] bg-green-500 border-2 border-green-500 rounded-xl text-xl font-bold text-white
                 hover:bg-green-600 focus:bg-green-600 focus:outline-none focus:ring-2 focus:ring-sky-400 active:scale-95 transition"
                   >

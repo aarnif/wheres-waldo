@@ -139,6 +139,7 @@ const Login = ({ setUser, randomGameId }) => {
                   <button
                     onClick={handleClickSignUp}
                     type="button"
+                    data-testid="sign-up-button"
                     className="w-full flex-grow h-[70px] border-2 border-slate-200 rounded-xl text-xl font-bold text-slate-200
                 hover:bg-zinc-500 focus:bg-zinc-500 focus:outline-none focus:ring-2 focus:ring-sky-400 active:scale-95 transition"
                   >
