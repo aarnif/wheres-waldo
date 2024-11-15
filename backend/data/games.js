@@ -6,6 +6,7 @@ const games = [
     image: "ski-resort.jpeg",
     characters: [
       {
+        _id: "66cf3939a634f95c9175d880",
         character: "66601f7a66990e4269078fd0",
         coordinates: {
           a: { x: 0.839, y: 0.738 },
@@ -15,6 +16,7 @@ const games = [
         },
       },
       {
+        _id: "66cf3939a634f95c9175d881",
         character: "66601f7a66990e4269078fd3",
         coordinates: {
           a: { x: 0.483, y: 0.391 },
@@ -24,6 +26,7 @@ const games = [
         },
       },
       {
+        _id: "66cf3939a634f95c9175d882",
         character: "66601f7a66990e4269078fd1",
         coordinates: {
           a: { x: 0.31, y: 0.643 },
@@ -33,6 +36,7 @@ const games = [
         },
       },
       {
+        _id: "66cf3939a634f95c9175d883",
         character: "66601f7a66990e4269078fd2",
         coordinates: {
           a: { x: 0.062, y: 0.767 },
@@ -69,6 +73,7 @@ const games = [
     image: "beach.jpg",
     characters: [
       {
+        _id: "6736274e31d56dba97768394",
         character: "66601f7a66990e4269078fd0",
         coordinates: {
           a: { x: 0.612, y: 0.362 },
@@ -78,6 +83,7 @@ const games = [
         },
       },
       {
+        _id: "6736274e31d56dba97768395",
         character: "66601f7a66990e4269078fd3",
         coordinates: {
           a: { x: 0.767, y: 0.398 },
@@ -87,6 +93,7 @@ const games = [
         },
       },
       {
+        _id: "6736274e31d56dba97768396",
         character: "66601f7a66990e4269078fd1",
         coordinates: {
           a: { x: 0.103, y: 0.346 },
@@ -96,6 +103,7 @@ const games = [
         },
       },
       {
+        _id: "6736274e31d56dba97768397",
         character: "66601f7a66990e4269078fd2",
         coordinates: {
           a: { x: 0.264, y: 0.341 },
@@ -132,6 +140,7 @@ const games = [
     image: "space.png",
     characters: [
       {
+        _id: "6736274e31d56dba9776839a",
         character: "66601f7a66990e4269078fd0",
         coordinates: {
           a: { x: 0.4, y: 0.615 },
@@ -141,6 +150,7 @@ const games = [
         },
       },
       {
+        _id: "6736274e31d56dba9776839b",
         character: "66601f7a66990e4269078fd3",
         coordinates: {
           a: { x: 0.289, y: 0.509 },
@@ -150,6 +160,7 @@ const games = [
         },
       },
       {
+        _id: "6736274e31d56dba9776839c",
         character: "66601f7a66990e4269078fd1",
         coordinates: {
           a: { x: 0.065, y: 0.68 },
@@ -159,6 +170,7 @@ const games = [
         },
       },
       {
+        _id: "6736274e31d56dba9776839d",
         character: "66601f7a66990e4269078fd2",
         coordinates: {
           a: { x: 0.775, y: 0.565 },
@@ -195,6 +207,7 @@ const games = [
     image: "hollywood.jpeg",
     characters: [
       {
+        _id: "6736274e31d56dba977683a0",
         character: "66601f7a66990e4269078fd0",
         coordinates: {
           a: { x: 0.698, y: 0.412 },
@@ -204,6 +217,7 @@ const games = [
         },
       },
       {
+        _id: "6736274e31d56dba977683a1",
         character: "66601f7a66990e4269078fd3",
         coordinates: {
           a: { x: 0.587, y: 0.687 },
@@ -213,6 +227,7 @@ const games = [
         },
       },
       {
+        _id: "6736274e31d56dba977683a2",
         character: "66601f7a66990e4269078fd1",
         coordinates: {
           a: { x: 0.55, y: 0.83 },
@@ -222,6 +237,7 @@ const games = [
         },
       },
       {
+        _id: "6736274e31d56dba977683a3",
         character: "66601f7a66990e4269078fd2",
         coordinates: {
           a: { x: 0.685, y: 0.689 },
@@ -258,6 +274,7 @@ const games = [
     image: "fruit-world.jpeg",
     characters: [
       {
+        _id: "6736274e31d56dba977683a6",
         character: "66601f7a66990e4269078fd0",
         coordinates: {
           a: { x: 0.886, y: 0.681 },
@@ -267,6 +284,7 @@ const games = [
         },
       },
       {
+        _id: "6736274e31d56dba977683a7",
         character: "66601f7a66990e4269078fd3",
         coordinates: {
           a: { x: 0.129, y: 0.891 },
@@ -276,6 +294,7 @@ const games = [
         },
       },
       {
+        _id: "6736274e31d56dba977683a8",
         character: "66601f7a66990e4269078fd1",
         coordinates: {
           a: { x: 0.656, y: 0.563 },
@@ -285,6 +304,7 @@ const games = [
         },
       },
       {
+        _id: "6736274e31d56dba977683a9",
         character: "66601f7a66990e4269078fd2",
         coordinates: {
           a: { x: 0.245, y: 0.476 },
