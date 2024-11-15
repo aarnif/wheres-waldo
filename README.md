@@ -11,8 +11,8 @@ The project is part of the [The Odin Project's](https://www.theodinproject.com/)
 
 ## Live Preview
 
-[Where's Waldo UI](https://radiant-faloodeh-14c3ee.netlify.app/)
-[Where's Waldo API](https://odin-wheres-waldo.onrender.com/)
+[Where's Waldo UI](https://wheres-waldo-aarnif.netlify.app/login)
+[Where's Waldo API](https://wheres-waldo-api-rln6.onrender.com/)
 
 ## Technologies
 
