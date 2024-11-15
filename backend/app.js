@@ -1,5 +1,6 @@
 import indexRouter from "./routes/index.js";
 import apiRouter from "./routes/api.js";
+import testingRouter from "./routes/testing.js";
 import config from "./utils/config.js";
 import errorHandler from "./errorHandler.js";
 
@@ -24,6 +25,10 @@ app.use(cors());
 
 app.use("/", indexRouter);
 app.use("/api", apiRouter);
+
+if (process.env.NODE_ENV === "test") {
+  app.use("/api/testing", testingRouter);
+}
 
 app.use(errorHandler);
 
