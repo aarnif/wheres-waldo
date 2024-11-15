@@ -13,7 +13,9 @@
     "test:server": "NODE_ENV=test node --test",
     "test:ui": "vitest --root frontend run",
     "lint": "eslint frontend --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "prod:ui": "vite preview --config frontend/vite.config.js"
+    "prod:ui": "vite preview --config frontend/vite.config.js",
+    "test:e2e": "playwright test",
+    "test:e2e:report": "playwright show-report"
   },
   "keywords": [],
   "author": "",
@@ -32,8 +34,8 @@
     "express": "^4.19.2",
     "express-async-handler": "^1.2.0",
     "framer-motion": "^11.2.6",
-    "jsonwebtoken": "^9.0.2",
     "jsdom": "^24.0.0",
+    "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.6.2",
     "mongoose": "^8.4.0",
     "morgan": "^1.10.0",
@@ -44,9 +46,11 @@
     "vitest": "^1.5.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.48.2",
     "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/react": "^15.0.2",
     "@testing-library/user-event": "^14.5.2",
+    "@types/node": "^22.9.0",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@vitejs/plugin-react": "^4.2.1",
