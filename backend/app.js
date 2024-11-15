@@ -27,6 +27,7 @@ app.use("/", indexRouter);
 app.use("/api", apiRouter);
 
 if (process.env.NODE_ENV === "test") {
+  console.log("Running in test mode");
   app.use("/api/testing", testingRouter);
 }
 
