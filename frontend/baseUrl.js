@@ -1,3 +1,3 @@
-const baseUrl = "https://wheres-waldo-api-rln6.onrender.com/api";
+const baseUrl = process.env.BASE_URL;
 
 export default baseUrl;

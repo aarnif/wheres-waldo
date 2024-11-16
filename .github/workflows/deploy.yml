@@ -30,6 +30,19 @@ jobs:
           SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
       - name: Run tests ui
         run: npm run test:ui
+      - name: Run e2e tests
+        run: |
+          npm run start:test:server &
+          npm run start:test:ui &
+          npx wait-on http://localhost:5000
+          npx wait-on http://localhost:5173
+          npm run test:e2e
+        env:
+          NODE_ENV: test
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
+          PORT: ${{ secrets.PORT }}
+          SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
 
   deploy:
     needs: [deployment_pipeline]

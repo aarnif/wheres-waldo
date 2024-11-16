@@ -10,6 +10,7 @@
     "prod:server": "NODE_ENV=production node backend/index.js",
     "build:ui": "vite build --config frontend/vite.config.js",
     "start:test:server": "NODE_ENV=test node backend/index.js",
+    "start:test:ui": "NODE_ENV=test vite --config frontend/vite.config.js",
     "test:server": "NODE_ENV=test node --test",
     "test:ui": "vitest --root frontend run",
     "lint": "eslint frontend --ext js,jsx --report-unused-disable-directives --max-warnings 0",

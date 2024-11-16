@@ -7,4 +7,9 @@ const MONGODB_URI =
     ? process.env.TEST_MONGODB_URI
     : process.env.MONGODB_URI;
 
-export default { MONGODB_URI, SESSION_SECRET, PORT };
+const BASE_URL =
+  process.env.NODE_ENV === "test"
+    ? `http://localhost:${PORT}/api`
+    : "https://wheres-waldo-api-rln6.onrender.com/api";
+
+export default { MONGODB_URI, SESSION_SECRET, PORT, BASE_URL };
