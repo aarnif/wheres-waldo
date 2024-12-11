@@ -1,14 +1,12 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import config from "../backend/utils/config";
+import config from "../config.js";
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
   define: {
-    "process.env": {
-      BASE_URL: config.BASE_URL,
-    },
+    "import.meta.env.VITE_BASE_URL": JSON.stringify(config.VITE_BASE_URL),
   },
   base: "/",
   root: "frontend",

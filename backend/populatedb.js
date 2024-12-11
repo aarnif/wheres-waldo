@@ -1,4 +1,4 @@
-import config from "./utils/config.js";
+import config from "../config.js";
 
 import User from "./models/User.js";
 import Character from "./models/Character.js";
