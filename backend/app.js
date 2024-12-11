@@ -1,7 +1,7 @@
 import indexRouter from "./routes/index.js";
 import apiRouter from "./routes/api.js";
 import testingRouter from "./routes/testing.js";
-import config from "./utils/config.js";
+import config from "../config.js";
 import errorHandler from "./errorHandler.js";
 
 import express from "express";
