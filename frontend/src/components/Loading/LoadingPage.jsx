@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import LoadingIcon from "../LoadingIcon";
+import LoadingIcon from "./LoadingIcon";
 
 const LoadingPage = () => {
   return (

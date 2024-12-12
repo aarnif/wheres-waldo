@@ -1,7 +1,7 @@
 import signingService from "./services/signingService";
 import gameService from "./services/gameService";
 
-import LoadingPage from "./components/LoadingPage.jsx";
+import LoadingPage from "./components/Loading/LoadingPage.jsx";
 import Header from "./components/Header";
 import Footer from "./components/Footer/index.jsx";
 import Home from "./components/Home";
