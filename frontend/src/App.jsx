@@ -1,8 +1,8 @@
 import signingService from "./services/signingService";
 import gameService from "./services/gameService";
 
+import LoadingPage from "./components/Loading/LoadingPage.jsx";
 import Header from "./components/Header";
-import LoadingIcon from "./LoadingIcon.jsx";
 import Footer from "./components/Footer/index.jsx";
 import Home from "./components/Home";
 import Game from "./components/Game";
@@ -13,6 +13,7 @@ import ScrollToHashElement from "./ScrollToHashElement.jsx";
 
 import { useState, useEffect } from "react";
 import { Routes, Route, Navigate, useMatch } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 
 const App = () => {
   const match = useMatch("/games/:id");
@@ -44,55 +45,61 @@ const App = () => {
 
   console.log("User:", user);
   console.log("Games:", games);
-
-  if (!games.length) {
-    return (
-      <div className="min-h-screen flex flex-col bg-zinc-600">
-        <Header />
-        <div className="flex-grow flex justify-center items-center">
-          <LoadingIcon />
-        </div>
-        <Footer />
-      </div>
-    );
-  }
-
   console.log("Random game ID:", randomGameId);
 
   return (
     <div className="min-h-screen flex flex-col bg-zinc-600">
-      <ScrollToHashElement />
-      <Routes>
-        <Route
-          path="/"
-          element={
-            user ? (
-              <Home user={user} games={games} />
-            ) : (
-              <Navigate replace to="/login" />
-            )
-          }
-        />
-        <Route
-          path="/games/:id"
-          element={
-            <Game
-              user={user}
-              setUser={setUser}
-              currentGame={currentGame}
-              setGames={setGames}
-            />
-          }
-        />
-        <Route
-          path="/login"
-          element={<Login setUser={setUser} randomGameId={randomGameId} />}
-        />
-        <Route
-          path="/signup"
-          element={<SignUp setUser={setUser} randomGameId={randomGameId} />}
-        />
-      </Routes>
+      <Header />
+      <AnimatePresence>
+        {!games.length ? (
+          <LoadingPage key="loading-page" />
+        ) : (
+          <motion.div
+            key="front-page"
+            className="h-screen flex flex-col"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, transition: { delay: 0.5 } }}
+          >
+            <ScrollToHashElement />
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  user ? (
+                    <Home user={user} games={games} />
+                  ) : (
+                    <Navigate replace to="/login" />
+                  )
+                }
+              />
+              <Route
+                path="/login"
+                element={
+                  <Login setUser={setUser} randomGameId={randomGameId} />
+                }
+              />
+              <Route
+                path="/signup"
+                element={
+                  <SignUp setUser={setUser} randomGameId={randomGameId} />
+                }
+              />
+              <Route
+                path="/games/:id"
+                element={
+                  <Game
+                    user={user}
+                    setUser={setUser}
+                    currentGame={currentGame}
+                    setGames={setGames}
+                  />
+                }
+              />
+            </Routes>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      <Footer />
     </div>
   );
 };
