@@ -10,6 +10,7 @@ const gameSchema = new Schema({
     required: true,
     enum: ["easy", "medium", "hard"],
   },
+  description: { type: String, required: true },
   image: { type: String, required: true },
   characters: [
     {
