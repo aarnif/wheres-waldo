@@ -5,6 +5,7 @@ import LoadingPage from "./components/Loading/LoadingPage.jsx";
 import Header from "./components/Header";
 import Footer from "./components/Footer/index.jsx";
 import Home from "./components/Home";
+import GamePreview from "./components/Game/GamePreview.jsx";
 import Game from "./components/Game";
 import Login from "./components/Auth/Login";
 import SignUp from "./components/Auth/SignUp";
@@ -49,7 +50,6 @@ const App = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-zinc-600">
-      <Header />
       <AnimatePresence>
         {!games.length ? (
           <LoadingPage key="loading-page" />
@@ -99,7 +99,6 @@ const App = () => {
           </motion.div>
         )}
       </AnimatePresence>
-      <Footer />
     </div>
   );
 };
