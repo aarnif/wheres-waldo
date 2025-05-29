@@ -1,43 +1,68 @@
-import GameCharacters from "../Games/GameCharacters";
-
-import { useState } from "react";
+import baseUrl from "../../../baseUrl";
 
 import Icon from "@mdi/react";
-import { mdiArrowLeftCircle } from "@mdi/js";
+import { mdiChevronLeft, mdiCheck } from "@mdi/js";
 
 const GameHeader = ({ game, time, handleChangeGame }) => {
-  const [hovered, setHovered] = useState(false);
+  const { id, characters } = game;
   return (
     <header
       id="game-header"
-      style={{ backgroundColor: game.colorTheme.gameHeader }}
-      className="z-10 fixed w-full h-[120px] flex justify-center items-center shadow-lg bg-zinc-600 text-white"
+      className="z-10 px-8 py-2 fixed w-full flex justify-between items-center text-white"
     >
-      <div className="ml-8 flex-grow max-w-[400px] min-w-[300px]">
-        <h1 className="font-title text-4xl font-bold text-center">
-          {game.title}
-        </h1>
-      </div>
-      <GameCharacters game={game} location={"header"} />
-      <div className="mr-8 flex-grow max-w-[400px] min-w-[300px] flex justify-around items-center">
-        <h1 className="max-w-[200px] min-w-[200px] font-title text-4xl font-bold text-left">
-          {time}
-        </h1>
+      <div className="flex justify-center items-center">
         <button
           onClick={handleChangeGame}
-          className="max-w-[100px] min-w-[50px]"
+          className="w-10 h-10 rounded-full bg-slate-900/30 hover:bg-slate-900/40 flex justify-center items-center transition"
         >
           <Icon
-            path={mdiArrowLeftCircle}
-            size={2}
-            style={{
-              color: hovered && game.colorTheme.goBackButtonHover,
-            }}
-            onMouseEnter={() => setHovered(true)}
-            onMouseLeave={() => setHovered(false)}
-            className="fill-current text-white active:scale-95 transition"
+            path={mdiChevronLeft}
+            size={1.7}
+            className="fill-current text-slate-50 hover:text-slate-300 active:scale-95 transition"
           />
         </button>
+      </div>
+      <div className="flex-grow flex justify-center">
+        <div className="flex justify-center gap-16 flex-wrap bg-slate-900/30 px-2 rounded-lg shadow-lg">
+          {characters?.map((character) => (
+            <div
+              key={character.character.name}
+              className="flex flex-col items-center gap-1"
+            >
+              <div className="relative p-1 rounded-lg flex items-center justify-center">
+                <img
+                  className={`w-12 h-12 rounded-lg object-cover ${
+                    character.isFound ? "brightness-75" : ""
+                  }`}
+                  src={`${baseUrl}/games/${id}/characters/${character.id}/image`}
+                  alt={character.character.name}
+                />
+                {character.isFound && (
+                  <div className="absolute inset-0 flex justify-center items-center rounded-lg">
+                    <Icon
+                      path={mdiCheck}
+                      title="Check"
+                      size={3}
+                      className="fill-current text-green-400"
+                    />
+                  </div>
+                )}
+              </div>
+              <span
+                className={`${
+                  character.isFound ? "text-slate-300" : "text-slate-50"
+                } text-base font-bold text-center`}
+              >
+                {character.character.name}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="flex items-center">
+        <h1 className="font-mono text-2xl font-bold bg-slate-900/30 p-1 rounded-lg">
+          {time}
+        </h1>
       </div>
     </header>
   );
