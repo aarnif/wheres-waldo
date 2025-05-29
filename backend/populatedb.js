@@ -38,6 +38,7 @@ const createGame = async (
   difficulty,
   description,
   image,
+  dimensions,
   characters,
   colorTheme,
   leaderboard
@@ -48,6 +49,7 @@ const createGame = async (
     difficulty: difficulty,
     description: description,
     image: image,
+    dimensions: dimensions,
     characters: characters,
     colorTheme: colorTheme,
     leaderboard: leaderboard,
@@ -80,6 +82,7 @@ const createGames = async () => {
       games[i].difficulty,
       games[i].description,
       games[i].image,
+      games[i].dimensions,
       games[i].characters,
       games[i].colorTheme,
       games[i].leaderboard
