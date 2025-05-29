@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 const GameMessageDisplay = ({ colorTheme, gameMessage }) => {
   return (
-    <motion.div className="fixed inset-0 flex justify-center items-end">
+    <motion.div className="pointer-events-none fixed inset-0 flex justify-center items-end">
       <motion.div
         style={{
           backgroundColor: utils.hexToRgba(colorTheme.gameMessageBox, 0.8),
