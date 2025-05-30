@@ -338,12 +338,7 @@ const GameView = ({ user, setUser, currentGame, setGames, handleEndGame }) => {
       )}
 
       <AnimatePresence mode="wait">
-        {showGameMessage && (
-          <GameMessageDisplay
-            colorTheme={game.colorTheme}
-            gameMessage={gameMessage}
-          />
-        )}
+        {showGameMessage && <GameMessageDisplay gameMessage={gameMessage} />}
       </AnimatePresence>
     </div>
   );
