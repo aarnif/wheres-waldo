@@ -51,16 +51,17 @@ const GamePreview = ({ currentGame, handleStartGame }) => {
 
           <div className="flex gap-4">
             <button
-              onClick={handleStartGame}
-              className="px-7 py-3 shadow-lg border border-red-600 bg-red-600 hover:bg-red-700 hover:border-red-700 active:border-red-800 active:inset-shadow-sm rounded-2xl text-white text-base font-bold transition-all duration-200 ease-in-out"
-            >
-              Play Game
-            </button>
-            <button
               onClick={() => navigate("/")}
               className="px-7 py-3 shadow-lg border border-slate-600 bg-slate-600 hover:bg-slate-700 hover:border-slate-700 active:border-slate-800 active:inset-shadow-sm rounded-2xl text-white text-base font-bold transition-all duration-200 ease-in-out"
             >
               Go Back
+            </button>
+
+            <button
+              onClick={handleStartGame}
+              className="px-7 py-3 shadow-lg border border-red-600 bg-red-600 hover:bg-red-700 hover:border-red-700 active:border-red-800 active:inset-shadow-sm rounded-2xl text-white text-base font-bold transition-all duration-200 ease-in-out"
+            >
+              Play Game
             </button>
           </div>
         </section>
