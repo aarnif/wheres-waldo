@@ -13,17 +13,17 @@ const GameHeader = ({ game, time, handleChangeGame }) => {
       <div className="flex justify-center items-center">
         <button
           onClick={handleChangeGame}
-          className="w-10 h-10 rounded-full bg-slate-900/30 hover:bg-slate-900/40 flex justify-center items-center transition"
+          className="w-10 h-10 rounded-full border border-slate-900/0 bg-slate-900/40 hover:bg-slate-900/50 active:border-slate-900/40 active:inset-shadow-sm flex justify-center items-center transition"
         >
           <Icon
             path={mdiChevronLeft}
             size={1.7}
-            className="fill-current text-slate-50 hover:text-slate-300 active:scale-95 transition"
+            className="fill-current text-slate-50"
           />
         </button>
       </div>
       <div className="flex-grow flex justify-center">
-        <div className="flex justify-center gap-16 flex-wrap bg-slate-900/30 px-2 rounded-lg shadow-lg">
+        <div className="flex justify-center gap-16 flex-wrap bg-slate-900/40 px-2 rounded-lg shadow-lg">
           {characters?.map((character) => (
             <div
               key={character.character.name}
@@ -60,7 +60,7 @@ const GameHeader = ({ game, time, handleChangeGame }) => {
         </div>
       </div>
       <div className="flex items-center">
-        <h1 className="font-mono text-2xl font-bold bg-slate-900/30 p-1 rounded-lg">
+        <h1 className="font-mono text-2xl font-bold bg-slate-900/40 p-1 rounded-lg">
           {time}
         </h1>
       </div>
