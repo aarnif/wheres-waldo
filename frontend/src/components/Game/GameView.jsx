@@ -263,34 +263,27 @@ const GameView = ({ user, setUser, currentGame, setGames, handleEndGame }) => {
     }
   };
 
+  const canvasDimensions = calculateCanvasDimensions();
+
   if (isGameOver) {
     return (
-      <main
-        className="flex justify-center items-center"
-        style={{ flexGrow: 1 }}
-      >
-        <GameOverModal
-          game={game}
-          time={utils.formatTime(time)}
-          startNewGame={startNewGame}
-          handleChangeGame={handleChangeGame}
-        />
-      </main>
+      <GameOverModal
+        time={utils.formatTime(time)}
+        startNewGame={startNewGame}
+        handleChangeGame={handleChangeGame}
+      />
     );
   }
 
   if (!hasGameStarted) {
     return (
-      <main
-        className="flex justify-center items-center"
-        style={{ flexGrow: 1 }}
-      >
-        <GameStartModal game={game} startNewGame={startNewGame} />
-      </main>
+      <GameStartModal
+        game={game}
+        startNewGame={startNewGame}
+        handleEndGame={handleEndGame}
+      />
     );
   }
-
-  const canvasDimensions = calculateCanvasDimensions();
 
   return (
     <div className="w-screen h-screen overflow-auto">
