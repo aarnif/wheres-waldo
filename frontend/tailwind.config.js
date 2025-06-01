@@ -3,6 +3,10 @@ export default {
   content: ["./frontend/index.html", "./frontend/src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      fontFamily: {
+        roboto: ["Roboto", "sans-serif"],
+        "roboto-condensed": ["Roboto Condensed", "sans-serif"],
+      },
       keyframes: {
         fadeIn: {
           "0%": { opacity: 0 },
