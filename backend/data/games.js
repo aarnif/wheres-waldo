@@ -52,23 +52,6 @@ const games = [
         },
       },
     ],
-    colorTheme: {
-      body: "#60a5fa", // blue-400
-      gameCardBackground: "#3b82f6", // blue-500
-      gameCard: "#60a5fa", // blue-400
-      gameCardHover: "#2563eb", // blue-600
-      gameIcons: "#60a5fa", // blue-400
-      gameCanvas: "#3b82f6", // blue-500
-      gameModal: "#2563eb", // blue-600
-      gameButton: "#3b82f6", // blue-500
-      gameButtonHover: "#1d4ed8", // blue-700
-      gameHeader: "#3b82f6", // blue-500
-      gameMessageBox: "#bfdbfe", // blue-200
-      goBackButtonHover: "#93c5fd", // blue-300
-      dropDownMenu: "#3b82f6", // blue-500
-      dropDownMenuItem: "#3b82f6", // blue-500
-      dropDownMenuItemHover: "#1d4ed8", // blue-700
-    },
     leaderboard: [],
   },
 
@@ -125,23 +108,6 @@ const games = [
         },
       },
     ],
-    colorTheme: {
-      body: "#a78bfa", // purple-400
-      gameCardBackground: "#8b5cf6", // purple-500
-      gameCard: "#a78bfa", // purple-400
-      gameCardHover: "#7c3aed", // purple-600
-      gameIcons: "#a78bfa", // purple-400
-      gameCanvas: "#8b5cf6", // purple-500
-      gameModal: "#7c3aed", // purple-600
-      gameButton: "#8b5cf6", // purple-500
-      gameButtonHover: "#6d28d9", // purple-700
-      gameHeader: "#8b5cf6", // purple-500
-      gameMessageBox: "#e9d5ff", // purple-200
-      goBackButtonHover: "#d8b4fe", // purple-300
-      dropDownMenu: "#8b5cf6", // purple-500
-      dropDownMenuItem: "#8b5cf6", // purple-500
-      dropDownMenuItemHover: "#6d28d9", // purple-700
-    },
     leaderboard: [],
   },
 
@@ -198,23 +164,6 @@ const games = [
         },
       },
     ],
-    colorTheme: {
-      body: "#f87171", // red-400
-      gameCardBackground: "#ef4444", // red-500
-      gameCard: "#f87171", // red-400
-      gameCardHover: "#dc2626", // red-600
-      gameIcons: "#f87171", // red-400
-      gameCanvas: "#ef4444", // red-500
-      gameModal: "#dc2626", // red-600
-      gameButton: "#ef4444", // red-500
-      gameButtonHover: "#b91c1c", // red-700
-      gameHeader: "#ef4444", // red-500
-      gameMessageBox: "#fecaca", // red-200
-      goBackButtonHover: "#fca5a5", // red-300
-      dropDownMenu: "#ef4444", // red-500
-      dropDownMenuItem: "#ef4444", // red-500
-      dropDownMenuItemHover: "#b91c1c", // red-700
-    },
     leaderboard: [],
   },
 
@@ -271,23 +220,6 @@ const games = [
         },
       },
     ],
-    colorTheme: {
-      body: "#fbbf24", // amber-400
-      gameCardBackground: "#f59e0b", // amber-500
-      gameCard: "#fbbf24", // amber-400
-      gameCardHover: "#d97706", // amber-600
-      gameIcons: "#fbbf24", // amber-400
-      gameCanvas: "#f59e0b", // amber-500
-      gameModal: "#d97706", // amber-600
-      gameButton: "#f59e0b", // amber-500
-      gameButtonHover: "#b45309", // amber-700
-      gameHeader: "#f59e0b", // amber-500
-      gameMessageBox: "#fde68a", // amber-200
-      goBackButtonHover: "#fcd34d", // amber-300
-      dropDownMenu: "#f59e0b", // amber-500
-      dropDownMenuItem: "#f59e0b", // amber-500
-      dropDownMenuItemHover: "#b45309", // amber-700
-    },
     leaderboard: [],
   },
 
@@ -344,23 +276,6 @@ const games = [
         },
       },
     ],
-    colorTheme: {
-      body: "#4ade80", // green-400
-      gameCardBackground: "#22c55e", // green-500
-      gameCard: "#4ade80", // green-400
-      gameCardHover: "#16a34a", // green-600
-      gameIcons: "#4ade80", // green-400
-      gameCanvas: "#22c55e", // green-500
-      gameModal: "#16a34a", // green-600
-      gameButton: "#22c55e", // green-500
-      gameButtonHover: "#15803d", // green-700
-      gameHeader: "#22c55e", // green-500
-      gameMessageBox: "#bbf7d0", // green-200
-      goBackButtonHover: "#86efac", // green-300
-      dropDownMenu: "#22c55e", // green-500
-      dropDownMenuItem: "#22c55e", // green-500
-      dropDownMenuItemHover: "#15803d", // green-700
-    },
     leaderboard: [],
   },
 ];

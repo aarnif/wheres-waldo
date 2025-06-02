@@ -1,4 +1,3 @@
-import { dispatchDOMEvent } from "@testing-library/user-event/dist/cjs/event/dispatchEvent.js";
 import helpers from "../utils/helpers.js";
 import mongoose from "mongoose";
 
@@ -41,24 +40,6 @@ const gameSchema = new Schema({
       isFound: { type: Boolean, required: true, default: false },
     },
   ],
-
-  colorTheme: {
-    body: { type: String, required: true },
-    gameCardBackground: { type: String, required: true },
-    gameCard: { type: String, required: true },
-    gameCardHover: { type: String, required: true },
-    gameIcons: { type: String, required: true },
-    gameCanvas: { type: String, required: true },
-    gameModal: { type: String, required: true },
-    gameButton: { type: String, required: true },
-    gameButtonHover: { type: String, required: true },
-    gameHeader: { type: String, required: true },
-    goBackButtonHover: { type: String, required: true },
-    dropDownMenu: { type: String, required: true },
-    dropDownMenuItem: { type: String, required: true },
-    dropDownMenuItemHover: { type: String, required: true },
-    gameMessageBox: { type: String, required: true },
-  },
 
   leaderboard: [
     {
