@@ -7,6 +7,9 @@ export default {
         roboto: ["Roboto", "sans-serif"],
         "roboto-condensed": ["Roboto Condensed", "sans-serif"],
       },
+      backgroundImage: {
+        stars: "url('/images/4-point-stars.svg')",
+      },
       keyframes: {
         fadeIn: {
           "0%": { opacity: 0 },

@@ -50,7 +50,7 @@ const App = () => {
       ) : (
         <motion.div
           key="front-page"
-          className="h-screen flex flex-col"
+          className="min-h-screen flex flex-col bg-stars bg-repeat bg-[length:20px_20px]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1, transition: { delay: 0.5 } }}
         >
@@ -65,14 +65,8 @@ const App = () => {
                 )
               }
             />
-            <Route
-              path="/login"
-              element={<Login setUser={setUser} randomGameId={randomGameId} />}
-            />
-            <Route
-              path="/signup"
-              element={<SignUp setUser={setUser} randomGameId={randomGameId} />}
-            />
+            <Route path="/login" element={<Login setUser={setUser} />} />
+            <Route path="/signup" element={<SignUp setUser={setUser} />} />
             <Route
               path="/games/:id"
               element={
