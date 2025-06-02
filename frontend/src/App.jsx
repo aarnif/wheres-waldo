@@ -2,10 +2,7 @@ import signingService from "./services/signingService";
 import gameService from "./services/gameService";
 
 import LoadingPage from "./components/Loading/LoadingPage.jsx";
-import Header from "./components/Header";
-import Footer from "./components/Footer/index.jsx";
 import Home from "./components/Home";
-import GamePreview from "./components/Game/GamePreview.jsx";
 import Game from "./components/Game";
 import Login from "./components/Auth/Login";
 import SignUp from "./components/Auth/SignUp";
@@ -49,57 +46,51 @@ const App = () => {
   console.log("Random game ID:", randomGameId);
 
   return (
-    <div className="min-h-screen flex flex-col bg-zinc-600">
-      <AnimatePresence>
-        {!games.length ? (
-          <LoadingPage key="loading-page" />
-        ) : (
-          <motion.div
-            key="front-page"
-            className="h-screen flex flex-col"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1, transition: { delay: 0.5 } }}
-          >
-            <ScrollToHashElement />
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  user ? (
-                    <Home user={user} games={games} />
-                  ) : (
-                    <Navigate replace to="/login" />
-                  )
-                }
-              />
-              <Route
-                path="/login"
-                element={
-                  <Login setUser={setUser} randomGameId={randomGameId} />
-                }
-              />
-              <Route
-                path="/signup"
-                element={
-                  <SignUp setUser={setUser} randomGameId={randomGameId} />
-                }
-              />
-              <Route
-                path="/games/:id"
-                element={
-                  <Game
-                    user={user}
-                    setUser={setUser}
-                    currentGame={currentGame}
-                    setGames={setGames}
-                  />
-                }
-              />
-            </Routes>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
+    <AnimatePresence>
+      {!games.length ? (
+        <LoadingPage key="loading-page" />
+      ) : (
+        <motion.div
+          key="front-page"
+          className="h-screen flex flex-col"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1, transition: { delay: 0.5 } }}
+        >
+          <ScrollToHashElement />
+          <Routes>
+            <Route
+              path="/"
+              element={
+                user ? (
+                  <Home user={user} games={games} />
+                ) : (
+                  <Navigate replace to="/login" />
+                )
+              }
+            />
+            <Route
+              path="/login"
+              element={<Login setUser={setUser} randomGameId={randomGameId} />}
+            />
+            <Route
+              path="/signup"
+              element={<SignUp setUser={setUser} randomGameId={randomGameId} />}
+            />
+            <Route
+              path="/games/:id"
+              element={
+                <Game
+                  user={user}
+                  setUser={setUser}
+                  currentGame={currentGame}
+                  setGames={setGames}
+                />
+              }
+            />
+          </Routes>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
 

@@ -2,9 +2,6 @@ import baseUrl from "../../../baseUrl.js";
 import signingService from "../../services/signingService";
 import useField from "../../hooks/useField";
 
-import Header from "../Header/index.jsx";
-import Footer from "../Footer/index.jsx";
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -85,7 +82,6 @@ const SignUp = ({ setUser, randomGameId }) => {
       }}
     >
       <div className="w-full flex-grow flex flex-col backdrop-blur-sm">
-        <Header />
         <div className="flex-grow w-full flex justify-center items-center">
           <div
             className="flex-grow max-w-[500px] max-h-[600px] p-8 flex justify-center items-center
@@ -176,7 +172,6 @@ const SignUp = ({ setUser, randomGameId }) => {
             </form>
           </div>
         </div>
-        <Footer />
       </div>
     </div>
   );
