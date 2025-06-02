@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 import baseUrl from "../../../baseUrl";
+import GameCharacter from "../GameCharacter.jsx";
 
 const GamePreview = ({ currentGame, handleStartGame }) => {
   const navigate = useNavigate();
@@ -19,9 +20,9 @@ const GamePreview = ({ currentGame, handleStartGame }) => {
               <h1 className="text-slate-50 text-3xl font-bold font-roboto-condensed tracking-wide">
                 {title}
               </h1>
-              <div className="px-1.5 py-1 bg-zinc-300/50 rounded-lg w-fit text-slate-100 text-sm font-medium shadow-lg">
+              <p className="px-1.5 py-1 bg-slate-300/50 rounded-lg w-fit text-slate-100 text-sm font-medium shadow-lg">
                 {difficulty}
-              </div>
+              </p>
             </div>
 
             <p className="text-slate-50 text-base font-medium leading-relaxed">
@@ -29,23 +30,13 @@ const GamePreview = ({ currentGame, handleStartGame }) => {
             </p>
           </div>
 
-          <div className="flex justify-start gap-8 flex-wrap">
+          <div className="flex justify-start gap-8">
             {characters?.map((character) => (
-              <div
-                key={character.character.name}
-                className="flex flex-col items-center gap-2"
-              >
-                <div className="p-2 bg-zinc-300/50 rounded-lg flex items-center justify-center shadow-lg">
-                  <img
-                    className="w-16 h-16 rounded-lg object-cover"
-                    src={`${baseUrl}/games/${id}/characters/${character.id}/image`}
-                    alt={character.character.name}
-                  />
-                </div>
-                <span className="text-slate-50 text-base font-bold text-center">
-                  {character.character.name}
-                </span>
-              </div>
+              <GameCharacter
+                key={character.id}
+                gameId={id}
+                character={character}
+              />
             ))}
           </div>
 

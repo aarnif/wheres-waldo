@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-import baseUrl from "../../../baseUrl";
+import GameCharacter from "../GameCharacter";
 
 const GameStartModal = ({ game, startNewGame, handleEndGame }) => {
   const { id, characters } = game;
@@ -19,23 +19,14 @@ const GameStartModal = ({ game, startNewGame, handleEndGame }) => {
 
         <div className="flex justify-center gap-8">
           {characters?.map((character) => (
-            <div
-              key={character.character.name}
-              className="flex flex-col items-center gap-1"
-            >
-              <div className="relative p-2 rounded-lg flex items-center justify-center bg-slate-600">
-                <img
-                  className="w-12 h-12 rounded-lg object-cover"
-                  src={`${baseUrl}/games/${id}/characters/${character.id}/image`}
-                  alt={character.character.name}
-                />
-              </div>
-              <span className="text-base font-bold text-center">
-                {character.character.name}
-              </span>
-            </div>
+            <GameCharacter
+              key={character.id}
+              gameId={id}
+              character={character}
+            />
           ))}
         </div>
+
         <div className="flex gap-8">
           <button
             onClick={handleEndGame}
