@@ -1,6 +1,7 @@
 import signingService from "./services/signingService";
 import gameService from "./services/gameService";
 
+import Title from "./components/Title";
 import LoadingPage from "./components/Loading/LoadingPage.jsx";
 import Home from "./components/Home";
 import Game from "./components/Game";
@@ -16,7 +17,7 @@ const App = () => {
 
   const [user, setUser] = useState(null);
   const [games, setGames] = useState([]);
-  const [randomGameId, setRandomGameId] = useState(null);
+  const [showTitle, setShowTitle] = useState(true);
 
   const currentGame = match
     ? games.find((game) => game.id === match.params.id)
@@ -26,7 +27,6 @@ const App = () => {
     console.log("Fetching games...");
     gameService.getAllGames().then((games) => {
       setGames(games);
-      setRandomGameId(games[Math.floor(Math.random() * games.length)].id);
     });
   }, []);
 
@@ -39,49 +39,53 @@ const App = () => {
     }
   }, []);
 
-  console.log("User:", user);
-  console.log("Games:", games);
-  console.log("Random game ID:", randomGameId);
-
   return (
-    <AnimatePresence>
-      {!games.length ? (
-        <LoadingPage key="loading-page" />
-      ) : (
-        <motion.div
-          key="front-page"
-          className="min-h-screen flex flex-col bg-stars bg-repeat bg-[length:20px_20px]"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1, transition: { delay: 0.5 } }}
-        >
-          <Routes>
-            <Route
-              path="/"
-              element={
-                user ? (
-                  <Home user={user} games={games} />
-                ) : (
-                  <Navigate replace to="/login" />
-                )
-              }
-            />
-            <Route path="/login" element={<Login setUser={setUser} />} />
-            <Route path="/signup" element={<SignUp setUser={setUser} />} />
-            <Route
-              path="/games/:id"
-              element={
-                <Game
-                  user={user}
-                  setUser={setUser}
-                  currentGame={currentGame}
-                  setGames={setGames}
-                />
-              }
-            />
-          </Routes>
-        </motion.div>
+    <>
+      {showTitle && (
+        <div className="hidden sm:block absolute top-0 left-0 px-4 sm:px-8 py-4 z-50">
+          <Title />
+        </div>
       )}
-    </AnimatePresence>
+      <AnimatePresence>
+        {!games.length ? (
+          <LoadingPage key="loading-page" />
+        ) : (
+          <motion.div
+            key="front-page"
+            className="min-h-screen flex flex-col bg-stars bg-repeat bg-[length:20px_20px]"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, transition: { delay: 0.5 } }}
+          >
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  user ? (
+                    <Home user={user} games={games} />
+                  ) : (
+                    <Navigate replace to="/login" />
+                  )
+                }
+              />
+              <Route path="/login" element={<Login setUser={setUser} />} />
+              <Route path="/signup" element={<SignUp setUser={setUser} />} />
+              <Route
+                path="/games/:id"
+                element={
+                  <Game
+                    user={user}
+                    setUser={setUser}
+                    currentGame={currentGame}
+                    setGames={setGames}
+                    setShowTitle={setShowTitle}
+                  />
+                }
+              />
+            </Routes>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 
