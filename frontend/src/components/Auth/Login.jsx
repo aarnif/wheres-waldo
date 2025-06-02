@@ -1,5 +1,6 @@
 import signingService from "../../services/signingService";
 import useField from "../../hooks/useField";
+import Title from "../Title";
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -53,6 +54,9 @@ const Login = ({ setUser }) => {
 
   return (
     <div className="w-full flex-grow flex flex-col justify-center items-center">
+      <div className="absolute top-0 left-0 px-4 sm:px-8 py-4">
+        <Title />
+      </div>
       <div className="w-full flex-grow flex flex-col">
         <div className="flex-grow w-full flex justify-center items-center">
           <div
