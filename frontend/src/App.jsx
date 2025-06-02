@@ -7,8 +7,6 @@ import Game from "./components/Game";
 import Login from "./components/Auth/Login";
 import SignUp from "./components/Auth/SignUp";
 
-import ScrollToHashElement from "./ScrollToHashElement.jsx";
-
 import { useState, useEffect } from "react";
 import { Routes, Route, Navigate, useMatch } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
@@ -56,7 +54,6 @@ const App = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1, transition: { delay: 0.5 } }}
         >
-          <ScrollToHashElement />
           <Routes>
             <Route
               path="/"
