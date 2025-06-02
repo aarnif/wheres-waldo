@@ -13,74 +13,42 @@ import bcrypt from "bcrypt";
 
 const saltRounds = 10; // Number of rounds to use in bcrypt hashing
 
-const createUser = async (username, password) => {
+const createUser = async (userData) => {
   const user = new User({
-    username: username,
-    passwordHash: await bcrypt.hash(password, saltRounds),
+    username: userData.username,
+    passwordHash: await bcrypt.hash(userData.password, saltRounds),
   });
   await user.save();
   console.log(`Created user: ${user.username}`);
 };
 
-const createCharacter = async (_id, name, image) => {
-  const character = new Character({
-    _id: _id,
-    name: name,
-    image: image,
-  });
+const createCharacter = async (characterData) => {
+  const character = new Character(characterData);
   await character.save();
   console.log(`Created character: ${character.name}`);
 };
 
-const createGame = async (
-  _id,
-  title,
-  difficulty,
-  image,
-  characters,
-  colorTheme,
-  leaderboard
-) => {
-  const game = new Game({
-    _id: _id,
-    title: title,
-    difficulty: difficulty,
-    image: image,
-    characters: characters,
-    colorTheme: colorTheme,
-    leaderboard: leaderboard,
-  });
+const createGame = async (gameData) => {
+  const game = new Game(gameData);
   await game.save();
   console.log(`Created game: ${game.title}`);
 };
 
 const createUsers = async () => {
-  for (let i = 0; i < users.length; i++) {
-    await createUser(users[i].username, users[i].password);
+  for (const userData of users) {
+    await createUser(userData);
   }
 };
 
 const createCharacters = async () => {
-  for (let i = 0; i < characters.length; i++) {
-    await createCharacter(
-      characters[i]._id,
-      characters[i].name,
-      characters[i].image
-    );
+  for (const characterData of characters) {
+    await createCharacter(characterData);
   }
 };
 
 const createGames = async () => {
-  for (let i = 0; i < games.length; i++) {
-    await createGame(
-      games[i]._id,
-      games[i].title,
-      games[i].difficulty,
-      games[i].image,
-      games[i].characters,
-      games[i].colorTheme,
-      games[i].leaderboard
-    );
+  for (const gameData of games) {
+    await createGame(gameData);
   }
 };
 

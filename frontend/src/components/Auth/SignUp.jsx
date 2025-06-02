@@ -1,14 +1,11 @@
-import baseUrl from "../../../baseUrl.js";
 import signingService from "../../services/signingService";
 import useField from "../../hooks/useField";
-
-import Header from "../Header/index.jsx";
-import Footer from "../Footer/index.jsx";
+import Title from "../Title";
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const SignUp = ({ setUser, randomGameId }) => {
+const SignUp = ({ setUser }) => {
   const [errorMessage, setErrorMessage] = useState(null);
 
   const navigate = useNavigate();
@@ -54,7 +51,7 @@ const SignUp = ({ setUser, randomGameId }) => {
       });
   };
 
-  const handleFormChange = (event) => {
+  const handleFormChange = () => {
     const userName = document.getElementById("username");
     const password = document.getElementById("password");
     const confirmPassword = document.getElementById("confirm-password");
@@ -74,22 +71,12 @@ const SignUp = ({ setUser, randomGameId }) => {
   };
 
   return (
-    <div
-      className="w-full flex-grow flex flex-col justify-center items-center"
-      style={{
-        backgroundImage: `url(${baseUrl}/games/${randomGameId}/image)`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        backgroundBlur: "10px",
-      }}
-    >
-      <div className="w-full flex-grow flex flex-col backdrop-blur-sm">
-        <Header />
+    <div className="w-full flex-grow flex flex-col justify-center items-center">
+      <div className="w-full flex-grow flex flex-col">
         <div className="flex-grow w-full flex justify-center items-center">
           <div
             className="flex-grow max-w-[500px] max-h-[600px] p-8 flex justify-center items-center
-         bg-zinc-700 bg-opacity-90 rounded-xl text-white shadow-xl"
+         bg-slate-700 bg-opacity-90 rounded-xl text-white shadow-xl"
           >
             <form
               id="sign-up-form"
@@ -113,7 +100,7 @@ const SignUp = ({ setUser, randomGameId }) => {
                     id="username"
                     name="username"
                     data-testid="username-input"
-                    className="w-full flex-grow p-2 rounded-lg bg-zinc-500
+                    className="w-full flex-grow p-2 rounded-lg bg-slate-500
           focus:outline-none focus:ring-2 focus:ring-sky-400 placeholder:text-slate-200 transition"
                     {...userName}
                   />
@@ -132,7 +119,7 @@ const SignUp = ({ setUser, randomGameId }) => {
                     id="password"
                     name="password"
                     data-testid="password-input"
-                    className="w-full flex-grow p-2 rounded-lg bg-zinc-500
+                    className="w-full flex-grow p-2 rounded-lg bg-slate-500
           focus:outline-none focus:ring-2 focus:ring-sky-400 placeholder:text-slate-200 transition"
                     {...password}
                   />
@@ -151,7 +138,7 @@ const SignUp = ({ setUser, randomGameId }) => {
                     id="confirm-password"
                     name="confirm-password"
                     data-testid="confirm-password-input"
-                    className="w-full flex-grow p-2 rounded-lg bg-zinc-500
+                    className="w-full flex-grow p-2 rounded-lg bg-slate-500
           focus:outline-none focus:ring-2 focus:ring-sky-400 placeholder:text-slate-200 transition"
                     {...confirmPassword}
                   />
@@ -172,11 +159,22 @@ const SignUp = ({ setUser, randomGameId }) => {
                     Sign Up
                   </button>
                 </li>
+
+                <li className="my-4 flex flex-col justify-center items-center">
+                  <button
+                    onClick={() => navigate("/login")}
+                    type="button"
+                    data-testid="sign-up-button"
+                    className="w-full flex-grow h-[70px] border-2 border-slate-200 rounded-xl text-xl font-bold text-slate-200
+                hover:bg-slate-500 focus:bg-slate-500 focus:outline-none focus:ring-2 focus:ring-sky-400 active:scale-95 transition"
+                  >
+                    Return to Login
+                  </button>
+                </li>
               </ul>
             </form>
           </div>
         </div>
-        <Footer />
       </div>
     </div>
   );

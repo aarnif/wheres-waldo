@@ -1,3 +1,4 @@
+import { dispatchDOMEvent } from "@testing-library/user-event/dist/cjs/event/dispatchEvent.js";
 import helpers from "../utils/helpers.js";
 import mongoose from "mongoose";
 
@@ -10,7 +11,12 @@ const gameSchema = new Schema({
     required: true,
     enum: ["easy", "medium", "hard"],
   },
+  description: { type: String, required: true },
   image: { type: String, required: true },
+  dimensions: {
+    width: { type: Number, required: true },
+    height: { type: Number, required: true },
+  },
   characters: [
     {
       character: { type: Schema.Types.ObjectId, ref: "Character" },

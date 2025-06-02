@@ -3,7 +3,13 @@ const games = [
     _id: "66c735869b3ffb61c2978a89",
     title: "Ski-Resort",
     difficulty: "easy",
+    description:
+      "Hit the slopes and search for your favorite characters in this winter wonderland! Navigate through bustling ski lodges, crowded chairlifts, and snowy mountain peaks. Can you spot Waldo, Wenda, Odlaw, and Wizard Whitebeard among the skiers, snowboarders, and après-ski enthusiasts? Bundle up and race against time to find all four before the last run of the day!",
     image: "ski-resort.jpeg",
+    dimensions: {
+      width: 5120,
+      height: 2880,
+    },
     characters: [
       {
         _id: "66cf3939a634f95c9175d880",
@@ -70,7 +76,13 @@ const games = [
     _id: "66601f7b66990e4269078fe0",
     title: "Beach",
     difficulty: "medium",
+    description:
+      "Surf's up and the beach is packed! Dive into this sunny seaside adventure where Waldo and friends are hiding among sunbathers, volleyball players, and beach vendors. From crowded boardwalks to busy lifeguard stations, can you locate all four characters before the tide comes in? Grab your sunscreen and start searching—time is ticking like the waves!",
     image: "beach.jpg",
+    dimensions: {
+      width: 3000,
+      height: 1926,
+    },
     characters: [
       {
         _id: "6736274e31d56dba97768394",
@@ -137,7 +149,13 @@ const games = [
     _id: "66601f7b66990e4269078fe7",
     title: "Space",
     difficulty: "medium",
+    description:
+      "Blast off into the cosmos for an out-of-this-world search! Navigate through bustling space stations, alien marketplaces, and intergalactic traffic jams. Can you spot Waldo, Wenda, Odlaw, and Wizard Whitebeard floating among astronauts, robots, and curious extraterrestrials? Houston, we have a challenge—find all four characters before your oxygen runs out!",
     image: "space.png",
+    dimensions: {
+      width: 3000,
+      height: 1975,
+    },
     characters: [
       {
         _id: "6736274e31d56dba9776839a",
@@ -204,7 +222,13 @@ const games = [
     _id: "66601f7b66990e4269078fee",
     title: "Hollywood",
     difficulty: "medium",
+    description:
+      "Welcome to Hollywood's biggest premiere! Race against the clock to find Waldo, Wenda, Odlaw, and Wizard Whitebeard hidden among the stars and film crews. Your timer starts now—spot all four characters as quickly as possible to top the leaderboard and claim your Hollywood fame!",
     image: "hollywood.jpeg",
+    dimensions: {
+      width: 5120,
+      height: 2880,
+    },
     characters: [
       {
         _id: "6736274e31d56dba977683a0",
@@ -271,7 +295,13 @@ const games = [
     _id: "66601f7b66990e4269078ff5",
     title: "Fruit-World",
     difficulty: "hard",
+    description:
+      "Welcome to the most deliciously chaotic farmers market ever! Weave through towering fruit stands, busy juice vendors, and enthusiastic shoppers in this fruity paradise. Can you find Waldo, Wenda, Odlaw, and Wizard Whitebeard hidden among the colorful chaos of apples, oranges, and exotic fruits? This is the ultimate challenge—every second counts in this vitamin-packed adventure!",
     image: "fruit-world.jpeg",
+    dimensions: {
+      width: 5120,
+      height: 2880,
+    },
     characters: [
       {
         _id: "6736274e31d56dba977683a6",

@@ -1,15 +1,12 @@
 import signingService from "./services/signingService";
 import gameService from "./services/gameService";
 
+import Title from "./components/Title";
 import LoadingPage from "./components/Loading/LoadingPage.jsx";
-import Header from "./components/Header";
-import Footer from "./components/Footer/index.jsx";
 import Home from "./components/Home";
 import Game from "./components/Game";
 import Login from "./components/Auth/Login";
 import SignUp from "./components/Auth/SignUp";
-
-import ScrollToHashElement from "./ScrollToHashElement.jsx";
 
 import { useState, useEffect } from "react";
 import { Routes, Route, Navigate, useMatch } from "react-router-dom";
@@ -20,7 +17,7 @@ const App = () => {
 
   const [user, setUser] = useState(null);
   const [games, setGames] = useState([]);
-  const [randomGameId, setRandomGameId] = useState(null);
+  const [showTitle, setShowTitle] = useState(true);
 
   const currentGame = match
     ? games.find((game) => game.id === match.params.id)
@@ -30,7 +27,6 @@ const App = () => {
     console.log("Fetching games...");
     gameService.getAllGames().then((games) => {
       setGames(games);
-      setRandomGameId(games[Math.floor(Math.random() * games.length)].id);
     });
   }, []);
 
@@ -43,24 +39,23 @@ const App = () => {
     }
   }, []);
 
-  console.log("User:", user);
-  console.log("Games:", games);
-  console.log("Random game ID:", randomGameId);
-
   return (
-    <div className="min-h-screen flex flex-col bg-zinc-600">
-      <Header />
+    <>
+      {showTitle && (
+        <div className="hidden sm:block absolute top-0 left-0 px-4 sm:px-8 py-4 z-50">
+          <Title />
+        </div>
+      )}
       <AnimatePresence>
         {!games.length ? (
           <LoadingPage key="loading-page" />
         ) : (
           <motion.div
             key="front-page"
-            className="h-screen flex flex-col"
+            className="min-h-screen flex flex-col bg-stars bg-repeat bg-[length:20px_20px]"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1, transition: { delay: 0.5 } }}
           >
-            <ScrollToHashElement />
             <Routes>
               <Route
                 path="/"
@@ -72,18 +67,8 @@ const App = () => {
                   )
                 }
               />
-              <Route
-                path="/login"
-                element={
-                  <Login setUser={setUser} randomGameId={randomGameId} />
-                }
-              />
-              <Route
-                path="/signup"
-                element={
-                  <SignUp setUser={setUser} randomGameId={randomGameId} />
-                }
-              />
+              <Route path="/login" element={<Login setUser={setUser} />} />
+              <Route path="/signup" element={<SignUp setUser={setUser} />} />
               <Route
                 path="/games/:id"
                 element={
@@ -92,6 +77,7 @@ const App = () => {
                     setUser={setUser}
                     currentGame={currentGame}
                     setGames={setGames}
+                    setShowTitle={setShowTitle}
                   />
                 }
               />
@@ -99,8 +85,7 @@ const App = () => {
           </motion.div>
         )}
       </AnimatePresence>
-      <Footer />
-    </div>
+    </>
   );
 };
 
