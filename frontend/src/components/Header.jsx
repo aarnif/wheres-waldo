@@ -12,6 +12,7 @@ const DesktopHeaderContent = ({ user, handleLogOut }) => {
       <nav className="flex items-center gap-16">
         <p className="text-white text-base font-bold">{user.username}</p>
         <button
+          data-testid="desktop-sign-out-button"
           className="flex justify-center items-center group"
           onClick={handleLogOut}
         >
@@ -26,7 +27,7 @@ const DesktopHeaderContent = ({ user, handleLogOut }) => {
   );
 };
 
-const MobileHeaderContent = ({ user, handleLogOut }) => {
+const MobileHeaderContent = ({ handleLogOut }) => {
   const iconSize = 1;
   return (
     <div className="w-full sm:hidden flex justify-center items-center">
@@ -40,6 +41,7 @@ const MobileHeaderContent = ({ user, handleLogOut }) => {
         </button>
         <Title />
         <button
+          data-testid="mobile-sign-out-button"
           className="flex justify-center items-center group"
           onClick={handleLogOut}
         >
@@ -66,7 +68,7 @@ const Header = ({ user }) => {
   return (
     <header className="w-full">
       <DesktopHeaderContent user={user} handleLogOut={handleLogOut} />
-      <MobileHeaderContent user={user} handleLogOut={handleLogOut} />
+      <MobileHeaderContent handleLogOut={handleLogOut} />
     </header>
   );
 };

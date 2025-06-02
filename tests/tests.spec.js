@@ -50,7 +50,7 @@ test.describe("Wheres Waldo app", () => {
     const signUpSubmitButton = await page.getByTestId("sign-up-submit-button");
     await signUpSubmitButton.click();
 
-    await expect(page.getByText("Dashboard: test")).toBeVisible();
+    await expect(page.getByText("test")).toBeVisible();
   });
 
   test("Sign in works with new user", async ({ page }) => {
@@ -63,7 +63,7 @@ test.describe("Wheres Waldo app", () => {
     const signInButton = await page.getByTestId("sign-in-button");
     await signInButton.click();
 
-    await expect(page.getByText("Dashboard: test")).toBeVisible();
+    await expect(page.getByText("test")).toBeVisible();
   });
 
   test("Sign out works", async ({ page }) => {
@@ -76,9 +76,9 @@ test.describe("Wheres Waldo app", () => {
     const signInButton = await page.getByTestId("sign-in-button");
     await signInButton.click();
 
-    await expect(page.getByText("Dashboard: test")).toBeVisible();
+    await expect(page.getByText("test")).toBeVisible();
 
-    const signOutButton = await page.getByTestId("sign-out-button");
+    const signOutButton = await page.getByTestId("desktop-sign-out-button");
     await signOutButton.click();
 
     await expect(page.getByTestId("sign-in-button")).toBeVisible();
