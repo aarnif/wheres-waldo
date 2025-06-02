@@ -1,11 +1,10 @@
-import baseUrl from "../../../baseUrl.js";
 import signingService from "../../services/signingService";
 import useField from "../../hooks/useField";
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Login = ({ setUser, randomGameId }) => {
+const Login = ({ setUser }) => {
   const navigate = useNavigate();
   const userName = useField("text", "Enter your username here...");
   const password = useField("password", "Enter your password here...");
@@ -53,21 +52,12 @@ const Login = ({ setUser, randomGameId }) => {
   };
 
   return (
-    <div
-      className="w-full flex-grow flex flex-col justify-center items-center"
-      style={{
-        backgroundImage: `url(${baseUrl}/games/${randomGameId}/image)`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        backgroundBlur: "10px",
-      }}
-    >
-      <div className="w-full flex-grow flex flex-col backdrop-blur-sm">
+    <div className="w-full flex-grow flex flex-col justify-center items-center">
+      <div className="w-full flex-grow flex flex-col">
         <div className="flex-grow w-full flex justify-center items-center">
           <div
             className="flex-grow max-w-[500px] max-h-[600px] p-8 flex justify-center items-center
-         bg-zinc-700 bg-opacity-90 rounded-xl text-white shadow-xl"
+         bg-slate-700 bg-opacity-90 rounded-xl text-white shadow-xl"
           >
             <form
               onSubmit={handleSubmit}
@@ -89,7 +79,7 @@ const Login = ({ setUser, randomGameId }) => {
                   </label>
                   <input
                     data-testid="username-input"
-                    className="w-full flex-grow p-2 rounded-lg bg-zinc-500
+                    className="w-full flex-grow p-2 rounded-lg bg-slate-500
                   focus:outline-none focus:ring-2 focus:ring-sky-400 placeholder:text-slate-200 transition"
                     {...userName}
                   />
@@ -106,7 +96,7 @@ const Login = ({ setUser, randomGameId }) => {
                   </label>
                   <input
                     data-testid="password-input"
-                    className="w-full flex-grow p-2 rounded-lg bg-zinc-500
+                    className="w-full flex-grow p-2 rounded-lg bg-slate-500
           focus:outline-none focus:ring-2 focus:ring-sky-400 placeholder:text-slate-200 transition"
                     {...password}
                   />
@@ -137,7 +127,7 @@ const Login = ({ setUser, randomGameId }) => {
                     type="button"
                     data-testid="sign-up-button"
                     className="w-full flex-grow h-[70px] border-2 border-slate-200 rounded-xl text-xl font-bold text-slate-200
-                hover:bg-zinc-500 focus:bg-zinc-500 focus:outline-none focus:ring-2 focus:ring-sky-400 active:scale-95 transition"
+                hover:bg-slate-500 focus:bg-slate-500 focus:outline-none focus:ring-2 focus:ring-sky-400 active:scale-95 transition"
                   >
                     Sign Up Here
                   </button>
