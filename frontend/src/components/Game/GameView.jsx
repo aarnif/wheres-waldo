@@ -213,6 +213,13 @@ const GameView = ({ user, setUser, currentGame, setGames, handleEndGame }) => {
         ...prevState,
         playedGames: prevState.playedGames.concat({ game: response }),
       }));
+      window.localStorage.setItem(
+        "loggedUser",
+        JSON.stringify({
+          ...user,
+          playedGames: user.playedGames.concat({ game: response }),
+        })
+      );
     });
   };
 
