@@ -16,6 +16,7 @@ const getAllGames = asyncHandler(async (req, res) => {
       path: "characters",
       populate: { path: "character" },
     })
+    .sort({ level: 1 })
     .exec();
 
   res.json(allGames);

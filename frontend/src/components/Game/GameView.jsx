@@ -211,7 +211,7 @@ const GameView = ({ user, setUser, currentGame, setGames, handleEndGame }) => {
       );
       setUser((prevState) => ({
         ...prevState,
-        playedGames: prevState.playedGames.concat(response.id),
+        playedGames: prevState.playedGames.concat({ game: response }),
       }));
     });
   };
