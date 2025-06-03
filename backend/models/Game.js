@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 
 const gameSchema = new Schema({
   title: { type: String, required: true },
+  level: { type: Number, required: true, unique: true },
   difficulty: {
     type: String,
     required: true,
