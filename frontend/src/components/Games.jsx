@@ -35,7 +35,7 @@ const GameCard = ({ user, game, games }) => {
         src={imageUrl}
         alt={title}
         className={`w-full h-full object-cover rounded-lg ${
-          !isUnlocked ? "blur-md grayscale" : "blur-md"
+          !isUnlocked ? "blur-md grayscale" : isCompleted ? "" : "blur-md"
         }`}
       />
 
