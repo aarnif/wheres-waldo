@@ -15,23 +15,25 @@ const GameOverModal = ({ time, startNewGame, handleChangeGame }) => {
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0, transition: { delay: 0.3 } }}
         transition={{ duration: 0.3 }}
-        className="mx-8 w-full max-w-[600px] p-8 flex flex-col justify-center items-center bg-slate-800 rounded-xl text-slate-100"
+        className="mx-4 w-full max-w-[600px] p-4 sm:p-8 flex flex-col justify-center items-center bg-slate-800 rounded-xl text-slate-100"
       >
-        <h2 className="mb-2 text-xl font-bold text-center">Congratulations!</h2>
+        <h2 className="mb-2 text-lg sm:text-xl font-bold text-center">
+          Congratulations!
+        </h2>
 
-        <h2 className="mb-4 text-xl font-bold text-center">
+        <h2 className="mb-4 text-lg sm:text-xl font-bold text-center">
           You found all the characters!
         </h2>
 
-        <h2 className="w-full mb-4 flex-grow text-xl font-bold text-center">
+        <h2 className="w-full mb-4 flex-grow text-lg sm:text-xl font-bold text-center">
           Your time was:
         </h2>
 
-        <h1 className="w-full mb-8 flex-grow text-2xl font-bold text-center text-slate-50">
+        <h1 className="w-full mb-8 flex-grow text-xl sm:text-2xl font-bold text-center text-slate-50">
           {time}
         </h1>
 
-        <div className="flex gap-8">
+        <div className="w-full flex flex-col-reverse sm:flex-row justify-center gap-4 sm:gap-8">
           <button
             onClick={startNewGame}
             className="px-7 py-3 shadow-lg border border-slate-600 bg-slate-600 hover:bg-slate-700 hover:border-slate-700 active:border-slate-800 active:inset-shadow-sm rounded-2xl text-white text-base font-bold transition-all duration-200 ease-in-out"
