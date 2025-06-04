@@ -71,110 +71,108 @@ const SignUp = ({ setUser }) => {
   };
 
   return (
-    <div className="w-full flex-grow flex flex-col justify-center items-center">
-      <div className="w-full flex-grow flex flex-col">
-        <div className="flex-grow w-full flex justify-center items-center">
-          <div
-            className="flex-grow max-w-[500px] max-h-[600px] p-8 flex justify-center items-center
+    <div className="flex-grow w-full flex justify-center items-center">
+      <div
+        className="m-4 flex-grow max-w-[500px] max-h-[600px] p-4 sm:p-8 flex justify-center items-center
          bg-slate-700 bg-opacity-90 rounded-xl text-white shadow-xl"
-          >
-            <form
-              id="sign-up-form"
-              onSubmit={handleSubmit}
-              onChange={handleFormChange}
-              className="flex-grow h-full flex flex-col"
-            >
-              <h1 className="text-2xl font-bold">Sign Up</h1>
-              <ul>
-                {errorMessage && (
-                  <li className="p-2 flex justify-center items-center bg-red-400 rounded-lg">
-                    <span className="text-md text-red-700">{errorMessage}</span>
-                  </li>
-                )}
+      >
+        <form
+          id="sign-up-form"
+          onSubmit={handleSubmit}
+          onChange={handleFormChange}
+          className="flex-grow h-full flex flex-col"
+        >
+          <h1 className="text-xl sm:text-2xl font-bold">Sign Up</h1>
+          <ul>
+            {errorMessage && (
+              <li className="p-2 flex justify-center items-center bg-red-400 rounded-lg">
+                <span className="text-sm sm:text-base text-red-700">
+                  {errorMessage}
+                </span>
+              </li>
+            )}
 
-                <li className="my-4 w-full flex-grow flex flex-col">
-                  <label className="text-md font-medium text-slate-200">
-                    USERNAME:
-                  </label>
-                  <input
-                    id="username"
-                    name="username"
-                    data-testid="username-input"
-                    className="w-full flex-grow p-2 rounded-lg bg-slate-500
+            <li className="my-4 w-full flex-grow flex flex-col">
+              <label className="text-sm sm:text-base font-medium text-slate-200">
+                USERNAME:
+              </label>
+              <input
+                id="username"
+                name="username"
+                data-testid="username-input"
+                className="w-full flex-grow p-2 rounded-lg bg-slate-500 text-sm sm:text-base
           focus:outline-none focus:ring-2 focus:ring-sky-400 placeholder:text-slate-200 transition"
-                    {...userName}
-                  />
-                  {userName.value.length === 0 && (
-                    <span className="text-sm text-red-500">
-                      Please enter username of at least 4 characters
-                    </span>
-                  )}
-                </li>
+                {...userName}
+              />
+              {userName.value.length === 0 && (
+                <span className="text-sm text-red-500">
+                  Please enter username of at least 4 characters
+                </span>
+              )}
+            </li>
 
-                <li className="my-4 w-full flex-grow flex flex-col">
-                  <label className="text-md font-medium text-slate-200">
-                    PASSWORD:
-                  </label>
-                  <input
-                    id="password"
-                    name="password"
-                    data-testid="password-input"
-                    className="w-full flex-grow p-2 rounded-lg bg-slate-500
+            <li className="my-4 w-full flex-grow flex flex-col">
+              <label className="text-sm sm:text-base font-medium text-slate-200">
+                PASSWORD:
+              </label>
+              <input
+                id="password"
+                name="password"
+                data-testid="password-input"
+                className="w-full flex-grow p-2 rounded-lg bg-slate-500 text-sm sm:text-base
           focus:outline-none focus:ring-2 focus:ring-sky-400 placeholder:text-slate-200 transition"
-                    {...password}
-                  />
-                  {password.value.length === 0 && (
-                    <span className="text-sm text-red-500">
-                      Please enter password of at least 6 characters
-                    </span>
-                  )}
-                </li>
+                {...password}
+              />
+              {password.value.length === 0 && (
+                <span className="text-sm text-red-500">
+                  Please enter password of at least 6 characters
+                </span>
+              )}
+            </li>
 
-                <li className="my-4 w-full flex-grow flex flex-col">
-                  <label className="text-md font-medium text-slate-200">
-                    CONFIRM PASSWORD:
-                  </label>
-                  <input
-                    id="confirm-password"
-                    name="confirm-password"
-                    data-testid="confirm-password-input"
-                    className="w-full flex-grow p-2 rounded-lg bg-slate-500
+            <li className="my-4 w-full flex-grow flex flex-col">
+              <label className="text-sm sm:text-base font-medium text-slate-200">
+                CONFIRM PASSWORD:
+              </label>
+              <input
+                id="confirm-password"
+                name="confirm-password"
+                data-testid="confirm-password-input"
+                className="w-full flex-grow p-2 rounded-lg bg-slate-500 text-sm sm:text-base
           focus:outline-none focus:ring-2 focus:ring-sky-400 placeholder:text-slate-200 transition"
-                    {...confirmPassword}
-                  />
-                  {confirmPassword.value.length === 0 && (
-                    <span className="text-sm text-red-500">
-                      Please re-enter password
-                    </span>
-                  )}
-                </li>
+                {...confirmPassword}
+              />
+              {confirmPassword.value.length === 0 && (
+                <span className="text-sm text-red-500">
+                  Please re-enter password
+                </span>
+              )}
+            </li>
 
-                <li className="my-4 flex justify-center items-center">
-                  <button
-                    type="submit"
-                    data-testid="sign-up-submit-button"
-                    className="flex-grow h-[70px] bg-green-500 border-2 border-green-500 rounded-xl text-xl font-bold text-white
+            <li className="mt-4 sm:my-4 flex justify-center items-center">
+              <button
+                type="submit"
+                data-testid="sign-up-submit-button"
+                className="flex-grow py-3 sm:py-4 bg-green-500 border-2 border-green-500 rounded-xl text-lg sm:text-xl font-bold text-white
                 hover:bg-green-600 focus:bg-green-600 focus:outline-none focus:ring-2 focus:ring-sky-400 active:scale-95 transition"
-                  >
-                    Sign Up
-                  </button>
-                </li>
+              >
+                Sign Up
+              </button>
+            </li>
 
-                <li className="my-4 flex flex-col justify-center items-center">
-                  <button
-                    onClick={() => navigate("/login")}
-                    type="button"
-                    data-testid="sign-up-button"
-                    className="w-full flex-grow h-[70px] border-2 border-slate-200 rounded-xl text-xl font-bold text-slate-200
+            <li className="mt-4 sm:my-4 flex flex-col justify-center items-center">
+              <button
+                onClick={() => navigate("/login")}
+                type="button"
+                data-testid="sign-up-button"
+                className="w-full flex-grow py-3 sm:py-4 border-2 border-slate-200 rounded-xl text-lg sm:text-xl font-bold text-slate-200
                 hover:bg-slate-500 focus:bg-slate-500 focus:outline-none focus:ring-2 focus:ring-sky-400 active:scale-95 transition"
-                  >
-                    Return to Login
-                  </button>
-                </li>
-              </ul>
-            </form>
-          </div>
-        </div>
+              >
+                Return to Login
+              </button>
+            </li>
+          </ul>
+        </form>
       </div>
     </div>
   );
