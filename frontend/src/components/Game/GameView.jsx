@@ -57,6 +57,8 @@ const GameView = ({ user, setUser, currentGame, setGames, handleEndGame }) => {
     volume: playSound ? 0.25 : 0,
   });
 
+  const isMobile = width < 640; // 640px is the sm breakpoint in Tailwind CSS
+
   const timeUnit = 10;
   const gameMessageDuration = 1000;
   const gameCanvasElement = document.getElementById("game-canvas");
@@ -231,6 +233,10 @@ const GameView = ({ user, setUser, currentGame, setGames, handleEndGame }) => {
     console.log("Clicked on character:", chosenCharacter);
     console.log("Clicked coordinates:", clickedCoordinates);
 
+    const chosenCharacterName = isMobile
+      ? chosenCharacter.character.displayName
+      : chosenCharacter.character.name;
+
     setShowDropdown(false);
 
     if (
@@ -241,7 +247,7 @@ const GameView = ({ user, setUser, currentGame, setGames, handleEndGame }) => {
     ) {
       chosenCharacter.isFound = true;
       rightPickSound();
-      setGameMessage(`You found ${chosenCharacter.character.name}!`);
+      setGameMessage(`You found ${chosenCharacterName}!`);
       setGameMarks([
         ...gameMarks,
         {
@@ -251,7 +257,7 @@ const GameView = ({ user, setUser, currentGame, setGames, handleEndGame }) => {
       ]);
     } else {
       wrongPickSound();
-      setGameMessage(`That is not ${chosenCharacter.character.name}!`);
+      setGameMessage(`That is not ${chosenCharacterName}!`);
     }
 
     setAimCordinates({
@@ -317,7 +323,7 @@ const GameView = ({ user, setUser, currentGame, setGames, handleEndGame }) => {
         onClick={handleCanvasClick}
       >
         {gameMarks.map((mark, index) => (
-          <GameMark key={index} aimCordinates={mark} />
+          <GameMark key={index} aimCordinates={mark} isMobile={isMobile} />
         ))}
 
         {showAimCursor && (

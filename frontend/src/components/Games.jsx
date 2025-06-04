@@ -27,7 +27,7 @@ const GameCard = ({ user, game, games }) => {
       disabled={!isUnlocked}
       className={`group relative w-full max-w-[500px] aspect-[4/5] rounded-lg shadow-md bg-slate-300 transition-all duration-200 ${
         isUnlocked
-          ? "cursor-pointer hover:scale-105"
+          ? "cursor-pointer sm:hover:scale-105"
           : "cursor-not-allowed opacity-60"
       }`}
     >
@@ -40,7 +40,7 @@ const GameCard = ({ user, game, games }) => {
       />
 
       {isUnlocked && !isCompleted && (
-        <div className="absolute opacity-100 group-hover:opacity-0 inset-0 flex justify-center items-center rounded-lg">
+        <div className="hidden absolute opacity-100 group-hover:opacity-0 inset-0 sm:flex justify-center items-center rounded-lg">
           <h2 className="px-4 py-1 text-2xl text-slate-50 bg-slate-300/50 rounded-full font-bold">
             Level {level}
           </h2>
@@ -57,9 +57,12 @@ const GameCard = ({ user, game, games }) => {
       )}
 
       {isUnlocked && !isCompleted && (
-        <div className="opacity-0 group-hover:opacity-100 absolute inset-0 p-12 flex flex-col justify-between bg-black/50 text-white rounded-lg transition-all duration-300 ease-in-out">
-          <h2 className="text-2xl font-bold">{title}</h2>
-          <div className="flex justify-start gap-8">
+        <div className="opacity-100 sm:opacity-0 sm:group-hover:opacity-100 absolute inset-0 p-8 sm:p-12 flex flex-col justify-between bg-black/50 text-white rounded-lg transition-all duration-300 ease-in-out">
+          <div className="flex justify-between sm:justify-start items-center">
+            <h2 className="text-2xl font-bold">{title}</h2>
+            <h3 className="text-lg font-semibold sm:hidden">Level {level}</h3>
+          </div>
+          <div className="grid grid-cols-2 sm:flex justify-center sm:justify-start gap-8">
             {characters?.map((character) => (
               <GameCharacter
                 key={character.id}

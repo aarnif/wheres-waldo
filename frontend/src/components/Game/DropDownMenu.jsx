@@ -4,10 +4,10 @@ const DropDownMenuItem = ({ character, handleDropDownClick }) => (
   <li className="my-2">
     <button
       id={character.id}
-      className="w-full p-2 flex justify-start items-center rounded-xl font-semibold hover:bg-slate-900 text-slate-50 transition"
+      className="w-full px-2 sm:p-2 flex justify-start items-center rounded-xl font-semibold hover:bg-slate-900 text-slate-50 transition"
       onClick={handleDropDownClick}
     >
-      {character.character.name}
+      {character.character.displayName}
     </button>
   </li>
 );
@@ -49,7 +49,7 @@ const DropDownMenu = ({ game, dropDownCoordinates, handleDropDownClick }) => {
         left: `${menuCoordinates.left}px`,
         top: `${menuCoordinates.top}px`,
       }}
-      className="absolute p-4 flex flex-col bg-slate-900/40 rounded-xl text-slate-100 z-10"
+      className="absolute p-2 sm:p-4 flex flex-col bg-slate-900/40 rounded-xl text-slate-100 z-10"
     >
       <ul>
         {game.characters.map(

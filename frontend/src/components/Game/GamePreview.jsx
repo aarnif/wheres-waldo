@@ -13,19 +13,19 @@ const GamePreview = ({ currentGame, handleStartGame }) => {
       style={{ backgroundImage: `url(${imageUrl})` }}
       className={`w-full h-screen flex justify-center items-center bg-cover bg-center animate-fade-in`}
     >
-      <div className="fixed inset-0 p-16 flex justify-start items-center bg-black bg-opacity-60 backdrop-blur-sm">
+      <div className="fixed inset-0 p-4 sm:p-16 flex justify-start items-center bg-black bg-opacity-60 backdrop-blur-sm">
         <section className="w-full max-w-3xl flex flex-col gap-12">
           <div className="flex flex-col gap-8">
-            <div className="flex flex-col gap-2">
-              <h1 className="text-slate-50 text-3xl font-bold font-roboto-condensed tracking-wide">
+            <div className="flex flex-col items-center sm:items-start gap-2">
+              <h1 className="text-center sm:text-left text-slate-50 text-3xl font-bold font-roboto-condensed tracking-wide">
                 {title}
               </h1>
-              <p className="px-1.5 py-1 bg-slate-300/50 rounded-lg w-fit text-slate-100 text-sm font-medium shadow-lg">
+              <p className="text-center sm:text-left px-1.5 py-1 bg-slate-300/50 rounded-lg w-fit text-slate-100 text-sm font-medium shadow-lg">
                 {difficulty}
               </p>
             </div>
 
-            <p className="text-slate-50 text-base font-medium leading-relaxed">
+            <p className="text-center sm:text-left text-slate-50 text-base font-medium leading-relaxed">
               {description}
             </p>
           </div>
@@ -40,7 +40,7 @@ const GamePreview = ({ currentGame, handleStartGame }) => {
             ))}
           </div>
 
-          <div className="flex gap-4">
+          <div className="flex flex-col-reverse sm:flex-row gap-4">
             <button
               onClick={() => navigate("/")}
               className="px-7 py-3 shadow-lg border border-slate-600 bg-slate-600 hover:bg-slate-700 hover:border-slate-700 active:border-slate-800 active:inset-shadow-sm rounded-2xl text-white text-base font-bold transition-all duration-200 ease-in-out"

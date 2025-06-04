@@ -8,12 +8,12 @@ const GameCharacter = ({ gameId, character }) => {
     >
       <div className="p-2 bg-slate-300/50 rounded-lg flex items-center justify-center shadow-lg">
         <img
-          className="w-16 h-16 rounded-lg object-cover"
+          className="w-12 h-12 sm:w-16 sm:h-16 rounded-lg object-cover"
           src={`${baseUrl}/games/${gameId}/characters/${character.id}/image`}
           alt={character.character.name}
         />
       </div>
-      <span className="text-slate-50 text-base font-bold text-center">
+      <span className="text-slate-50 text-sm sm:text-base font-bold text-center">
         {character.character.displayName}
       </span>
     </div>
