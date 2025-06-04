@@ -11,8 +11,8 @@ The project is part of the [The Odin Project's](https://www.theodinproject.com/)
 
 ## Live Preview
 
-[Where's Waldo UI](https://wheres-waldo-aarnif.netlify.app/login)
-[Where's Waldo API](https://wheres-waldo-api-rln6.onrender.com/)
+- [Where's Waldo UI](https://wheres-waldo-aarnif.netlify.app/login)
+- [Where's Waldo API](https://wheres-waldo-api-rln6.onrender.com/)
 
 ## Technologies
 
@@ -36,7 +36,7 @@ Where's Waldo (originally Where's Wally) is a brand created by Martin Handford.
 
 ## Images
 
-![Where's Waldo](/frontend/public/images/sing-in.png)
+![Where's Waldo](/frontend/public/images/sign-in.png)
 Sign In Page
 <br>
 
@@ -44,8 +44,8 @@ Sign In Page
 Games Page
 <br>
 
-![Where's Waldo](/frontend/public/images/game.png)
-Individual Game Page
+![Where's Waldo](/frontend/public/images/game-view.png)
+Game View
 <br>
 
 Below are all the routes that the api supports.
