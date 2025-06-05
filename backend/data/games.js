@@ -57,9 +57,66 @@ const games = [
   },
 
   {
+    _id: "66c735869b3ffb61c2978a90",
+    title: "Athletics",
+    level: 2,
+    difficulty: "easy",
+    description:
+      "Ready, set, go! The track and field championships are in full swing, and the stadium is buzzing with energy! Navigate through packed grandstands, busy warm-up areas, and crowded medal ceremonies. Can you spot Waldo, Wenda, Odlaw, and Wizard Whitebeard among the athletes, coaches, and cheering spectators? Sprint to find all four before the final event concludes!",
+    image: "athletics.jpg",
+    dimensions: {
+      width: 3000,
+      height: 1899,
+    },
+    characters: [
+      {
+        _id: "66c735869b3ffb61c2978a91",
+        character: "66601f7a66990e4269078fd0",
+        coordinates: {
+          a: { x: 0.269, y: 0.32 },
+          b: { x: 0.292, y: 0.32 },
+          c: { x: 0.292, y: 0.367 },
+          d: { x: 0.269, y: 0.367 },
+        },
+      },
+      {
+        _id: "66c735869b3ffb61c2978a92",
+        character: "66601f7a66990e4269078fd3",
+        coordinates: {
+          a: { x: 0.244, y: 0.708 },
+          b: { x: 0.259, y: 0.708 },
+          c: { x: 0.259, y: 0.745 },
+          d: { x: 0.244, y: 0.745 },
+        },
+      },
+      {
+        _id: "66c735869b3ffb61c2978a93",
+        character: "66601f7a66990e4269078fd1",
+        coordinates: {
+          a: { x: 0.591, y: 0.629 },
+          b: { x: 0.608, y: 0.629 },
+          c: { x: 0.608, y: 0.666 },
+          d: { x: 0.591, y: 0.666 },
+        },
+      },
+      {
+        _id: "66c735869b3ffb61c2978a94",
+        character: "66601f7a66990e4269078fd2",
+        coordinates: {
+          a: { x: 0.605, y: 0.842 },
+          b: { x: 0.62, y: 0.842 },
+          c: { x: 0.62, y: 0.916 },
+          d: { x: 0.605, y: 0.916 },
+        },
+      },
+    ],
+    leaderboard: [],
+  },
+
+  {
     _id: "66601f7b66990e4269078fe0",
     title: "Beach",
-    level: 2,
+    level: 3,
     difficulty: "medium",
     description:
       "Surf's up and the beach is packed! Dive into this sunny seaside adventure where Waldo and friends are hiding among sunbathers, volleyball players, and beach vendors. From crowded boardwalks to busy lifeguard stations, can you locate all four characters before the tide comes in? Grab your sunscreen and start searching—time is ticking like the waves!",
@@ -116,7 +173,7 @@ const games = [
   {
     _id: "66601f7b66990e4269078fe7",
     title: "Space",
-    level: 3,
+    level: 4,
     difficulty: "medium",
     description:
       "Blast off into the cosmos for an out-of-this-world search! Navigate through bustling space stations, alien marketplaces, and intergalactic traffic jams. Can you spot Waldo, Wenda, Odlaw, and Wizard Whitebeard floating among astronauts, robots, and curious extraterrestrials? Houston, we have a challenge—find all four characters before your oxygen runs out!",
@@ -173,7 +230,7 @@ const games = [
   {
     _id: "66601f7b66990e4269078fee",
     title: "Hollywood",
-    level: 4,
+    level: 5,
     difficulty: "medium",
     description:
       "Welcome to Hollywood's biggest premiere! Race against the clock to find Waldo, Wenda, Odlaw, and Wizard Whitebeard hidden among the stars and film crews. Your timer starts now—spot all four characters as quickly as possible to top the leaderboard and claim your Hollywood fame!",
@@ -230,7 +287,7 @@ const games = [
   {
     _id: "66601f7b66990e4269078ff5",
     title: "Fruit-World",
-    level: 5,
+    level: 6,
     difficulty: "hard",
     description:
       "Welcome to the most deliciously chaotic farmers market ever! Weave through towering fruit stands, busy juice vendors, and enthusiastic shoppers in this fruity paradise. Can you find Waldo, Wenda, Odlaw, and Wizard Whitebeard hidden among the colorful chaos of apples, oranges, and exotic fruits? This is the ultimate challenge—every second counts in this vitamin-packed adventure!",
