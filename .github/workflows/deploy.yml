@@ -45,6 +45,7 @@ jobs:
           TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
           PORT: ${{ secrets.PORT }}
           SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
+          VITE_BASE_URL: ${{ secrets.VITE_BASE_URL }}
 
   deploy:
     needs: [deployment_pipeline]
