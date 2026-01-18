@@ -42,7 +42,7 @@ const App = () => {
   return (
     <>
       {showTitle && (
-        <div className="hidden sm:block absolute top-0 left-0 px-4 sm:px-8 py-4 z-50">
+        <div className="absolute top-0 left-0 z-50 hidden px-4 py-4 sm:block sm:px-8">
           <Title />
         </div>
       )}
@@ -52,7 +52,7 @@ const App = () => {
         ) : (
           <motion.div
             key="front-page"
-            className="min-h-screen flex flex-col bg-stars bg-repeat bg-[length:20px_20px]"
+            className="min-h-screen flex flex-col bg-[url('/images/4-point-stars.svg')] bg-repeat bg-[length:20px_20px]"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1, transition: { delay: 0.5 } }}
           >
