@@ -6,10 +6,22 @@
 @import "@fontsource/roboto-condensed/500.css";
 @import "@fontsource/roboto-condensed/700.css";
 
-@config "../tailwind.config.js";
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --font-roboto: "Roboto", sans-serif;
+  --font-roboto-condensed: "Roboto Condensed", sans-serif;
+
+  --animate-fade-in: fade-in 0.4s ease-out;
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+}
 
 @layer base {
   .transition {
