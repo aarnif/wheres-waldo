@@ -10,7 +10,7 @@ const typeCredentials = async (
   page,
   username,
   password,
-  confirmPassword = null
+  confirmPassword = null,
 ) => {
   const usernameInput = await page.getByTestId("username-input");
   await usernameInput.fill(username);
@@ -20,7 +20,7 @@ const typeCredentials = async (
 
   if (confirmPassword) {
     const confirmPasswordInput = await page.getByTestId(
-      "confirm-password-input"
+      "confirm-password-input",
     );
     await confirmPasswordInput.fill(confirmPassword);
   }
@@ -36,7 +36,7 @@ test.describe("Wheres Waldo app", () => {
   });
 
   test("Sign up with a new user", async ({ page, request }) => {
-    await request.post("http://localhost:5000/api/testing/reset");
+    await request.post("http://localhost:3000/api/testing/reset");
     const signUpButton = await page.getByTestId("sign-up-button");
     await signUpButton.click();
 
@@ -44,7 +44,7 @@ test.describe("Wheres Waldo app", () => {
       page,
       userCredentials.username,
       userCredentials.password,
-      userCredentials.confirmPassword
+      userCredentials.confirmPassword,
     );
 
     const signUpSubmitButton = await page.getByTestId("sign-up-submit-button");
@@ -57,7 +57,7 @@ test.describe("Wheres Waldo app", () => {
     await typeCredentials(
       page,
       userCredentials.username,
-      userCredentials.password
+      userCredentials.password,
     );
 
     const signInButton = await page.getByTestId("sign-in-button");
@@ -70,7 +70,7 @@ test.describe("Wheres Waldo app", () => {
     await typeCredentials(
       page,
       userCredentials.username,
-      userCredentials.password
+      userCredentials.password,
     );
 
     const signInButton = await page.getByTestId("sign-in-button");
