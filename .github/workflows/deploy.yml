@@ -12,10 +12,10 @@ jobs:
   deployment_pipeline:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v6
         with:
-          node-version: "21"
+          node-version: "24"
       - name: Install dependencies
         run: npm install
       - name: Install Playwright Browsers
@@ -48,10 +48,10 @@ jobs:
     needs: [deployment_pipeline]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v6
         with:
-          node-version: "21"
+          node-version: "24"
       - name: Trigger deployment
         if: ${{ github.event_name == 'push' && contains(join(github.event.commits.*.message, ', '), '#skip') == false }}
         run: curl ${{ secrets.RENDER_SERVICE_URL }}
