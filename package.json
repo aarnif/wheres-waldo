@@ -22,7 +22,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@cascadia-code/scroll-to-hash-element": "^2.0.3",
     "@fontsource/roboto": "^5.2.9",
     "@fontsource/roboto-condensed": "^5.2.8",
     "@fortawesome/free-brands-svg-icons": "^7.1.0",
