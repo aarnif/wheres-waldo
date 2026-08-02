@@ -3,7 +3,9 @@
   "private": true,
   "version": "1.0.0",
   "description": "Where's Waldo (A Photo Tagging App)",
-  "workspaces": [],
+  "workspaces": [
+    "backend"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
