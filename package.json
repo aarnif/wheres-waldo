@@ -1,0 +1,22 @@
+{
+  "name": "wheres-waldo",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Where's Waldo (A Photo Tagging App)",
+  "workspaces": [],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aarnif/wheres-waldo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/aarnif/wheres-waldo/issues"
+  },
+  "homepage": "https://github.com/aarnif/wheres-waldo#readme"
+}
