@@ -4,7 +4,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "db:start": "docker compose -f docker-compose.dev.yml up",
+    "db:populate": "POPULATE_DB=true node src/db/populateDb.ts"
   },
   "keywords": [],
   "author": "",

@@ -8,7 +8,8 @@
     "frontend"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "backend:db:start": "npm run db:start -w backend",
+    "backend:db:populate": "npm run db:populate -w backend"
   },
   "repository": {
     "type": "git",
