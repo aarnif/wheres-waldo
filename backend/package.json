@@ -11,11 +11,13 @@
   "license": "MIT",
   "type": "module",
   "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
     "@types/node": "^26.1.2",
     "drizzle-kit": "^0.31.10",
     "typescript": "^7.0.2"
   },
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "drizzle-orm": "^0.45.2",
     "postgres": "^3.4.9"
   }
