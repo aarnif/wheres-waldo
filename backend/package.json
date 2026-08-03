@@ -5,7 +5,9 @@
   "description": "",
   "scripts": {
     "db:start": "docker compose -f docker-compose.dev.yml up",
-    "db:populate": "POPULATE_DB=true node src/db/populateDb.ts"
+    "db:populate": "POPULATE_DB=true node src/db/populateDb.ts",
+    "dev": "node --watch src/index.ts",
+    "start": "node src/index.ts"
   },
   "keywords": [],
   "author": "",
