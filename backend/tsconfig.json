@@ -1,5 +1,5 @@
 {
-  "include": ["src/**/*", "drizzle.config.ts"],
+  "include": ["src/**/*", "config.ts", "drizzle.config.ts"],
   "compilerOptions": {
     "target": "esnext",
     "noEmit": true,
