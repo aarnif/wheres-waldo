@@ -9,7 +9,9 @@
   ],
   "scripts": {
     "backend:db:start": "npm run db:start -w backend",
-    "backend:db:populate": "npm run db:populate -w backend"
+    "backend:db:populate": "npm run db:populate -w backend",
+    "backend:dev": "npm run dev -w backend",
+    "backend:start": "npm run start -w backend"
   },
   "repository": {
     "type": "git",
