@@ -1,10 +1,14 @@
 import { before, after, describe, test } from "node:test";
 import assert from "node:assert";
 import supertest from "supertest";
+import { eq, inArray } from "drizzle-orm";
 import app from "../app.ts";
 import { emptyDatabase, populateDatabase } from "../db/populateDb.ts";
 import { db } from "../db/index.ts";
 import { mockGames } from "./mocks/games.ts";
+import { mockGameScores } from "./mocks/gameScores.ts";
+import { mockUsers } from "./mocks/users.ts";
+import { users, gameScores } from "../db/schema.ts";
 
 const api = supertest(app);
 
@@ -74,6 +78,52 @@ describe("GET /api/games/:id", () => {
 
   test("returns 404 for non-existing game", async () => {
     const response = await api.get("/api/games/0");
+
+    assert.strictEqual(response.status, 404);
+    assert.deepStrictEqual(response.body, { error: "Game not found" });
+  });
+});
+
+describe("GET /api/games/:id/scores", () => {
+  before(async () => {
+    await db.insert(users).values(mockUsers);
+    await db.insert(gameScores).values(mockGameScores);
+  });
+
+  after(async () => {
+    await db.delete(gameScores).where(eq(gameScores.gameId, mockGames[0].id));
+    const mockUserIdsToDelete = mockUsers.map((user) => user.id);
+    await db.delete(users).where(inArray(users.id, mockUserIdsToDelete));
+  });
+
+  test("returns all scores for the game", async () => {
+    const expectedGame = mockGames[0];
+    const response = await api.get(`/api/games/${expectedGame.id}/scores`);
+
+    assert.strictEqual(response.body.length, mockGameScores.length);
+  });
+
+  test("returns leaderboard with correct properties", async () => {
+    const expectedGame = mockGames[0];
+    const expectedScore = mockGameScores[0];
+    const expectedUser = mockUsers[0];
+    const response = await api.get(`/api/games/${expectedGame.id}/scores`);
+    const leaderboard = response.body;
+
+    assert.strictEqual(leaderboard[0].time, expectedScore.time);
+    assert.strictEqual(leaderboard[0].user.username, expectedUser.username);
+    assert.strictEqual(leaderboard[0].user.passwordHash, undefined);
+  });
+
+  test("returns 400 for invalid game id", async () => {
+    const response = await api.get("/api/games/invalid-id/scores");
+
+    assert.strictEqual(response.status, 400);
+    assert.deepStrictEqual(response.body, { error: "Invalid game id" });
+  });
+
+  test("returns 404 for non-existing game", async () => {
+    const response = await api.get("/api/games/0/scores");
 
     assert.strictEqual(response.status, 404);
     assert.deepStrictEqual(response.body, { error: "Game not found" });
