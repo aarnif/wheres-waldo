@@ -7,7 +7,8 @@
     "db:start": "docker compose -f docker-compose.dev.yml up",
     "db:populate": "POPULATE_DB=true node src/db/populateDb.ts",
     "dev": "node --watch src/index.ts",
-    "start": "node src/index.ts"
+    "start": "node src/index.ts",
+    "test": "NODE_ENV=test node src/tests/*.test.ts"
   },
   "keywords": [],
   "author": "",
@@ -18,7 +19,9 @@
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/node": "^26.1.2",
+    "@types/supertest": "^7.2.1",
     "drizzle-kit": "^0.31.10",
+    "supertest": "^7.2.2",
     "typescript": "^7.0.2"
   },
   "dependencies": {
