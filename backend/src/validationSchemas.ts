@@ -10,3 +10,8 @@ export const newUserInputSchema = z
     message: "Passwords do not match",
     path: ["confirmPassword"],
   });
+
+export const loginInputSchema = z.object({
+  username: z.string().min(1, "Username required"),
+  password: z.string().min(1, "Password required"),
+});
