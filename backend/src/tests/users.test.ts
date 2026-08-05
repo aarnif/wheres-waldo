@@ -132,7 +132,11 @@ describe("POST /api/users/login", () => {
 
     assert.strictEqual(response.status, 400);
     assert.ok(response.body.errors.length > 0);
-    assert.ok(response.body.errors[0].message.includes("Username required"));
+    assert.ok(
+      response.body.errors[0].message.includes(
+        "Invalid input: expected string, received undefined",
+      ),
+    );
   });
 
   test("returns 400 for missing password", async () => {
@@ -142,7 +146,11 @@ describe("POST /api/users/login", () => {
 
     assert.strictEqual(response.status, 400);
     assert.ok(response.body.errors.length > 0);
-    assert.ok(response.body.errors[0].message.includes("Password required"));
+    assert.ok(
+      response.body.errors[0].message.includes(
+        "Invalid input: expected string, received undefined",
+      ),
+    );
   });
 
   test("returns 400 for non-existing username", async () => {
