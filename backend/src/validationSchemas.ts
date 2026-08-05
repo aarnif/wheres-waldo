@@ -15,3 +15,7 @@ export const loginInputSchema = z.object({
   username: z.string().min(1, "Username required"),
   password: z.string().min(1, "Password required"),
 });
+
+export const gameScoreInputSchema = z.object({
+  time: z.number().int().positive("Time must be a positive integer"),
+});
