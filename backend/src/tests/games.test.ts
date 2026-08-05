@@ -1,4 +1,4 @@
-import { before, after, describe, test } from "node:test";
+import { before, after, describe, test, afterEach } from "node:test";
 import assert from "node:assert";
 import supertest from "supertest";
 import { eq, inArray } from "drizzle-orm";
@@ -9,6 +9,8 @@ import { mockGames } from "./mocks/games.ts";
 import { mockGameScores } from "./mocks/gameScores.ts";
 import { mockUsers } from "./mocks/users.ts";
 import { users, gameScores } from "../db/schema.ts";
+import jwt from "jsonwebtoken";
+import config from "../../config.ts";
 
 const api = supertest(app);
 
@@ -127,5 +129,147 @@ describe("GET /api/games/:id/scores", () => {
 
     assert.strictEqual(response.status, 404);
     assert.deepStrictEqual(response.body, { error: "Game not found" });
+  });
+});
+
+describe("POST /api/games/:id/scores", () => {
+  const token = jwt.sign({ id: 1, username: "test" }, config.JWT_SECRET);
+
+  afterEach(async () => {
+    await db.delete(gameScores).where(eq(gameScores.gameId, mockGames[0].id));
+  });
+
+  test("returns 201 and creates a new score", async () => {
+    const response = await api
+      .post(`/api/games/${mockGames[0].id}/scores`)
+      .set("Authorization", `Bearer ${token}`)
+      .send({ time: 30000 });
+
+    assert.strictEqual(response.status, 201);
+    assert.strictEqual(response.body.time, 30000);
+    assert.ok(response.body.id);
+  });
+
+  test("returns 200 and updates score when new time is better", async () => {
+    await api
+      .post(`/api/games/${mockGames[0].id}/scores`)
+      .set("Authorization", `Bearer ${token}`)
+      .send({ time: 30000 });
+
+    const response = await api
+      .post(`/api/games/${mockGames[0].id}/scores`)
+      .set("Authorization", `Bearer ${token}`)
+      .send({ time: 20000 });
+
+    assert.strictEqual(response.status, 200);
+    assert.strictEqual(response.body.time, 20000);
+  });
+
+  test("returns 200 and keeps existing score when new time is worse", async () => {
+    await api
+      .post(`/api/games/${mockGames[0].id}/scores`)
+      .set("Authorization", `Bearer ${token}`)
+      .send({ time: 20000 });
+
+    const response = await api
+      .post(`/api/games/${mockGames[0].id}/scores`)
+      .set("Authorization", `Bearer ${token}`)
+      .send({ time: 30000 });
+
+    assert.strictEqual(response.status, 200);
+    assert.strictEqual(response.body.time, 20000);
+  });
+
+  test("returns 400 for invalid game id", async () => {
+    const response = await api
+      .post("/api/games/invalid-id/scores")
+      .set("Authorization", `Bearer ${token}`)
+      .send({ time: 30000 });
+
+    assert.strictEqual(response.status, 400);
+    assert.deepStrictEqual(response.body, { error: "Invalid game id" });
+  });
+
+  test("returns 404 for non-existing game", async () => {
+    const response = await api
+      .post("/api/games/0/scores")
+      .set("Authorization", `Bearer ${token}`)
+      .send({ time: 30000 });
+
+    assert.strictEqual(response.status, 404);
+    assert.deepStrictEqual(response.body, { error: "Game not found" });
+  });
+
+  test("returns 400 for missing time", async () => {
+    const response = await api
+      .post(`/api/games/${mockGames[0].id}/scores`)
+      .set("Authorization", `Bearer ${token}`)
+      .send({});
+
+    assert.strictEqual(response.status, 400);
+    assert.ok(response.body.errors.length > 0);
+    assert.ok(
+      response.body.errors[0].message.includes(
+        "Invalid input: expected number, received undefined",
+      ),
+    );
+  });
+
+  test("returns 400 for time as string", async () => {
+    const response = await api
+      .post(`/api/games/${mockGames[0].id}/scores`)
+      .set("Authorization", `Bearer ${token}`)
+      .send({ time: "30000" });
+
+    assert.strictEqual(response.status, 400);
+    assert.ok(response.body.errors.length > 0);
+    assert.ok(
+      response.body.errors[0].message.includes(
+        "Invalid input: expected number, received string",
+      ),
+    );
+  });
+
+  test("returns 400 for negative time", async () => {
+    const response = await api
+      .post(`/api/games/${mockGames[0].id}/scores`)
+      .set("Authorization", `Bearer ${token}`)
+      .send({ time: -100 });
+
+    assert.strictEqual(response.status, 400);
+    assert.ok(response.body.errors.length > 0);
+    assert.ok(
+      response.body.errors[0].message.includes(
+        "Time must be a positive integer",
+      ),
+    );
+  });
+
+  test("returns 401 when no token is provided", async () => {
+    const response = await api
+      .post(`/api/games/${mockGames[0].id}/scores`)
+      .send({ time: 30000 });
+
+    assert.strictEqual(response.status, 401);
+    assert.deepStrictEqual(response.body, { error: "Not authenticated" });
+  });
+
+  test("returns 401 for invalid token", async () => {
+    const response = await api
+      .post(`/api/games/${mockGames[0].id}/scores`)
+      .set("Authorization", "Bearer invalid-token")
+      .send({ time: 30000 });
+
+    assert.strictEqual(response.status, 401);
+    assert.deepStrictEqual(response.body, { error: "Not authenticated" });
+  });
+
+  test("returns only id and time properties", async () => {
+    const response = await api
+      .post(`/api/games/${mockGames[0].id}/scores`)
+      .set("Authorization", `Bearer ${token}`)
+      .send({ time: 30000 });
+
+    assert.deepStrictEqual(Object.keys(response.body).sort(), ["id", "time"]);
   });
 });
