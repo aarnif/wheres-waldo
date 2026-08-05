@@ -107,3 +107,63 @@ describe("POST /api/users", () => {
     assert.deepStrictEqual(response.body, { error: "Username already exists" });
   });
 });
+
+describe("POST /api/users/login", () => {
+  test("returns 200 with JSON content type", async () => {
+    await api
+      .post("/api/users/login")
+      .send({ username: "test", password: "password" })
+      .expect(200)
+      .expect("Content-Type", /application\/json/);
+  });
+
+  test("returns token", async () => {
+    const response = await api
+      .post("/api/users/login")
+      .send({ username: "test", password: "password" });
+
+    assert.ok(response.body.token, "token not found in response");
+  });
+
+  test("returns 400 for missing username", async () => {
+    const response = await api
+      .post("/api/users/login")
+      .send({ password: "password" });
+
+    assert.strictEqual(response.status, 400);
+    assert.ok(response.body.errors.length > 0);
+    assert.ok(response.body.errors[0].message.includes("Username required"));
+  });
+
+  test("returns 400 for missing password", async () => {
+    const response = await api
+      .post("/api/users/login")
+      .send({ username: "test" });
+
+    assert.strictEqual(response.status, 400);
+    assert.ok(response.body.errors.length > 0);
+    assert.ok(response.body.errors[0].message.includes("Password required"));
+  });
+
+  test("returns 400 for non-existing username", async () => {
+    const response = await api
+      .post("/api/users/login")
+      .send({ username: "nonexistent", password: "password" });
+
+    assert.strictEqual(response.status, 400);
+    assert.deepStrictEqual(response.body, {
+      error: "Invalid username or password",
+    });
+  });
+
+  test("returns 400 for incorrect password", async () => {
+    const response = await api
+      .post("/api/users/login")
+      .send({ username: "test", password: "wrongpassword" });
+
+    assert.strictEqual(response.status, 400);
+    assert.deepStrictEqual(response.body, {
+      error: "Invalid username or password",
+    });
+  });
+});
