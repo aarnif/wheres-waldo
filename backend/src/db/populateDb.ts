@@ -1,4 +1,5 @@
 import "dotenv/config";
+import { sql } from "drizzle-orm";
 import { db } from "./index.ts";
 import {
   users,
@@ -13,11 +14,9 @@ import charactersData from "./data/characters.ts";
 import gameCharactersData from "./data/gameCharacters.ts";
 
 export const emptyDatabase = async () => {
-  await db.delete(gameScores);
-  await db.delete(gameCharacters);
-  await db.delete(games);
-  await db.delete(characters);
-  await db.delete(users);
+  await db.execute(
+    sql`TRUNCATE TABLE ${gameScores}, ${gameCharacters}, ${games}, ${characters}, ${users} RESTART IDENTITY CASCADE`,
+  );
 };
 
 const createUsers = async () => {
