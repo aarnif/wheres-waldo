@@ -12,7 +12,11 @@
     "backend:db:populate": "npm run db:populate -w backend",
     "backend:dev": "npm run dev -w backend",
     "backend:start": "npm run start -w backend",
-    "backend:test": "npm run test -w backend"
+    "backend:test": "npm run test -w backend",
+    "frontend:dev": "npm run dev -w frontend",
+    "frontend:build": "npm run build -w frontend",
+    "frontend:start": "npm run preview -w frontend",
+    "frontend:lint": "npm run lint -w frontend"
   },
   "repository": {
     "type": "git",
