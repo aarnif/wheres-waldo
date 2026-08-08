@@ -7,7 +7,11 @@ const GameContent = ({ game }: { game: Game }) => {
   const { id, title, image } = game;
 
   return (
-    <Link to={`/games/${id}`} className="h-full p-2">
+    <Link
+      to={`/games/${id}`}
+      className="h-full p-2"
+      data-testid={`game-card-${id}`}
+    >
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
