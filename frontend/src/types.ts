@@ -7,3 +7,10 @@ export interface Game {
   width: number;
   height: number;
 }
+
+export interface Placeholder {
+  id: number;
+  isPlaceholder: true;
+}
+
+export type GameCardData = Game | Placeholder;
