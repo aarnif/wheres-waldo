@@ -14,3 +14,13 @@ export interface Placeholder {
 }
 
 export type GameCardData = Game | Placeholder;
+
+export interface User {
+  id: number;
+  username: string;
+}
+
+export interface DecodedToken {
+  id: number;
+  username: string;
+}
