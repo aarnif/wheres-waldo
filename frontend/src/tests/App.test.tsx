@@ -41,7 +41,7 @@ describe("<App />", () => {
       await user.click(signUpLink);
 
       await waitFor(() => {
-        expect(screen.getByRole("heading", { name: "Signup" })).toBeDefined();
+        expect(screen.getByRole("heading", { name: "Sign Up" })).toBeDefined();
       });
     });
 
@@ -86,7 +86,7 @@ describe("<App />", () => {
       renderComponent(["/signup"]);
 
       await waitFor(() => {
-        expect(screen.getByRole("heading", { name: "Signup" })).toBeDefined();
+        expect(screen.getByRole("heading", { name: "Sign Up" })).toBeDefined();
       });
     });
   });
