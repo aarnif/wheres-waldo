@@ -1,6 +1,7 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router";
 import { vi, describe, expect, test } from "vitest";
+import AuthProvider from "../components/AuthProvider";
 import Home from "../pages/Home";
 import { mockGames } from "./mocks/games";
 
@@ -15,9 +16,11 @@ describe("<Home />", () => {
     vi.mocked(getGames).mockResolvedValue(mockGames);
 
     render(
-      <MemoryRouter initialEntries={["/"]}>
-        <Home />
-      </MemoryRouter>,
+      <AuthProvider>
+        <MemoryRouter initialEntries={["/"]}>
+          <Home />
+        </MemoryRouter>
+      </AuthProvider>,
     );
 
     await waitFor(() => {

@@ -3,6 +3,7 @@ import type { GameCardData } from "../../types";
 import { getGames } from "../../services/games";
 import Header from "./Header";
 import GameCard from "./GameCard";
+import LoginModal from "./LoginModal";
 
 const PLACEHOLDER_COUNT = 6;
 
@@ -13,6 +14,7 @@ const placeholders: GameCardData[] = Array.from(
 
 const Home = () => {
   const [games, setGames] = useState<GameCardData[]>(placeholders);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     getGames()
@@ -22,9 +24,17 @@ const Home = () => {
       });
   }, []);
 
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <div className="flex min-h-screen w-full flex-col bg-[url('/background.png')] bg-size-[auto_100%] bg-center bg-repeat-x">
-      <Header />
+      <Header handleOpen={handleOpen} />
       <main className="flex w-full grow justify-center">
         <div className="grid max-w-400 grow grid-cols-1 gap-8 p-8 sm:grid-cols-2 lg:grid-cols-3">
           {games.map((game) => (
@@ -32,6 +42,7 @@ const Home = () => {
           ))}
         </div>
       </main>
+      {open && <LoginModal handleClose={handleClose} />}
     </div>
   );
 };
