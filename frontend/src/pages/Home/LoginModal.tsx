@@ -57,6 +57,7 @@ const LoginModal = ({ handleClose }: { handleClose: () => void }) => {
 
   return (
     <motion.div
+      data-testid="login-overlay"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
@@ -77,6 +78,7 @@ const LoginModal = ({ handleClose }: { handleClose: () => void }) => {
         className="z-10 w-full max-w-120 rounded-lg border border-slate-600/40 bg-slate-600/20 shadow-lg backdrop-blur-sm"
       >
         <form
+          data-testid="login-form"
           className="flex w-full flex-col gap-12 rounded-2xl p-4"
           onSubmit={handleSubmit}
         >
@@ -85,6 +87,7 @@ const LoginModal = ({ handleClose }: { handleClose: () => void }) => {
               Log In
             </h1>
             <MdClose
+              data-testid="login-close-button"
               className="h-5 w-5 cursor-pointer text-red-600 hover:text-red-700"
               onClick={handleClose}
             />
@@ -101,6 +104,7 @@ const LoginModal = ({ handleClose }: { handleClose: () => void }) => {
           </div>
           <div>
             <button
+              data-testid="login-submit-button"
               type="submit"
               className={`rounded-lg bg-red-600 px-6 py-1.5 text-sm font-bold text-white shadow-[3px_3px_0px_0px] shadow-slate-950 sm:px-8 sm:py-2 sm:text-base ${!isSubmitting && "cursor-pointer transition-all duration-300 hover:bg-red-700 active:translate-x-0.75 active:translate-y-0.75 active:shadow-none"}`}
               disabled={isSubmitting}
