@@ -43,3 +43,7 @@ export interface InputField {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onReset: () => void;
 }
+
+export interface SignUpCredentials extends LoginCredentials {
+  confirmPassword: string;
+}
