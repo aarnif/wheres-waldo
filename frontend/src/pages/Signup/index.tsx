@@ -109,6 +109,7 @@ const Signup = () => {
       </h1>
       <div className="flex grow items-center justify-center bg-linear-to-r to-slate-800 to-50% p-4 sm:to-30%">
         <form
+          data-testid="sign-up-form"
           className="flex w-full max-w-96 flex-col gap-8 rounded-2xl border border-slate-600/40 bg-slate-600/20 p-4 shadow-lg backdrop-blur-sm"
           onSubmit={handleSubmit}
         >
