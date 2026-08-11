@@ -12,7 +12,7 @@ import useErrorMessage from "../../hooks/useErrorMessage";
 import useField from "../../hooks/useField";
 import { setToken } from "../../helpers/token";
 
-const Signup = () => {
+const SignUp = () => {
   const { setUser } = useAuth();
   const navigate = useNavigate();
   const { message, showMessage, closeMessage } = useErrorMessage();
@@ -152,4 +152,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default SignUp;

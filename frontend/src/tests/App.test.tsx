@@ -83,7 +83,7 @@ describe("<App />", () => {
 
   describe("Signup page", () => {
     test("renders the page", async () => {
-      renderComponent(["/signup"]);
+      renderComponent(["/sign-up"]);
 
       await waitFor(() => {
         expect(screen.getByRole("heading", { name: "Sign Up" })).toBeDefined();
@@ -92,7 +92,7 @@ describe("<App />", () => {
 
     test("navigates back to the home page when cancel link is clicked", async () => {
       const user = userEvent.setup();
-      renderComponent(["/signup"]);
+      renderComponent(["/sign-up"]);
 
       await waitFor(() => {
         expect(screen.getByRole("heading", { name: "Sign Up" })).toBeDefined();

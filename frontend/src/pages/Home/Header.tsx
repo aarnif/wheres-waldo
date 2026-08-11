@@ -31,7 +31,7 @@ const Header = ({ handleOpen }: { handleOpen: () => void }) => {
         ) : (
           <>
             <Link
-              to="/signup"
+              to="/sign-up"
               className="rounded-lg bg-red-600 px-2.25 py-1.5 text-sm font-bold shadow-[3px_3px_0px_0px] shadow-slate-950 transition-all duration-300 hover:bg-red-700 active:translate-x-0.75 active:translate-y-0.75 active:shadow-none sm:px-3 sm:py-2 sm:text-base"
             >
               Sign Up

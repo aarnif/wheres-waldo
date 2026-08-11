@@ -4,7 +4,7 @@ import userEvent, { type UserEvent } from "@testing-library/user-event";
 import { vi, describe, expect, test } from "vitest";
 import type { SignUpCredentials } from "../types";
 import AuthProvider from "../components/AuthProvider";
-import Signup from "../pages/Signup";
+import SignUp from "../pages/SignUp";
 
 const mockNavigate = vi.fn();
 
@@ -37,8 +37,8 @@ vi.mock("jwt-decode", () => ({
 const renderComponent = () =>
   render(
     <AuthProvider>
-      <MemoryRouter initialEntries={["/signup"]}>
-        <Signup />
+      <MemoryRouter initialEntries={["/sign-up"]}>
+        <SignUp />
       </MemoryRouter>
     </AuthProvider>,
   );
