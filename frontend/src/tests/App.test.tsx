@@ -41,7 +41,7 @@ describe("<App />", () => {
       await user.click(signUpLink);
 
       await waitFor(() => {
-        expect(screen.getByRole("heading", { name: "Signup" })).toBeDefined();
+        expect(screen.getByRole("heading", { name: "Sign Up" })).toBeDefined();
       });
     });
 
@@ -83,10 +83,26 @@ describe("<App />", () => {
 
   describe("Signup page", () => {
     test("renders the page", async () => {
-      renderComponent(["/signup"]);
+      renderComponent(["/sign-up"]);
 
       await waitFor(() => {
-        expect(screen.getByRole("heading", { name: "Signup" })).toBeDefined();
+        expect(screen.getByRole("heading", { name: "Sign Up" })).toBeDefined();
+      });
+    });
+
+    test("navigates back to the home page when cancel link is clicked", async () => {
+      const user = userEvent.setup();
+      renderComponent(["/sign-up"]);
+
+      await waitFor(() => {
+        expect(screen.getByRole("heading", { name: "Sign Up" })).toBeDefined();
+      });
+
+      const cancelLink = screen.getByRole("link", { name: "Cancel" });
+      await user.click(cancelLink);
+
+      await waitFor(() => {
+        expect(screen.queryByRole("heading", { name: "Sign Up" })).toBeNull();
       });
     });
   });
