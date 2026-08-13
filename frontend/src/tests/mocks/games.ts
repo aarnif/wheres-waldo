@@ -1,4 +1,4 @@
-import type { Game } from "../../types";
+import type { Game, GameDetails } from "../../types";
 
 export const mockGames: Game[] = [
   {
@@ -61,3 +61,65 @@ export const mockGames: Game[] = [
     height: 2880,
   },
 ];
+
+export const mockGameDetails: GameDetails = {
+  id: 1,
+  title: "Ski-Resort",
+  level: 1,
+  difficulty: "easy",
+  description:
+    "Snow crunches underfoot as skiers and snowboarders carve down the mountain past pine trees and a creaking chairlift. Somewhere in the wintery chaos, Waldo, Wenda, Odlaw, and Wizard Whitebeard are bundled up and hiding in plain sight.",
+  image: "ski-resort.jpeg",
+  width: 5120,
+  height: 2880,
+  characters: [
+    {
+      id: 1,
+      x: 0.839,
+      y: 0.738,
+      width: 0.038,
+      height: 0.069,
+      character: {
+        name: "Waldo",
+        displayName: "Waldo",
+        image: "waldo.png",
+      },
+    },
+    {
+      id: 2,
+      x: 0.483,
+      y: 0.391,
+      width: 0.013,
+      height: 0.045,
+      character: {
+        name: "Wenda",
+        displayName: "Wenda",
+        image: "wenda.png",
+      },
+    },
+    {
+      id: 3,
+      x: 0.31,
+      y: 0.643,
+      width: 0.013,
+      height: 0.035,
+      character: {
+        name: "Odlaw",
+        displayName: "Odlaw",
+        image: "odlaw.png",
+      },
+    },
+    {
+      id: 4,
+      x: 0.062,
+      y: 0.767,
+      width: 0.026,
+      height: 0.049,
+      character: {
+        name: "Wizard Whitebeard",
+        displayName: "Wizard",
+        image: "wizard-whitebeard.png",
+      },
+    },
+  ],
+};

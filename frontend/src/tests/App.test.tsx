@@ -3,10 +3,11 @@ import { MemoryRouter } from "react-router";
 import userEvent from "@testing-library/user-event";
 import { vi, describe, expect, test, beforeEach } from "vitest";
 import App from "../App";
-import { mockGames } from "./mocks/games";
+import { mockGames, mockGameDetails } from "./mocks/games";
 
 vi.mock("../services/games", () => ({
   getGames: vi.fn(),
+  getGameById: vi.fn(),
 }));
 
 const renderComponent = (initialEntries = ["/"]) =>
@@ -46,6 +47,8 @@ describe("<App />", () => {
     });
 
     test("navigates to the game page when a game card is clicked", async () => {
+      const { getGameById } = await import("../services/games");
+      vi.mocked(getGameById).mockResolvedValue(mockGameDetails);
       const firstGame = mockGames[0];
       const { id } = firstGame;
 
@@ -66,17 +69,23 @@ describe("<App />", () => {
       await user.click(gameCardLink);
 
       await waitFor(() => {
-        expect(screen.getByRole("heading", { name: "Game 1" })).toBeDefined();
+        expect(
+          screen.getByRole("heading", { name: "Ski-Resort" }),
+        ).toBeDefined();
       });
     });
   });
 
   describe("Game page", () => {
     test("renders the page", async () => {
+      const { getGameById } = await import("../services/games");
+      vi.mocked(getGameById).mockResolvedValue(mockGameDetails);
       renderComponent(["/games/1"]);
 
       await waitFor(() => {
-        expect(screen.getByRole("heading", { name: "Game 1" })).toBeDefined();
+        expect(
+          screen.getByRole("heading", { name: "Ski-Resort" }),
+        ).toBeDefined();
       });
     });
   });
