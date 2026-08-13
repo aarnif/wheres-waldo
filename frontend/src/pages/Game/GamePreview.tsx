@@ -23,7 +23,17 @@ const GamePreviewSkeleton = () => (
             <div className="animate-shimmer h-7 w-40 rounded-lg bg-linear-to-r from-red-700 via-red-600/70 to-red-700 bg-size-[200%_100%] sm:h-8"></div>
             <div className="animate-shimmer h-7 w-20 rounded-lg bg-linear-to-r from-slate-700 via-slate-600/70 to-slate-700 bg-size-[200%_100%] shadow-lg"></div>
           </div>
-          <div className="animate-shimmer h-39 w-full rounded-lg bg-linear-to-r from-slate-100 via-slate-50/70 to-slate-100 bg-size-[200%_100%] shadow-lg sm:h-19.5"></div>
+
+          <div className="xss:min-h-30 xs:min-h-26 min-h-39 md:min-h-24">
+            <div className="flex grow flex-col gap-1">
+              <div className="animate-shimmer xxs:hidden h-5.5 rounded-lg bg-linear-to-r from-slate-100 via-slate-50/70 to-slate-100 bg-size-[200%_100%] shadow-lg"></div>
+              <div className="animate-shimmer xs:hidden h-5.5 rounded-lg bg-linear-to-r from-slate-100 via-slate-50/70 to-slate-100 bg-size-[200%_100%] shadow-lg"></div>
+              <div className="animate-shimmer h-5.5 rounded-lg bg-linear-to-r from-slate-100 via-slate-50/70 to-slate-100 bg-size-[200%_100%] shadow-lg sm:hidden"></div>
+              <div className="animate-shimmer h-5.5 rounded-lg bg-linear-to-r from-slate-100 via-slate-50/70 to-slate-100 bg-size-[200%_100%] shadow-lg"></div>
+              <div className="animate-shimmer h-5.5 rounded-lg bg-linear-to-r from-slate-100 via-slate-50/70 to-slate-100 bg-size-[200%_100%] shadow-lg"></div>
+              <div className="animate-shimmer h-5.5 rounded-lg bg-linear-to-r from-slate-100 via-slate-50/70 to-slate-100 bg-size-[200%_100%] shadow-lg"></div>
+            </div>
+          </div>
         </div>
 
         <div className="flex gap-4 sm:gap-8">
@@ -33,7 +43,7 @@ const GamePreviewSkeleton = () => (
               className="flex flex-col items-center gap-2"
             >
               <div className="animate-shimmer h-16.5 w-16.5 rounded-lg border border-slate-50/20 bg-linear-to-r from-slate-100/10 via-slate-50/10 to-slate-100/10 bg-size-[200%_100%] p-2 shadow-lg backdrop-blur-sm sm:h-20.5 sm:w-20.5"></div>
-              <div className="animate-shimmer h-5 w-14 rounded-lg bg-linear-to-r from-slate-100 via-slate-50/70 to-slate-100 bg-size-[200%_100%] shadow-lg sm:h-6 sm:w-16"></div>
+              <div className="animate-shimmer h-5 w-14 rounded-lg bg-linear-to-r from-slate-100 via-slate-50/70 to-slate-100 bg-size-[200%_100%] shadow-lg sm:h-5.5 sm:w-16"></div>
             </div>
           ))}
         </div>
@@ -83,9 +93,11 @@ const GamePreviewContent = ({ game }: { game: GameDetails }) => {
               </p>
             </div>
 
-            <p className="text-base leading-relaxed font-medium text-slate-50">
-              {description}
-            </p>
+            <div className="xss:min-h-30 xs:min-h-26 min-h-39 md:min-h-24">
+              <p className="text-base leading-relaxed font-medium text-slate-50">
+                {description}
+              </p>
+            </div>
           </div>
 
           <div className="flex gap-4 sm:gap-8">
