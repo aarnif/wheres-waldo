@@ -61,7 +61,13 @@ const GamePreviewSkeleton = () => (
   </motion.div>
 );
 
-const GamePreviewContent = ({ game }: { game: GameDetails }) => {
+const GamePreviewContent = ({
+  game,
+  handleStartGame,
+}: {
+  game: GameDetails;
+  handleStartGame: () => void;
+}) => {
   const { title, difficulty, description, characters, image } = game;
 
   const difficultyColor = {
@@ -113,7 +119,10 @@ const GamePreviewContent = ({ game }: { game: GameDetails }) => {
             >
               Go Back
             </Link>
-            <button className="grow cursor-pointer rounded-lg bg-red-600 py-1.5 text-center text-sm font-bold shadow-[3px_3px_0px_0px] shadow-slate-950 transition-all duration-300 hover:bg-red-700 active:translate-x-0.75 active:translate-y-0.75 active:shadow-none sm:py-2 sm:text-base">
+            <button
+              onClick={handleStartGame}
+              className="grow cursor-pointer rounded-lg bg-red-600 py-1.5 text-center text-sm font-bold shadow-[3px_3px_0px_0px] shadow-slate-950 transition-all duration-300 hover:bg-red-700 active:translate-x-0.75 active:translate-y-0.75 active:shadow-none sm:py-2 sm:text-base"
+            >
               Play Game
             </button>
           </div>
@@ -123,13 +132,23 @@ const GamePreviewContent = ({ game }: { game: GameDetails }) => {
   );
 };
 
-const GamePreview = ({ game }: { game: GameDetails | null }) => (
+const GamePreview = ({
+  game,
+  handleStartGame,
+}: {
+  game: GameDetails | null;
+  handleStartGame: () => void;
+}) => (
   <AnimatePresence mode="sync">
     <div className="fixed inset-0 backdrop-blur-sm" />
     {!game ? (
       <GamePreviewSkeleton key="skeleton" />
     ) : (
-      <GamePreviewContent game={game} key="preview" />
+      <GamePreviewContent
+        key="preview"
+        game={game}
+        handleStartGame={handleStartGame}
+      />
     )}
   </AnimatePresence>
 );
