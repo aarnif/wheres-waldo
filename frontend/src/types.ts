@@ -67,3 +67,8 @@ export interface GameDetails extends Game {
   description: string;
   characters: GameCharacter[];
 }
+
+export interface GameScore {
+  id: number;
+  time: number;
+}
