@@ -1,19 +1,14 @@
 import { motion } from "motion/react";
-import type { GameCharacter as GameCharacterType } from "../../types";
-import GameCharacter from "./GameCharacter";
+import { Link } from "react-router";
 
-const GameStart = ({
-  title,
-  characters,
-  handleCancelGame,
-  handleStartGame,
+const GameEnd = ({
+  time,
+  handleStartAgain,
 }: {
-  title: string;
-  characters: GameCharacterType[];
-  handleCancelGame: () => void;
-  handleStartGame: () => void;
+  time: string;
+  handleStartAgain: () => void;
 }) => (
-  <div className="fixed inset-0 flex items-center justify-start bg-black/90 p-4 backdrop-blur-sm sm:p-16">
+  <div className="fixed inset-0 z-100 flex items-center justify-start bg-black/90 p-4 backdrop-blur-sm sm:p-16">
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -30,36 +25,38 @@ const GameStart = ({
           damping: 20,
           mass: 0.8,
         }}
-        className="flex flex-col gap-8 rounded-lg border border-slate-50/20 bg-slate-900/20 px-4 py-4 shadow-lg sm:gap-10 sm:px-8"
+        className="flex w-full max-w-122.5 flex-col gap-8 rounded-lg border border-slate-50/20 bg-slate-900/20 px-4 py-4 shadow-lg sm:gap-10 sm:px-8"
       >
-        <h1 className="font-title text-center text-3xl font-bold text-red-600 sm:text-4xl">
-          {title}
+        <h1 className="font-title text-center text-4xl font-bold text-red-600">
+          Congratulations
         </h1>
 
-        <p className="text-center text-lg font-bold text-slate-50 sm:text-xl">
-          Find and click on each character in the image
-        </p>
+        <div className="flex flex-col gap-4">
+          <p className="text-center text-xl font-bold text-slate-50">
+            You found all characters!
+          </p>
 
-        <div className="flex gap-4 sm:gap-8">
-          {characters.map((character) => (
-            <GameCharacter key={character.id} character={character} />
-          ))}
+          <p className="text-center text-xl font-bold text-slate-50">
+            Your time was:
+          </p>
         </div>
+
+        <p className="text-center text-3xl font-bold text-white">{time}</p>
 
         <div className="flex justify-center">
           <div className="flex max-w-96 grow gap-8 text-white">
             <button
-              onClick={handleCancelGame}
+              onClick={handleStartAgain}
               className="grow cursor-pointer rounded-lg bg-slate-500 py-1.5 text-center text-sm font-bold shadow-[3px_3px_0px_0px] shadow-slate-950 transition-all duration-300 hover:bg-slate-600 active:translate-x-0.75 active:translate-y-0.75 active:shadow-none sm:py-2 sm:text-base"
             >
-              Cancel
+              Play Again
             </button>
-            <button
-              onClick={handleStartGame}
+            <Link
+              to="/"
               className="grow cursor-pointer rounded-lg bg-red-600 py-1.5 text-center text-sm font-bold shadow-[3px_3px_0px_0px] shadow-slate-950 transition-all duration-300 hover:bg-red-700 active:translate-x-0.75 active:translate-y-0.75 active:shadow-none sm:py-2 sm:text-base"
             >
-              Let's Play
-            </button>
+              Next Game
+            </Link>
           </div>
         </div>
       </motion.div>
@@ -67,4 +64,4 @@ const GameStart = ({
   </div>
 );
 
-export default GameStart;
+export default GameEnd;

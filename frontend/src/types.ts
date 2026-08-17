@@ -72,3 +72,7 @@ export interface GameScore {
   id: number;
   time: number;
 }
+
+export interface FoundCharacter extends GameCharacter {
+  found: boolean;
+}
