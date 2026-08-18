@@ -47,3 +47,32 @@ export interface InputField {
 export interface SignUpCredentials extends LoginCredentials {
   confirmPassword: string;
 }
+
+export interface Character {
+  name: string;
+  displayName: string;
+  image: string;
+}
+
+export interface GameCharacter {
+  id: number;
+  character: Character;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
+export interface GameDetails extends Game {
+  description: string;
+  characters: GameCharacter[];
+}
+
+export interface GameScore {
+  id: number;
+  time: number;
+}
+
+export interface FoundCharacter extends GameCharacter {
+  found: boolean;
+}
