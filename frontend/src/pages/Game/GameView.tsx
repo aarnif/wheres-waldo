@@ -185,6 +185,7 @@ const GameView = ({
         />
       )}
       <div
+        data-testid="game-canvas"
         id="game-canvas"
         ref={gameCanvasRef}
         className={`relative ${showAimCursor ? "cursor-none" : "cursor-default"}`}

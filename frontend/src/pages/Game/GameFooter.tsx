@@ -31,7 +31,10 @@ const GameFooter = ({
                 alt={name}
               />
               {found && (
-                <div className="absolute inset-0 flex h-12 w-12 items-center justify-center rounded-lg bg-slate-700/50">
+                <div
+                  data-testid={`found-character-${name}`}
+                  className="absolute inset-0 flex h-12 w-12 items-center justify-center rounded-lg bg-slate-700/50"
+                >
                   <MdCheck className="h-12 w-12 fill-current text-green-400" />
                 </div>
               )}
