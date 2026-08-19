@@ -6,6 +6,7 @@ export interface Game {
   image: string;
   width: number;
   height: number;
+  gameScores: LeaderboardEntry[];
 }
 
 export interface Placeholder {
@@ -75,4 +76,8 @@ export interface GameScore {
 
 export interface FoundCharacter extends GameCharacter {
   found: boolean;
+}
+
+export interface LeaderboardEntry extends GameScore {
+  user: User;
 }
