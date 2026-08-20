@@ -1,15 +1,62 @@
 import { Link } from "react-router";
 import { AnimatePresence, motion } from "motion/react";
-import type { GameCardData, Game } from "../../types";
+import type {
+  GameCardData,
+  Game,
+  LeaderboardEntry as LeaderboardEntryType,
+} from "../../types";
+import useAuth from "../../hooks/useAuth";
 import { BASE_URL } from "../../../config";
+import { formatTime } from "../../helpers/time";
 
-const GameContent = ({ game }: { game: Game }) => {
-  const { id, title, image } = game;
+const LeaderboardEntry = ({
+  entry,
+  rank,
+  isCurrentUser,
+}: {
+  entry: LeaderboardEntryType;
+  rank: number;
+  isCurrentUser: boolean;
+}) => {
+  const { time, user } = entry;
+
+  return (
+    <li
+      className={`relative flex items-center justify-center text-lg sm:text-xl ${isCurrentUser ? "font-extrabold text-white" : "font-semibold text-slate-200"}`}
+    >
+      <p className="absolute left-2 sm:left-4 md:left-8">{rank}.</p>
+      <p
+        className={`font-mono ${isCurrentUser ? "text-xl sm:text-2xl" : "text-lg sm:text-xl"}`}
+      >
+        {formatTime(time)}
+      </p>
+      <p className="absolute right-2 sm:right-4 md:right-8">{user.username}</p>
+    </li>
+  );
+};
+
+const GameContent = ({
+  game,
+  showLeaderboard,
+}: {
+  game: Game;
+  showLeaderboard: boolean;
+}) => {
+  const { user: currentUser } = useAuth();
+  const { id, title, image, gameScores } = game;
+
+  const currentUserEntry = gameScores.find(
+    (entry) => entry.user.id === currentUser?.id,
+  );
+  const currentUserRank = currentUserEntry
+    ? gameScores.indexOf(currentUserEntry) + 1
+    : null;
+  const userInTopFive = currentUserRank !== null && currentUserRank <= 5;
 
   return (
     <Link
       to={`/games/${id}`}
-      className="h-full p-2"
+      className="h-full w-full p-2"
       data-testid={`game-card-${id}`}
     >
       <motion.div
@@ -18,12 +65,48 @@ const GameContent = ({ game }: { game: Game }) => {
         transition={{ duration: 0.3, ease: "easeInOut" }}
         className="flex h-full grow flex-col gap-2"
       >
-        <img
-          loading="lazy"
-          alt={title}
-          src={`${BASE_URL}/images/games/${image}`}
-          className="grow rounded-lg object-cover transition-all duration-300 ease-in-out group-hover:brightness-50"
-        />
+        <div
+          className={`relative flex h-full grow transition-all duration-500 ease-in-out transform-3d ${showLeaderboard ? "rotate-y-180" : ""}`}
+        >
+          <div className="absolute inset-0 flex flex-col backface-hidden">
+            <img
+              loading="lazy"
+              alt={title}
+              src={`${BASE_URL}/images/games/${image}`}
+              className="grow rounded-lg object-cover transition-all duration-300 ease-in-out group-hover:brightness-50"
+            />
+          </div>
+          <div className="absolute inset-0 flex rotate-y-180 flex-col rounded-lg bg-slate-600/20 p-2 transition-all duration-300 ease-in-out backface-hidden group-hover:bg-slate-700/20">
+            <ul className="flex grow flex-col gap-4 pt-8 sm:pt-12">
+              {gameScores.slice(0, 5).map((entry, index) => {
+                const { id, user } = entry;
+                const isCurrentUser = user.id === currentUser?.id;
+                return (
+                  <LeaderboardEntry
+                    key={id}
+                    entry={entry}
+                    rank={index + 1}
+                    isCurrentUser={isCurrentUser}
+                  />
+                );
+              })}
+              {currentUserEntry && !userInTopFive && (
+                <>
+                  <li
+                    key="divider"
+                    className="mx-8 flex items-center justify-center border-t border-dashed text-xl font-semibold text-slate-200"
+                  ></li>
+                  <LeaderboardEntry
+                    key={currentUserEntry.id}
+                    entry={currentUserEntry}
+                    rank={currentUserRank!}
+                    isCurrentUser={true}
+                  />
+                </>
+              )}
+            </ul>
+          </div>
+        </div>
         <h2 className="font-title text-center text-3xl text-red-600 transition-colors duration-300 ease-in-out group-hover:text-red-500">
           {title}
         </h2>
@@ -43,7 +126,13 @@ const GameCardSkeleton = () => (
   </motion.div>
 );
 
-const GameCard = ({ game }: { game: GameCardData }) => {
+const GameCard = ({
+  game,
+  showLeaderboard,
+}: {
+  game: GameCardData;
+  showLeaderboard: boolean;
+}) => {
   const isPlaceholder = "isPlaceholder" in game;
 
   return (
@@ -54,7 +143,11 @@ const GameCard = ({ game }: { game: GameCardData }) => {
         {isPlaceholder ? (
           <GameCardSkeleton key="skeleton" />
         ) : (
-          <GameContent key="card" game={game} />
+          <GameContent
+            key="card"
+            game={game}
+            showLeaderboard={showLeaderboard}
+          />
         )}
       </AnimatePresence>
     </div>

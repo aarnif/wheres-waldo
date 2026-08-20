@@ -1,4 +1,10 @@
-import type { Game, GameDetails } from "../../types";
+import type { Game, GameDetails, LeaderboardEntry } from "../../types";
+
+const mockSkiResortLeaderboard: LeaderboardEntry[] = [
+  { id: 1, time: 45, user: { id: 1, username: "Player1" } },
+  { id: 2, time: 52, user: { id: 2, username: "Player2" } },
+  { id: 3, time: 63, user: { id: 3, username: "Player3" } },
+];
 
 export const mockGames: Game[] = [
   {
@@ -9,6 +15,7 @@ export const mockGames: Game[] = [
     image: "ski-resort.jpeg",
     width: 5120,
     height: 2880,
+    gameScores: mockSkiResortLeaderboard,
   },
 
   {
@@ -19,6 +26,10 @@ export const mockGames: Game[] = [
     image: "athletics.jpg",
     width: 3000,
     height: 1899,
+    gameScores: [
+      { id: 4, time: 38, user: { id: 1, username: "Player1" } },
+      { id: 5, time: 44, user: { id: 2, username: "Player2" } },
+    ],
   },
 
   {
@@ -29,6 +40,11 @@ export const mockGames: Game[] = [
     image: "beach.jpg",
     width: 3000,
     height: 1926,
+    gameScores: [
+      { id: 6, time: 78, user: { id: 3, username: "Player3" } },
+      { id: 7, time: 92, user: { id: 1, username: "Player1" } },
+      { id: 8, time: 105, user: { id: 2, username: "Player2" } },
+    ],
   },
 
   {
@@ -39,6 +55,10 @@ export const mockGames: Game[] = [
     image: "space.png",
     width: 3000,
     height: 1975,
+    gameScores: [
+      { id: 9, time: 89, user: { id: 2, username: "Player2" } },
+      { id: 10, time: 112, user: { id: 3, username: "Player3" } },
+    ],
   },
 
   {
@@ -49,6 +69,10 @@ export const mockGames: Game[] = [
     image: "hollywood.jpeg",
     width: 5120,
     height: 2880,
+    gameScores: [
+      { id: 11, time: 156, user: { id: 1, username: "Player1" } },
+      { id: 12, time: 178, user: { id: 3, username: "Player3" } },
+    ],
   },
 
   {
@@ -59,6 +83,11 @@ export const mockGames: Game[] = [
     image: "fruit-world.jpeg",
     width: 5120,
     height: 2880,
+    gameScores: [
+      { id: 13, time: 234, user: { id: 3, username: "Player3" } },
+      { id: 14, time: 267, user: { id: 1, username: "Player1" } },
+      { id: 15, time: 289, user: { id: 2, username: "Player2" } },
+    ],
   },
 ];
 
@@ -122,4 +151,5 @@ export const mockGameDetails: GameDetails = {
       },
     },
   ],
+  gameScores: mockSkiResortLeaderboard,
 };
