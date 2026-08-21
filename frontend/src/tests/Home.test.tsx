@@ -6,6 +6,7 @@ import type { LoginCredentials } from "../types";
 import AuthProvider from "../components/AuthProvider";
 import Home from "../pages/Home";
 import { mockGames } from "./mocks/games";
+import { formatTime } from "../helpers/time";
 
 vi.mock("../services/games", () => ({
   getGames: vi.fn(),
@@ -60,6 +61,11 @@ const fillLoginForm = async (
 
   await user.type(usernameInput, username);
   await user.type(passwordInput, password);
+};
+
+const switchToLeaderboardTab = async (user: UserEvent) => {
+  const leaderboardTab = screen.getByRole("button", { name: "Leaderboard" });
+  await user.click(leaderboardTab);
 };
 
 describe("<Home />", () => {
@@ -228,6 +234,61 @@ describe("<Home />", () => {
     await waitFor(() => {
       expect(screen.getByRole("button", { name: "Log In" })).toBeDefined();
       expect(screen.queryByText("test")).toBeNull();
+    });
+  });
+
+  test("shows leaderboard when leaderboard tab is clicked", async () => {
+    const user = userEvent.setup();
+    renderComponent();
+
+    await waitFor(() => {
+      mockGames.forEach((game) => {
+        expect(screen.getByRole("heading", { name: game.title })).toBeDefined();
+      });
+    });
+
+    await switchToLeaderboardTab(user);
+
+    const firstGame = mockGames[0];
+    const topScore = firstGame.gameScores[0];
+    const gameCard = screen.getByTestId(`game-card-${firstGame.id}`);
+
+    await waitFor(() => {
+      expect(within(gameCard).getByText(topScore.user.username)).toBeDefined();
+      expect(
+        within(gameCard).getByText(formatTime(topScore.time)),
+      ).toBeDefined();
+    });
+  });
+
+  test("shows games when games tab is clicked after viewing leaderboard", async () => {
+    const user = userEvent.setup();
+    renderComponent();
+
+    await waitFor(() => {
+      expect(screen.getByRole("button", { name: "Leaderboard" })).toBeDefined();
+      mockGames.forEach((game) => {
+        expect(screen.getByRole("heading", { name: game.title })).toBeDefined();
+      });
+    });
+
+    await switchToLeaderboardTab(user);
+
+    const firstGame = mockGames[0];
+    const topScore = firstGame.gameScores[0];
+    const gameCard = screen.getByTestId(`game-card-${firstGame.id}`);
+
+    await waitFor(() => {
+      expect(within(gameCard).getByText(topScore.user.username)).toBeDefined();
+    });
+
+    const gamesTab = screen.getByRole("button", { name: "Games" });
+    await user.click(gamesTab);
+
+    await waitFor(() => {
+      mockGames.forEach((game) => {
+        expect(screen.getByRole("heading", { name: game.title })).toBeDefined();
+      });
     });
   });
 });
