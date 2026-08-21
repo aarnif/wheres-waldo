@@ -7,6 +7,7 @@ import type {
 } from "../../types";
 import useAuth from "../../hooks/useAuth";
 import { BASE_URL } from "../../../config";
+import { getGameScores } from "../../helpers/localGameScores";
 import { formatTime } from "../../helpers/time";
 
 const LeaderboardEntry = ({
@@ -53,6 +54,10 @@ const GameContent = ({
     : null;
   const userInTopFive = currentUserRank !== null && currentUserRank <= 5;
 
+  const userGameScore = currentUserEntry
+    ? currentUserEntry
+    : getGameScores().find((entry) => entry.id === id);
+
   return (
     <Link
       to={`/games/${id}`}
@@ -75,6 +80,18 @@ const GameContent = ({
               src={`${BASE_URL}/images/games/${image}`}
               className="grow rounded-lg object-cover transition-all duration-300 ease-in-out group-hover:brightness-50"
             />
+            {userGameScore && (
+              <div className="absolute inset-0 flex items-center justify-center rounded-lg bg-black/70">
+                <div className="flex flex-col gap-2">
+                  <p className="text-center text-lg font-bold text-white sm:text-xl">
+                    Your Time:
+                  </p>
+                  <p className="text-center text-2xl font-extrabold text-white sm:text-3xl">
+                    {formatTime(userGameScore.time)}
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
           <div className="absolute inset-0 flex rotate-y-180 flex-col rounded-lg bg-slate-600/20 p-2 transition-all duration-300 ease-in-out backface-hidden group-hover:bg-slate-700/20">
             <ul className="flex grow flex-col gap-4 pt-8 sm:pt-12">
