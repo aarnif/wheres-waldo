@@ -86,7 +86,10 @@ const GameContent = ({
                   <p className="text-center text-lg font-bold text-white sm:text-xl">
                     Your Time:
                   </p>
-                  <p className="text-center text-2xl font-extrabold text-white sm:text-3xl">
+                  <p
+                    data-testid="user-game-time"
+                    className="text-center text-2xl font-extrabold text-white sm:text-3xl"
+                  >
                     {formatTime(userGameScore.time)}
                   </p>
                 </div>

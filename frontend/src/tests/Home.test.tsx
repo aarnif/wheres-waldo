@@ -291,4 +291,72 @@ describe("<Home />", () => {
       });
     });
   });
+
+  test("shows current user's time on game card front after logging in", async () => {
+    const { login } = await import("../services/auth");
+    vi.mocked(login).mockResolvedValue({ token: "mocked-token" });
+
+    const user = userEvent.setup();
+    renderComponent();
+    await openLoginModal(user);
+    await fillLoginForm(user, { username: "Player1", password: "password" });
+
+    const loginForm = screen.getByTestId("login-form");
+    const submitButton = within(loginForm).getByRole("button", {
+      name: "Log In",
+    });
+    await user.click(submitButton);
+
+    await waitFor(() => {
+      mockGames.forEach((game) => {
+        expect(screen.getByRole("heading", { name: game.title })).toBeDefined();
+      });
+    });
+
+    const firstGame = mockGames[0];
+    const userEntry = firstGame.gameScores.find(
+      (entry) => entry.user.username === "Player1",
+    )!;
+    const gameCard = screen.getByTestId(`game-card-${firstGame.id}`);
+
+    await waitFor(() => {
+      expect(within(gameCard).getByText("Your Time:")).toBeDefined();
+
+      const userGameTimeDisplay =
+        within(gameCard).getByTestId("user-game-time");
+      expect(userGameTimeDisplay.textContent).toMatch(
+        formatTime(userEntry.time),
+      );
+    });
+  });
+
+  test("does not show your time on games the user has not played", async () => {
+    const { login } = await import("../services/auth");
+    vi.mocked(login).mockResolvedValue({ token: "mocked-token" });
+
+    const user = userEvent.setup();
+    renderComponent();
+    await openLoginModal(user);
+    await fillLoginForm(user, { username: "Player1", password: "password" });
+
+    const loginForm = screen.getByTestId("login-form");
+    const submitButton = within(loginForm).getByRole("button", {
+      name: "Log In",
+    });
+    await user.click(submitButton);
+
+    await waitFor(() => {
+      mockGames.forEach((game) => {
+        expect(screen.getByRole("heading", { name: game.title })).toBeDefined();
+      });
+    });
+
+    const spaceGame = mockGames.find((game) => game.title === "Space")!;
+    const gameCard = screen.getByTestId(`game-card-${spaceGame.id}`);
+
+    await waitFor(() => {
+      expect(within(gameCard).queryByText("Your Time:")).toBeNull();
+      expect(within(gameCard).queryByTestId("user-game-time")).toBeNull();
+    });
+  });
 });
