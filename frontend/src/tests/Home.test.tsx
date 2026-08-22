@@ -23,7 +23,7 @@ vi.mock("../helpers/token", () => ({
 }));
 
 vi.mock("jwt-decode", () => ({
-  jwtDecode: vi.fn(() => ({ id: 1, username: "test" })),
+  jwtDecode: vi.fn(() => ({ id: 1, username: "Player1" })),
 }));
 
 const renderComponent = () =>
@@ -189,7 +189,7 @@ describe("<Home />", () => {
     const user = userEvent.setup();
     renderComponent();
     await openLoginModal(user);
-    await fillLoginForm(user, { username: "test", password: "password" });
+    await fillLoginForm(user, { username: "Player1", password: "password" });
 
     const loginForm = screen.getByTestId("login-form");
     const submitButton = within(loginForm).getByRole("button", {
@@ -199,13 +199,13 @@ describe("<Home />", () => {
     await user.click(submitButton);
 
     expect(login).toHaveBeenCalledWith({
-      username: "test",
+      username: "Player1",
       password: "password",
     });
 
     await waitFor(() => {
       expect(screen.queryByRole("heading", { name: "Log In" })).toBeNull();
-      expect(screen.getByText("test")).toBeDefined();
+      expect(screen.getByText("Player1")).toBeDefined();
     });
   });
 
@@ -216,7 +216,7 @@ describe("<Home />", () => {
     const user = userEvent.setup();
     renderComponent();
     await openLoginModal(user);
-    await fillLoginForm(user, { username: "test", password: "password" });
+    await fillLoginForm(user, { username: "Player1", password: "password" });
 
     const loginForm = screen.getByTestId("login-form");
     const submitButton = within(loginForm).getByRole("button", {
@@ -225,7 +225,7 @@ describe("<Home />", () => {
     await user.click(submitButton);
 
     await waitFor(() => {
-      expect(screen.getByText("test")).toBeDefined();
+      expect(screen.getByText("Player1")).toBeDefined();
     });
 
     const logoutButton = screen.getByRole("button", { name: "Log Out" });
@@ -233,7 +233,7 @@ describe("<Home />", () => {
 
     await waitFor(() => {
       expect(screen.getByRole("button", { name: "Log In" })).toBeDefined();
-      expect(screen.queryByText("test")).toBeNull();
+      expect(screen.queryByText("Player1")).toBeNull();
     });
   });
 
