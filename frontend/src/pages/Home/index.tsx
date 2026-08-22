@@ -15,6 +15,7 @@ const placeholders: GameCardData[] = Array.from(
 const Home = () => {
   const [games, setGames] = useState<GameCardData[]>(placeholders);
   const [open, setOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState<"games" | "leaderboard">("games");
 
   useEffect(() => {
     getGames()
@@ -34,11 +35,19 @@ const Home = () => {
 
   return (
     <div className="flex min-h-screen w-full flex-col bg-[url('/background.png')] bg-size-[auto_100%] bg-center bg-repeat-x">
-      <Header handleOpen={handleOpen} />
+      <Header
+        handleOpen={handleOpen}
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+      />
       <main className="flex w-full grow justify-center">
         <div className="grid max-w-400 grow grid-cols-1 gap-8 p-8 sm:grid-cols-2 lg:grid-cols-3">
           {games.map((game) => (
-            <GameCard key={game.id} game={game} />
+            <GameCard
+              key={game.id}
+              game={game}
+              showLeaderboard={activeTab === "leaderboard"}
+            />
           ))}
         </div>
       </main>

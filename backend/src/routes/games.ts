@@ -19,6 +19,23 @@ route.get("/", async (_req, res) => {
       width: true,
       height: true,
     },
+    with: {
+      gameScores: {
+        columns: {
+          id: true,
+          time: true,
+        },
+        with: {
+          user: {
+            columns: {
+              id: true,
+              username: true,
+            },
+          },
+        },
+        orderBy: asc(gameScores.time),
+      },
+    },
   });
 
   res.json(allGames);
@@ -51,6 +68,21 @@ route.get("/:id", async (req, res) => {
             },
           },
         },
+      },
+      gameScores: {
+        columns: {
+          id: true,
+          time: true,
+        },
+        with: {
+          user: {
+            columns: {
+              id: true,
+              username: true,
+            },
+          },
+        },
+        orderBy: asc(gameScores.time),
       },
     },
   });

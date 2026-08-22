@@ -6,6 +6,7 @@ import type { LoginCredentials } from "../types";
 import AuthProvider from "../components/AuthProvider";
 import Home from "../pages/Home";
 import { mockGames } from "./mocks/games";
+import { formatTime } from "../helpers/time";
 
 vi.mock("../services/games", () => ({
   getGames: vi.fn(),
@@ -22,7 +23,7 @@ vi.mock("../helpers/token", () => ({
 }));
 
 vi.mock("jwt-decode", () => ({
-  jwtDecode: vi.fn(() => ({ id: 1, username: "test" })),
+  jwtDecode: vi.fn(() => ({ id: 1, username: "Player1" })),
 }));
 
 const renderComponent = () =>
@@ -60,6 +61,11 @@ const fillLoginForm = async (
 
   await user.type(usernameInput, username);
   await user.type(passwordInput, password);
+};
+
+const switchToLeaderboardTab = async (user: UserEvent) => {
+  const leaderboardTab = screen.getByRole("button", { name: "Leaderboard" });
+  await user.click(leaderboardTab);
 };
 
 describe("<Home />", () => {
@@ -183,7 +189,7 @@ describe("<Home />", () => {
     const user = userEvent.setup();
     renderComponent();
     await openLoginModal(user);
-    await fillLoginForm(user, { username: "test", password: "password" });
+    await fillLoginForm(user, { username: "Player1", password: "password" });
 
     const loginForm = screen.getByTestId("login-form");
     const submitButton = within(loginForm).getByRole("button", {
@@ -193,13 +199,13 @@ describe("<Home />", () => {
     await user.click(submitButton);
 
     expect(login).toHaveBeenCalledWith({
-      username: "test",
+      username: "Player1",
       password: "password",
     });
 
     await waitFor(() => {
       expect(screen.queryByRole("heading", { name: "Log In" })).toBeNull();
-      expect(screen.getByText("test")).toBeDefined();
+      expect(screen.getByText("Player1")).toBeDefined();
     });
   });
 
@@ -210,7 +216,7 @@ describe("<Home />", () => {
     const user = userEvent.setup();
     renderComponent();
     await openLoginModal(user);
-    await fillLoginForm(user, { username: "test", password: "password" });
+    await fillLoginForm(user, { username: "Player1", password: "password" });
 
     const loginForm = screen.getByTestId("login-form");
     const submitButton = within(loginForm).getByRole("button", {
@@ -219,7 +225,7 @@ describe("<Home />", () => {
     await user.click(submitButton);
 
     await waitFor(() => {
-      expect(screen.getByText("test")).toBeDefined();
+      expect(screen.getByText("Player1")).toBeDefined();
     });
 
     const logoutButton = screen.getByRole("button", { name: "Log Out" });
@@ -227,7 +233,130 @@ describe("<Home />", () => {
 
     await waitFor(() => {
       expect(screen.getByRole("button", { name: "Log In" })).toBeDefined();
-      expect(screen.queryByText("test")).toBeNull();
+      expect(screen.queryByText("Player1")).toBeNull();
+    });
+  });
+
+  test("shows leaderboard when leaderboard tab is clicked", async () => {
+    const user = userEvent.setup();
+    renderComponent();
+
+    await waitFor(() => {
+      mockGames.forEach((game) => {
+        expect(screen.getByRole("heading", { name: game.title })).toBeDefined();
+      });
+    });
+
+    await switchToLeaderboardTab(user);
+
+    const firstGame = mockGames[0];
+    const topScore = firstGame.gameScores[0];
+    const gameCard = screen.getByTestId(`game-card-${firstGame.id}`);
+
+    await waitFor(() => {
+      expect(within(gameCard).getByText(topScore.user.username)).toBeDefined();
+      expect(
+        within(gameCard).getByText(formatTime(topScore.time)),
+      ).toBeDefined();
+    });
+  });
+
+  test("shows games when games tab is clicked after viewing leaderboard", async () => {
+    const user = userEvent.setup();
+    renderComponent();
+
+    await waitFor(() => {
+      expect(screen.getByRole("button", { name: "Leaderboard" })).toBeDefined();
+      mockGames.forEach((game) => {
+        expect(screen.getByRole("heading", { name: game.title })).toBeDefined();
+      });
+    });
+
+    await switchToLeaderboardTab(user);
+
+    const firstGame = mockGames[0];
+    const topScore = firstGame.gameScores[0];
+    const gameCard = screen.getByTestId(`game-card-${firstGame.id}`);
+
+    await waitFor(() => {
+      expect(within(gameCard).getByText(topScore.user.username)).toBeDefined();
+    });
+
+    const gamesTab = screen.getByRole("button", { name: "Games" });
+    await user.click(gamesTab);
+
+    await waitFor(() => {
+      mockGames.forEach((game) => {
+        expect(screen.getByRole("heading", { name: game.title })).toBeDefined();
+      });
+    });
+  });
+
+  test("shows current user's time on game card front after logging in", async () => {
+    const { login } = await import("../services/auth");
+    vi.mocked(login).mockResolvedValue({ token: "mocked-token" });
+
+    const user = userEvent.setup();
+    renderComponent();
+    await openLoginModal(user);
+    await fillLoginForm(user, { username: "Player1", password: "password" });
+
+    const loginForm = screen.getByTestId("login-form");
+    const submitButton = within(loginForm).getByRole("button", {
+      name: "Log In",
+    });
+    await user.click(submitButton);
+
+    await waitFor(() => {
+      mockGames.forEach((game) => {
+        expect(screen.getByRole("heading", { name: game.title })).toBeDefined();
+      });
+    });
+
+    const firstGame = mockGames[0];
+    const userEntry = firstGame.gameScores.find(
+      (entry) => entry.user.username === "Player1",
+    )!;
+    const gameCard = screen.getByTestId(`game-card-${firstGame.id}`);
+
+    await waitFor(() => {
+      expect(within(gameCard).getByText("Your Time:")).toBeDefined();
+
+      const userGameTimeDisplay =
+        within(gameCard).getByTestId("user-game-time");
+      expect(userGameTimeDisplay.textContent).toMatch(
+        formatTime(userEntry.time),
+      );
+    });
+  });
+
+  test("does not show your time on games the user has not played", async () => {
+    const { login } = await import("../services/auth");
+    vi.mocked(login).mockResolvedValue({ token: "mocked-token" });
+
+    const user = userEvent.setup();
+    renderComponent();
+    await openLoginModal(user);
+    await fillLoginForm(user, { username: "Player1", password: "password" });
+
+    const loginForm = screen.getByTestId("login-form");
+    const submitButton = within(loginForm).getByRole("button", {
+      name: "Log In",
+    });
+    await user.click(submitButton);
+
+    await waitFor(() => {
+      mockGames.forEach((game) => {
+        expect(screen.getByRole("heading", { name: game.title })).toBeDefined();
+      });
+    });
+
+    const spaceGame = mockGames.find((game) => game.title === "Space")!;
+    const gameCard = screen.getByTestId(`game-card-${spaceGame.id}`);
+
+    await waitFor(() => {
+      expect(within(gameCard).queryByText("Your Time:")).toBeNull();
+      expect(within(gameCard).queryByTestId("user-game-time")).toBeNull();
     });
   });
 });
