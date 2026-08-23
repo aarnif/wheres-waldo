@@ -69,6 +69,20 @@ const fillLoginForm = async (
   await user.type(passwordInput, password);
 };
 
+const loginWithCredentials = async (
+  user: UserEvent,
+  credentials: LoginCredentials = { username: "Player1", password: "password" },
+) => {
+  await openLoginModal(user);
+  await fillLoginForm(user, credentials);
+
+  const loginForm = screen.getByTestId("login-form");
+  const submitButton = within(loginForm).getByRole("button", {
+    name: "Log In",
+  });
+  await user.click(submitButton);
+};
+
 const switchToLeaderboardTab = async (user: UserEvent) => {
   const leaderboardTab = screen.getByRole("button", { name: "Leaderboard" });
   await user.click(leaderboardTab);
@@ -173,15 +187,11 @@ describe("<Home />", () => {
 
     const user = userEvent.setup();
     renderComponent();
-    await openLoginModal(user);
-    await fillLoginForm(user, { username: "wronguser", password: "wrongpass" });
 
-    const loginForm = screen.getByTestId("login-form");
-    const submitButton = within(loginForm).getByRole("button", {
-      name: "Log In",
+    await loginWithCredentials(user, {
+      username: "wronguser",
+      password: "wrongpass",
     });
-
-    await user.click(submitButton);
 
     expect(login).toHaveBeenCalledWith({
       username: "wronguser",
@@ -199,15 +209,8 @@ describe("<Home />", () => {
 
     const user = userEvent.setup();
     renderComponent();
-    await openLoginModal(user);
-    await fillLoginForm(user, { username: "Player1", password: "password" });
 
-    const loginForm = screen.getByTestId("login-form");
-    const submitButton = within(loginForm).getByRole("button", {
-      name: "Log In",
-    });
-
-    await user.click(submitButton);
+    await loginWithCredentials(user);
 
     expect(login).toHaveBeenCalledWith({
       username: "Player1",
@@ -226,14 +229,8 @@ describe("<Home />", () => {
 
     const user = userEvent.setup();
     renderComponent();
-    await openLoginModal(user);
-    await fillLoginForm(user, { username: "Player1", password: "password" });
 
-    const loginForm = screen.getByTestId("login-form");
-    const submitButton = within(loginForm).getByRole("button", {
-      name: "Log In",
-    });
-    await user.click(submitButton);
+    await loginWithCredentials(user);
 
     await waitFor(() => {
       expect(screen.getByText("Player1")).toBeDefined();
@@ -309,14 +306,8 @@ describe("<Home />", () => {
 
     const user = userEvent.setup();
     renderComponent();
-    await openLoginModal(user);
-    await fillLoginForm(user, { username: "Player1", password: "password" });
 
-    const loginForm = screen.getByTestId("login-form");
-    const submitButton = within(loginForm).getByRole("button", {
-      name: "Log In",
-    });
-    await user.click(submitButton);
+    await loginWithCredentials(user);
 
     await waitFor(() => {
       mockGames.forEach((game) => {
@@ -347,14 +338,8 @@ describe("<Home />", () => {
 
     const user = userEvent.setup();
     renderComponent();
-    await openLoginModal(user);
-    await fillLoginForm(user, { username: "Player1", password: "password" });
 
-    const loginForm = screen.getByTestId("login-form");
-    const submitButton = within(loginForm).getByRole("button", {
-      name: "Log In",
-    });
-    await user.click(submitButton);
+    await loginWithCredentials(user);
 
     await waitFor(() => {
       mockGames.forEach((game) => {
@@ -381,14 +366,7 @@ describe("<Home />", () => {
     const user = userEvent.setup();
     renderComponent();
 
-    await openLoginModal(user);
-    await fillLoginForm(user, { username: "Player1", password: "password" });
-
-    const loginForm = screen.getByTestId("login-form");
-    const submitButton = within(loginForm).getByRole("button", {
-      name: "Log In",
-    });
-    await user.click(submitButton);
+    await loginWithCredentials(user);
 
     await waitFor(() => {
       expect(screen.getByText("Save your scores?")).toBeDefined();
@@ -405,14 +383,7 @@ describe("<Home />", () => {
     const user = userEvent.setup();
     renderComponent();
 
-    await openLoginModal(user);
-    await fillLoginForm(user, { username: "Player1", password: "password" });
-
-    const loginForm = screen.getByTestId("login-form");
-    const submitButton = within(loginForm).getByRole("button", {
-      name: "Log In",
-    });
-    await user.click(submitButton);
+    await loginWithCredentials(user);
 
     await waitFor(() => {
       expect(screen.getByText("Player1")).toBeDefined();
@@ -434,14 +405,7 @@ describe("<Home />", () => {
     const user = userEvent.setup();
     renderComponent();
 
-    await openLoginModal(user);
-    await fillLoginForm(user, { username: "Player1", password: "password" });
-
-    const loginForm = screen.getByTestId("login-form");
-    const submitButton = within(loginForm).getByRole("button", {
-      name: "Log In",
-    });
-    await user.click(submitButton);
+    await loginWithCredentials(user);
 
     await waitFor(() => {
       expect(screen.getByText("Save your scores?")).toBeDefined();
@@ -470,14 +434,7 @@ describe("<Home />", () => {
     const user = userEvent.setup();
     renderComponent();
 
-    await openLoginModal(user);
-    await fillLoginForm(user, { username: "Player1", password: "password" });
-
-    const loginForm = screen.getByTestId("login-form");
-    const submitButton = within(loginForm).getByRole("button", {
-      name: "Log In",
-    });
-    await user.click(submitButton);
+    await loginWithCredentials(user);
 
     await waitFor(() => {
       expect(screen.getByText("Save your scores?")).toBeDefined();
