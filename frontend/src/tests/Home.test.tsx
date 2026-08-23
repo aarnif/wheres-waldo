@@ -10,10 +10,16 @@ import { formatTime } from "../helpers/time";
 
 vi.mock("../services/games", () => ({
   getGames: vi.fn(),
+  syncGameScores: vi.fn(),
 }));
 
 vi.mock("../services/auth", () => ({
   login: vi.fn(),
+}));
+
+vi.mock("../helpers/localGameScores", () => ({
+  getGameScores: vi.fn(),
+  clearGameScores: vi.fn(),
 }));
 
 vi.mock("../helpers/token", () => ({
@@ -70,8 +76,13 @@ const switchToLeaderboardTab = async (user: UserEvent) => {
 
 describe("<Home />", () => {
   beforeEach(async () => {
+    vi.clearAllMocks();
+
     const { getGames } = await import("../services/games");
+    const { getGameScores } = await import("../helpers/localGameScores");
+
     vi.mocked(getGames).mockResolvedValue(mockGames);
+    vi.mocked(getGameScores).mockReturnValue([]);
   });
 
   test("renders component with header and all games", async () => {
@@ -358,5 +369,128 @@ describe("<Home />", () => {
       expect(within(gameCard).queryByText("Your Time:")).toBeNull();
       expect(within(gameCard).queryByTestId("user-game-time")).toBeNull();
     });
+  });
+
+  test("shows sync prompt after login when local scores exist", async () => {
+    const { getGameScores } = await import("../helpers/localGameScores");
+    const { login } = await import("../services/auth");
+
+    vi.mocked(getGameScores).mockReturnValue([{ id: 1, time: 4500 }]);
+    vi.mocked(login).mockResolvedValue({ token: "mocked-token" });
+
+    const user = userEvent.setup();
+    renderComponent();
+
+    await openLoginModal(user);
+    await fillLoginForm(user, { username: "Player1", password: "password" });
+
+    const loginForm = screen.getByTestId("login-form");
+    const submitButton = within(loginForm).getByRole("button", {
+      name: "Log In",
+    });
+    await user.click(submitButton);
+
+    await waitFor(() => {
+      expect(screen.getByText("Save your scores?")).toBeDefined();
+    });
+  });
+
+  test("does not show sync prompt after login when no local scores exist", async () => {
+    const { getGameScores } = await import("../helpers/localGameScores");
+    const { login } = await import("../services/auth");
+
+    vi.mocked(getGameScores).mockReturnValue([]);
+    vi.mocked(login).mockResolvedValue({ token: "mocked-token" });
+
+    const user = userEvent.setup();
+    renderComponent();
+
+    await openLoginModal(user);
+    await fillLoginForm(user, { username: "Player1", password: "password" });
+
+    const loginForm = screen.getByTestId("login-form");
+    const submitButton = within(loginForm).getByRole("button", {
+      name: "Log In",
+    });
+    await user.click(submitButton);
+
+    await waitFor(() => {
+      expect(screen.getByText("Player1")).toBeDefined();
+    });
+
+    expect(screen.queryByText("Save your scores?")).toBeNull();
+  });
+
+  test("syncs and clears local scores when save scores is clicked", async () => {
+    const { getGameScores, clearGameScores } =
+      await import("../helpers/localGameScores");
+    const { syncGameScores } = await import("../services/games");
+    const { login } = await import("../services/auth");
+
+    vi.mocked(getGameScores).mockReturnValue([{ id: 1, time: 4500 }]);
+    vi.mocked(syncGameScores).mockResolvedValue(undefined);
+    vi.mocked(login).mockResolvedValue({ token: "mocked-token" });
+
+    const user = userEvent.setup();
+    renderComponent();
+
+    await openLoginModal(user);
+    await fillLoginForm(user, { username: "Player1", password: "password" });
+
+    const loginForm = screen.getByTestId("login-form");
+    const submitButton = within(loginForm).getByRole("button", {
+      name: "Log In",
+    });
+    await user.click(submitButton);
+
+    await waitFor(() => {
+      expect(screen.getByText("Save your scores?")).toBeDefined();
+    });
+
+    const saveButton = screen.getByRole("button", { name: "Save Scores" });
+    await user.click(saveButton);
+
+    await waitFor(() => {
+      expect(syncGameScores).toHaveBeenCalledWith([{ id: 1, time: 4500 }]);
+      expect(clearGameScores).toHaveBeenCalled();
+      expect(screen.queryByText("Save your scores?")).toBeNull();
+    });
+  });
+
+  test("dismisses sync prompt without syncing when not now is clicked", async () => {
+    const { getGameScores, clearGameScores } =
+      await import("../helpers/localGameScores");
+    const { syncGameScores } = await import("../services/games");
+    const { login } = await import("../services/auth");
+
+    vi.mocked(getGameScores).mockReturnValue([{ id: 1, time: 4500 }]);
+    vi.mocked(syncGameScores).mockResolvedValue(undefined);
+    vi.mocked(login).mockResolvedValue({ token: "mocked-token" });
+
+    const user = userEvent.setup();
+    renderComponent();
+
+    await openLoginModal(user);
+    await fillLoginForm(user, { username: "Player1", password: "password" });
+
+    const loginForm = screen.getByTestId("login-form");
+    const submitButton = within(loginForm).getByRole("button", {
+      name: "Log In",
+    });
+    await user.click(submitButton);
+
+    await waitFor(() => {
+      expect(screen.getByText("Save your scores?")).toBeDefined();
+    });
+
+    const notNowButton = screen.getByRole("button", { name: "Not Now" });
+    await user.click(notNowButton);
+
+    await waitFor(() => {
+      expect(screen.queryByText("Save your scores?")).toBeNull();
+    });
+
+    expect(syncGameScores).not.toHaveBeenCalled();
+    expect(clearGameScores).not.toHaveBeenCalled();
   });
 });
