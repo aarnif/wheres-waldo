@@ -49,3 +49,9 @@ export const submitGameScore = async (
 
   return body;
 };
+
+export const syncGameScores = async (scores: GameScore[]): Promise<void> => {
+  await Promise.all(
+    scores.map((score) => submitGameScore(String(score.id), score.time)),
+  );
+};

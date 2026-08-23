@@ -1,9 +1,12 @@
-import { useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import type { GameCardData } from "../../types";
-import { getGames } from "../../services/games";
+import { getGames, syncGameScores } from "../../services/games";
+import { clearGameScores, getGameScores } from "../../helpers/localGameScores";
+import useAuth from "../../hooks/useAuth";
 import Header from "./Header";
 import GameCard from "./GameCard";
 import LoginModal from "./LoginModal";
+import SyncScoresModal from "./SyncScoresModal";
 
 const PLACEHOLDER_COUNT = 6;
 
@@ -13,17 +16,48 @@ const placeholders: GameCardData[] = Array.from(
 );
 
 const Home = () => {
+  const { user } = useAuth();
+  const previousUserRef = useRef(user);
   const [games, setGames] = useState<GameCardData[]>(placeholders);
   const [open, setOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"games" | "leaderboard">("games");
+  const [showSyncModal, setShowSyncModal] = useState(false);
 
   useEffect(() => {
+    fetchGames();
+  }, []);
+
+  useEffect(() => {
+    const justLoggedIn = !previousUserRef.current && user;
+    if (justLoggedIn && getGameScores().length > 0) {
+      setShowSyncModal(true);
+    }
+    previousUserRef.current = user;
+  }, [user]);
+
+  const fetchGames = () => {
     getGames()
       .then(setGames)
       .catch((error) => {
         console.error(error);
       });
-  }, []);
+  };
+
+  const handleSync = async () => {
+    try {
+      await syncGameScores(getGameScores());
+      clearGameScores();
+    } catch (error) {
+      console.error(error);
+    } finally {
+      fetchGames();
+      setShowSyncModal(false);
+    }
+  };
+
+  const handleDismiss = () => {
+    setShowSyncModal(false);
+  };
 
   const handleOpen = () => {
     setOpen(true);
@@ -52,6 +86,12 @@ const Home = () => {
         </div>
       </main>
       {open && <LoginModal handleClose={handleClose} />}
+      {showSyncModal && (
+        <SyncScoresModal
+          handleSync={handleSync}
+          handleDismiss={handleDismiss}
+        />
+      )}
     </div>
   );
 };
