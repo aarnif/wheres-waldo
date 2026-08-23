@@ -68,6 +68,10 @@ const GameView = ({
 
   const handleEndGame = () => {
     stopTimer();
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    setShowFooter(false);
     if (user)
       submitGameScore(String(game.id), time).catch((error) =>
         console.error(error.message),
@@ -228,7 +232,9 @@ const GameView = ({
       )}
 
       <AnimatePresence>
-        {showFooter && <GameFooter foundCharacters={foundCharacters} />}
+        {showFooter && !gameEnd && (
+          <GameFooter foundCharacters={foundCharacters} />
+        )}
       </AnimatePresence>
     </div>
   );
