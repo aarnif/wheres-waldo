@@ -56,7 +56,7 @@ const GameContent = ({
 
   const userGameScore = currentUserEntry
     ? currentUserEntry
-    : getGameScores().find((entry) => entry.id === id);
+    : !currentUser && getGameScores().find((entry) => entry.id === id);
 
   return (
     <Link
