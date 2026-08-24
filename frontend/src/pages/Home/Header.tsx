@@ -1,6 +1,7 @@
 import { Link } from "react-router";
 import { motion } from "framer-motion";
 import useAuth from "../../hooks/useAuth";
+import useNotify from "../../hooks/useNotify";
 import { clearToken } from "../../helpers/token";
 
 const Header = ({
@@ -13,10 +14,12 @@ const Header = ({
   setActiveTab: React.Dispatch<React.SetStateAction<"games" | "leaderboard">>;
 }) => {
   const { user, setUser } = useAuth();
+  const { notify } = useNotify();
 
   const handleLogout = () => {
     clearToken();
     setUser(null);
+    notify("You have been logged out", "success");
   };
 
   const toggleButtons = [
@@ -58,7 +61,10 @@ const Header = ({
       <nav className="flex items-center gap-4 text-white sm:gap-8">
         {user ? (
           <>
-            <span className="text-sm font-bold sm:text-base">
+            <span
+              data-testid="current-user"
+              className="text-sm font-bold sm:text-base"
+            >
               {user.username}
             </span>
             <button

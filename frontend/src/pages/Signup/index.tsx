@@ -8,12 +8,14 @@ import { login } from "../../services/auth";
 import Error from "../../components/Error";
 import FormField from "../../components/FormField";
 import useAuth from "../../hooks/useAuth";
+import useNotify from "../../hooks/useNotify";
 import useErrorMessage from "../../hooks/useErrorMessage";
 import useField from "../../hooks/useField";
 import { setToken } from "../../helpers/token";
 
 const SignUp = () => {
   const { setUser } = useAuth();
+  const { notify } = useNotify();
   const navigate = useNavigate();
   const { message, showMessage, closeMessage } = useErrorMessage();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -86,6 +88,7 @@ const SignUp = () => {
             setToken(token);
             const decoded = jwtDecode<DecodedToken>(token);
             setUser({ id: decoded.id, username: decoded.username });
+            notify(`Account created for ${decoded.username}!`, "success");
             navigate("/");
           })
           .catch(() => {

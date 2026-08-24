@@ -4,6 +4,7 @@ import userEvent, { type UserEvent } from "@testing-library/user-event";
 import { vi, describe, expect, test, beforeEach } from "vitest";
 import type { LoginCredentials } from "../types";
 import AuthProvider from "../components/AuthProvider";
+import NotificationProvider from "../components/NotificationProvider";
 import Home from "../pages/Home";
 import { mockGames } from "./mocks/games";
 import { formatTime } from "../helpers/time";
@@ -35,9 +36,11 @@ vi.mock("jwt-decode", () => ({
 const renderComponent = () =>
   render(
     <AuthProvider>
-      <MemoryRouter initialEntries={["/"]}>
-        <Home />
-      </MemoryRouter>
+      <NotificationProvider>
+        <MemoryRouter initialEntries={["/"]}>
+          <Home />
+        </MemoryRouter>
+      </NotificationProvider>
     </AuthProvider>,
   );
 
@@ -219,7 +222,15 @@ describe("<Home />", () => {
 
     await waitFor(() => {
       expect(screen.queryByRole("heading", { name: "Log In" })).toBeNull();
-      expect(screen.getByText("Player1")).toBeDefined();
+      const currentUser = screen.getByTestId("current-user");
+      expect(currentUser.textContent).toBe("Player1");
+      expect(screen.getByText("Welcome back, Player1!")).toBeDefined();
+    });
+
+    await user.click(screen.getByTestId("notification-close-button"));
+
+    await waitFor(() => {
+      expect(screen.queryByText("Welcome back, Player1!")).toBeNull();
     });
   });
 
@@ -233,7 +244,15 @@ describe("<Home />", () => {
     await loginWithCredentials(user);
 
     await waitFor(() => {
-      expect(screen.getByText("Player1")).toBeDefined();
+      const currentUser = screen.getByTestId("current-user");
+      expect(currentUser.textContent).toBe("Player1");
+      expect(screen.getByText("Welcome back, Player1!")).toBeDefined();
+    });
+
+    await user.click(screen.getByTestId("notification-close-button"));
+
+    await waitFor(() => {
+      expect(screen.queryByText("Welcome back, Player1!")).toBeNull();
     });
 
     const logoutButton = screen.getByRole("button", { name: "Log Out" });
@@ -241,7 +260,14 @@ describe("<Home />", () => {
 
     await waitFor(() => {
       expect(screen.getByRole("button", { name: "Log In" })).toBeDefined();
-      expect(screen.queryByText("Player1")).toBeNull();
+      expect(screen.queryByTestId("current-user")).toBeNull();
+      expect(screen.getByText("You have been logged out")).toBeDefined();
+    });
+
+    await user.click(screen.getByTestId("notification-close-button"));
+
+    await waitFor(() => {
+      expect(screen.queryByText("You have been logged out")).toBeNull();
     });
   });
 
@@ -386,7 +412,8 @@ describe("<Home />", () => {
     await loginWithCredentials(user);
 
     await waitFor(() => {
-      expect(screen.getByText("Player1")).toBeDefined();
+      const currentUser = screen.getByTestId("current-user");
+      expect(currentUser.textContent).toBe("Player1");
     });
 
     expect(screen.queryByText("Save your scores?")).toBeNull();
@@ -407,6 +434,12 @@ describe("<Home />", () => {
 
     await loginWithCredentials(user);
 
+    await user.click(screen.getByTestId("notification-close-button"));
+
+    await waitFor(() => {
+      expect(screen.queryByText("Welcome back, Player1!")).toBeNull();
+    });
+
     await waitFor(() => {
       expect(screen.getByText("Save your scores?")).toBeDefined();
     });
@@ -418,6 +451,51 @@ describe("<Home />", () => {
       expect(syncGameScores).toHaveBeenCalledWith([{ id: 1, time: 4500 }]);
       expect(clearGameScores).toHaveBeenCalled();
       expect(screen.queryByText("Save your scores?")).toBeNull();
+      expect(screen.getByText("Scores saved successfully!")).toBeDefined();
+    });
+
+    await user.click(screen.getByTestId("notification-close-button"));
+
+    await waitFor(() => {
+      expect(screen.queryByText("Scores saved successfully!")).toBeNull();
+    });
+  });
+
+  test("shows error notification when score sync fails", async () => {
+    const { getGameScores } = await import("../helpers/localGameScores");
+    const { syncGameScores } = await import("../services/games");
+    const { login } = await import("../services/auth");
+
+    vi.mocked(getGameScores).mockReturnValue([{ id: 1, time: 4500 }]);
+    vi.mocked(syncGameScores).mockRejectedValue(new Error("Sync failed"));
+    vi.mocked(login).mockResolvedValue({ token: "mocked-token" });
+
+    const user = userEvent.setup();
+    renderComponent();
+
+    await loginWithCredentials(user);
+
+    await user.click(screen.getByTestId("notification-close-button"));
+
+    await waitFor(() => {
+      expect(screen.queryByText("Welcome back, Player1!")).toBeNull();
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText("Save your scores?")).toBeDefined();
+    });
+
+    const saveButton = screen.getByRole("button", { name: "Save Scores" });
+    await user.click(saveButton);
+
+    await waitFor(() => {
+      expect(screen.getByText("Failed to save scores")).toBeDefined();
+    });
+
+    await user.click(screen.getByTestId("notification-close-button"));
+
+    await waitFor(() => {
+      expect(screen.queryByText("Failed to save scores")).toBeNull();
     });
   });
 

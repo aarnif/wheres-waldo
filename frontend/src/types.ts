@@ -81,3 +81,11 @@ export interface FoundCharacter extends GameCharacter {
 export interface LeaderboardEntry extends GameScore {
   user: User;
 }
+
+export type NotificationType = "success" | "error";
+
+export interface Notification {
+  id: number;
+  message: string;
+  type: NotificationType;
+}

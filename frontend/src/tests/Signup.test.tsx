@@ -4,6 +4,7 @@ import userEvent, { type UserEvent } from "@testing-library/user-event";
 import { vi, describe, expect, test } from "vitest";
 import type { SignUpCredentials } from "../types";
 import AuthProvider from "../components/AuthProvider";
+import NotificationProvider from "../components/NotificationProvider";
 import SignUp from "../pages/SignUp";
 
 const mockNavigate = vi.fn();
@@ -37,9 +38,11 @@ vi.mock("jwt-decode", () => ({
 const renderComponent = () =>
   render(
     <AuthProvider>
-      <MemoryRouter initialEntries={["/sign-up"]}>
-        <SignUp />
-      </MemoryRouter>
+      <NotificationProvider>
+        <MemoryRouter initialEntries={["/sign-up"]}>
+          <SignUp />
+        </MemoryRouter>
+      </NotificationProvider>
     </AuthProvider>,
   );
 
@@ -225,5 +228,15 @@ describe("<Signup />", () => {
     });
 
     expect(mockNavigate).toHaveBeenCalledWith("/");
+
+    await waitFor(() => {
+      expect(screen.getByText("Account created for test!")).toBeDefined();
+    });
+
+    await user.click(screen.getByTestId("notification-close-button"));
+
+    await waitFor(() => {
+      expect(screen.queryByText("Account created for test!")).toBeNull();
+    });
   });
 });

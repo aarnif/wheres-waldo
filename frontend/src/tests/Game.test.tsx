@@ -3,6 +3,7 @@ import { MemoryRouter } from "react-router";
 import userEvent, { type UserEvent } from "@testing-library/user-event";
 import { vi, describe, expect, test, beforeEach } from "vitest";
 import AuthProvider from "../components/AuthProvider";
+import NotificationProvider from "../components/NotificationProvider";
 import Game from "../pages/Game";
 import { mockGameDetails } from "./mocks/games";
 import type { GameCharacter } from "../types";
@@ -26,9 +27,11 @@ vi.mock("../services/games", () => ({
 const renderComponent = () =>
   render(
     <AuthProvider>
-      <MemoryRouter initialEntries={["/games/1"]}>
-        <Game />
-      </MemoryRouter>
+      <NotificationProvider>
+        <MemoryRouter initialEntries={["/games/1"]}>
+          <Game />
+        </MemoryRouter>
+      </NotificationProvider>
     </AuthProvider>,
   );
 
@@ -223,6 +226,9 @@ describe("<Game />", () => {
       expect(screen.getByTestId("game-mark")).toBeDefined();
       expect(
         screen.getByTestId(`found-character-${character.character.name}`),
+      ).toBeDefined();
+      expect(
+        screen.getByText(`You found ${character.character.displayName}!`),
       ).toBeDefined();
     });
   });
