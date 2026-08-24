@@ -4,6 +4,7 @@ import userEvent, { type UserEvent } from "@testing-library/user-event";
 import { vi, describe, expect, test, beforeEach } from "vitest";
 import type { LoginCredentials } from "../types";
 import AuthProvider from "../components/AuthProvider";
+import NotificationProvider from "../components/NotificationProvider";
 import Home from "../pages/Home";
 import { mockGames } from "./mocks/games";
 import { formatTime } from "../helpers/time";
@@ -35,9 +36,11 @@ vi.mock("jwt-decode", () => ({
 const renderComponent = () =>
   render(
     <AuthProvider>
-      <MemoryRouter initialEntries={["/"]}>
-        <Home />
-      </MemoryRouter>
+      <NotificationProvider>
+        <MemoryRouter initialEntries={["/"]}>
+          <Home />
+        </MemoryRouter>
+      </NotificationProvider>
     </AuthProvider>,
   );
 

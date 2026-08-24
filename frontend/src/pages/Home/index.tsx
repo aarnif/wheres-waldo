@@ -3,6 +3,7 @@ import type { GameCardData } from "../../types";
 import { getGames, syncGameScores } from "../../services/games";
 import { clearGameScores, getGameScores } from "../../helpers/localGameScores";
 import useAuth from "../../hooks/useAuth";
+import useNotify from "../../hooks/useNotify";
 import Header from "./Header";
 import GameCard from "./GameCard";
 import LoginModal from "./LoginModal";
@@ -17,6 +18,7 @@ const placeholders: GameCardData[] = Array.from(
 
 const Home = () => {
   const { user } = useAuth();
+  const { notify } = useNotify();
   const previousUserRef = useRef(user);
   const [games, setGames] = useState<GameCardData[]>(placeholders);
   const [open, setOpen] = useState(false);
@@ -47,8 +49,10 @@ const Home = () => {
     try {
       await syncGameScores(getGameScores());
       clearGameScores();
+      notify("Scores saved successfully!", "success");
     } catch (error) {
       console.error(error);
+      notify("Failed to save scores", "error");
     } finally {
       fetchGames();
       setShowSyncModal(false);

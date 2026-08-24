@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { jwtDecode } from "jwt-decode";
 import { MdClose } from "react-icons/md";
 import useAuth from "../../hooks/useAuth";
+import useNotify from "../../hooks/useNotify";
 import useField from "../../hooks/useField";
 import useErrorMessage from "../../hooks/useErrorMessage";
 import { login } from "../../services/auth";
@@ -13,6 +14,7 @@ import type { DecodedToken } from "../../types";
 
 const LoginModal = ({ handleClose }: { handleClose: () => void }) => {
   const { setUser } = useAuth();
+  const { notify } = useNotify();
   const { message, showMessage, closeMessage } = useErrorMessage();
 
   const username = useField("username", "text", "Enter your username here...");
@@ -45,6 +47,7 @@ const LoginModal = ({ handleClose }: { handleClose: () => void }) => {
         setToken(token);
         const decoded = jwtDecode<DecodedToken>(token);
         setUser({ id: decoded.id, username: decoded.username });
+        notify(`Welcome back, ${decoded.username}!`, "success");
         handleClose();
       })
       .catch((error) => {

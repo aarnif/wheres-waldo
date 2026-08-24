@@ -13,6 +13,7 @@ import AimCursor from "./AimCursor";
 import GameMark from "./GameMark";
 import GameEnd from "./GameEnd";
 import useAuth from "../../hooks/useAuth";
+import useNotify from "../../hooks/useNotify";
 
 const GAME_MESSAGE_DURATION = 3000;
 
@@ -24,6 +25,7 @@ const GameView = ({
   handleCancelGame: () => void;
 }) => {
   const { user } = useAuth();
+  const { notify, clearAll } = useNotify();
   const gameCanvasRef = useRef<HTMLDivElement | null>(null);
   const startTimeRef = useRef<number | null>(null);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -72,6 +74,7 @@ const GameView = ({
       clearTimeout(timeoutRef.current);
     }
     setShowFooter(false);
+    clearAll();
     if (user)
       submitGameScore(String(game.id), time).catch((error) =>
         console.error(error.message),
@@ -166,6 +169,11 @@ const GameView = ({
       );
       setGameMarks((prevMarks) => [...prevMarks, { x: xPercent, y: yPercent }]);
       handleShowFooter();
+      notify(
+        `You found ${foundCharacter.character.displayName}!`,
+        "success",
+        true,
+      );
     }
   };
 
