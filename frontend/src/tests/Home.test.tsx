@@ -222,7 +222,8 @@ describe("<Home />", () => {
 
     await waitFor(() => {
       expect(screen.queryByRole("heading", { name: "Log In" })).toBeNull();
-      expect(screen.getByText("Player1")).toBeDefined();
+      const currentUser = screen.getByTestId("current-user");
+      expect(currentUser.textContent).toBe("Player1");
     });
   });
 
@@ -236,7 +237,8 @@ describe("<Home />", () => {
     await loginWithCredentials(user);
 
     await waitFor(() => {
-      expect(screen.getByText("Player1")).toBeDefined();
+      const currentUser = screen.getByTestId("current-user");
+      expect(currentUser.textContent).toBe("Player1");
     });
 
     const logoutButton = screen.getByRole("button", { name: "Log Out" });
@@ -244,7 +246,7 @@ describe("<Home />", () => {
 
     await waitFor(() => {
       expect(screen.getByRole("button", { name: "Log In" })).toBeDefined();
-      expect(screen.queryByText("Player1")).toBeNull();
+      expect(screen.queryByTestId("current-user")).toBeNull();
     });
   });
 
@@ -389,7 +391,8 @@ describe("<Home />", () => {
     await loginWithCredentials(user);
 
     await waitFor(() => {
-      expect(screen.getByText("Player1")).toBeDefined();
+      const currentUser = screen.getByTestId("current-user");
+      expect(currentUser.textContent).toBe("Player1");
     });
 
     expect(screen.queryByText("Save your scores?")).toBeNull();
