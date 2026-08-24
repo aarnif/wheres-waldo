@@ -228,5 +228,15 @@ describe("<Signup />", () => {
     });
 
     expect(mockNavigate).toHaveBeenCalledWith("/");
+
+    await waitFor(() => {
+      expect(screen.getByText("Account created for test!")).toBeDefined();
+    });
+
+    await user.click(screen.getByTestId("notification-close-button"));
+
+    await waitFor(() => {
+      expect(screen.queryByText("Account created for test!")).toBeNull();
+    });
   });
 });

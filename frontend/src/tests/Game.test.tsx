@@ -227,6 +227,9 @@ describe("<Game />", () => {
       expect(
         screen.getByTestId(`found-character-${character.character.name}`),
       ).toBeDefined();
+      expect(
+        screen.getByText(`You found ${character.character.displayName}!`),
+      ).toBeDefined();
     });
   });
 
