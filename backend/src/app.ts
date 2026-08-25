@@ -4,6 +4,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import gamesRouter from "./routes/games.ts";
 import usersRouter from "./routes/users.ts";
+import testingRouter from "./routes/testing.ts";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -24,6 +25,10 @@ app.use(
 
 app.use("/api/games", gamesRouter);
 app.use("/api/users", usersRouter);
+
+if (process.env.NODE_ENV === "test") {
+  app.use("/api/testing", testingRouter);
+}
 
 app.get("/ping", (_req, res) => {
   res.send("pong");
