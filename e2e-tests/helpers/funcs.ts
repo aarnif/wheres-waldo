@@ -1,5 +1,5 @@
 import { expect, type Page, type APIRequestContext } from "@playwright/test";
-import { SignUpCredentials } from "../../frontend/src/types";
+import { SignUpCredentials, LoginCredentials } from "../../frontend/src/types";
 
 export const createUserViaApi = async (
   request: APIRequestContext,
@@ -38,6 +38,17 @@ export const signUp = async (page: Page, credentials: SignUpCredentials) => {
   await page.getByLabel("ConfirmPassword").fill(confirmPassword);
 
   await page.getByRole("button", { name: "Sign Up" }).click();
+};
+
+export const logIn = async (page: Page, credentials: LoginCredentials) => {
+  await page.getByRole("button", { name: "Log In" }).click();
+
+  const { username, password } = credentials;
+
+  await page.getByLabel("Username").fill(username);
+  await page.getByLabel("Password").fill(password);
+
+  await page.getByTestId("login-submit-button").click();
 };
 
 export const assertErrorNotifyAndClose = async (
