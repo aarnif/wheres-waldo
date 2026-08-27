@@ -23,6 +23,7 @@ const LeaderboardEntry = ({
 
   return (
     <li
+      data-testid={isCurrentUser ? "leaderboard-current-user" : undefined}
       className={`relative flex items-center justify-center text-lg sm:text-xl ${isCurrentUser ? "font-extrabold text-white" : "font-semibold text-slate-200"}`}
     >
       <p className="absolute left-2 sm:left-4 md:left-8">{rank}.</p>
@@ -71,6 +72,7 @@ const GameContent = ({
         className="flex h-full grow flex-col gap-2"
       >
         <div
+          data-testid={showLeaderboard ? `game-card-${id}-flipped` : undefined}
           className={`relative flex h-full grow transition-all duration-500 ease-in-out transform-3d ${showLeaderboard ? "rotate-y-180" : ""}`}
         >
           <div className="absolute inset-0 flex flex-col backface-hidden">
@@ -113,6 +115,7 @@ const GameContent = ({
               {currentUserEntry && !userInTopFive && (
                 <>
                   <li
+                    data-testid="leaderboard-divider"
                     key="divider"
                     className="mx-8 flex items-center justify-center border-t border-dashed text-xl font-semibold text-slate-200"
                   ></li>

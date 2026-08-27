@@ -2,10 +2,15 @@ import { expect, type Page, type APIRequestContext } from "@playwright/test";
 import type {
   SignUpCredentials,
   LoginCredentials,
+  LoginResponse,
   Game,
   GameDetails,
   GameCharacter,
+  GameScore,
+  LeaderboardEntry,
+  User,
 } from "../../frontend/src/types";
+import { formatTime } from "../../frontend/src/helpers/time";
 
 export const getGamesViaApi = async (
   request: APIRequestContext,
@@ -55,6 +60,79 @@ export const createUserViaApi = async (
   return body;
 };
 
+export const addGameScoreViaApi = async (
+  request: APIRequestContext,
+  token: string,
+  gameId: number,
+  time: number,
+): Promise<GameScore> => {
+  const response = await request.post(
+    `http://localhost:3000/api/games/${gameId}/scores`,
+    {
+      headers: { Authorization: `Bearer ${token}` },
+      data: { time },
+    },
+  );
+
+  const body = await response.json();
+
+  if (!response.ok()) {
+    let message = "Failed to add game score";
+
+    if (body.errors) {
+      message = body.errors
+        .map((error: { message: string }) => error.message)
+        .join(", ");
+    } else if (body.error) {
+      message = body.error;
+    }
+
+    throw new Error(message);
+  }
+
+  return body;
+};
+
+export const logInViaApi = async (
+  request: APIRequestContext,
+  credentials: LoginCredentials,
+): Promise<LoginResponse> => {
+  const response = await request.post("http://localhost:3000/api/users/login", {
+    data: credentials,
+  });
+
+  const body = await response.json();
+
+  if (!response.ok) {
+    let message = "Failed to login";
+
+    if (body.errors) {
+      message = body.errors
+        .map((error: { message: string }) => error.message)
+        .join(", ");
+    } else if (body.error) {
+      message = body.error;
+    }
+
+    throw new Error(message);
+  }
+
+  return body;
+};
+
+export const createPlayerWithScoreViaApi = async (
+  request: APIRequestContext,
+  credentials: SignUpCredentials,
+  gameId: number,
+  time: number,
+): Promise<LeaderboardEntry> => {
+  const user: User = await createUserViaApi(request, credentials);
+  const { token } = await logInViaApi(request, credentials);
+  const score = await addGameScoreViaApi(request, token, gameId, time);
+
+  return { ...score, user };
+};
+
 export const signUp = async (page: Page, credentials: SignUpCredentials) => {
   await page.getByRole("link", { name: "Sign Up" }).click();
 
@@ -91,6 +169,65 @@ export const assertGameCards = async (page: Page, games: Game[]) => {
   for (const game of games) {
     await expect(page.getByRole("img", { name: game.title })).toBeVisible();
     await expect(page.getByRole("heading", { name: game.title })).toBeVisible();
+  }
+};
+
+export const assertLeaderboardEntries = async (
+  page: Page,
+  gameId: number,
+  entries: LeaderboardEntry[],
+  currentUsername?: string,
+) => {
+  const topFiveEntries = entries.slice(0, 5);
+  const gameCard = page.getByTestId(`game-card-${gameId}`);
+  const listItems = gameCard.getByRole("listitem");
+
+  const currentUserIndex = currentUsername
+    ? entries.findIndex((entry) => entry.user.username === currentUsername)
+    : -1;
+
+  if (currentUsername && currentUserIndex === -1) {
+    throw new Error("Current user time not found in leaderboard entries");
+  }
+
+  const outsideTopFive = currentUserIndex >= 5;
+
+  await expect(listItems).toHaveCount(
+    topFiveEntries.length + (outsideTopFive ? 2 : 0),
+  );
+
+  for (const [index, entry] of topFiveEntries.entries()) {
+    const listItem = listItems.nth(index);
+
+    await expect(
+      listItem.getByText(`${index + 1}.`, { exact: true }),
+    ).toBeVisible();
+    await expect(
+      listItem.getByText(entry.user.username, { exact: true }),
+    ).toBeVisible();
+    await expect(
+      listItem.getByText(formatTime(entry.time), { exact: true }),
+    ).toBeVisible();
+  }
+
+  if (outsideTopFive) {
+    const { time } = entries[currentUserIndex];
+    const currentUserEntry = gameCard.getByTestId("leaderboard-current-user");
+
+    await expect(gameCard.getByTestId("leaderboard-divider")).toBeVisible();
+    await expect(
+      currentUserEntry.getByText(`${currentUserIndex + 1}.`, {
+        exact: true,
+      }),
+    ).toBeVisible();
+    await expect(
+      currentUserEntry.getByText(currentUsername!, { exact: true }),
+    ).toBeVisible();
+    await expect(
+      currentUserEntry.getByText(formatTime(time), {
+        exact: true,
+      }),
+    ).toBeVisible();
   }
 };
 
