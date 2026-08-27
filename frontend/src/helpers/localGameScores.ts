@@ -1,6 +1,6 @@
 import type { GameScore } from "../types";
 
-const GAME_SCORES_KEY = "wheres-waldo-game-scores";
+export const GAME_SCORES_KEY = "wheres-waldo-game-scores";
 
 export const getGameScores = (): GameScore[] => {
   const raw = localStorage.getItem(GAME_SCORES_KEY);

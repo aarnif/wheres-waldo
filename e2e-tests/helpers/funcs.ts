@@ -11,6 +11,7 @@ import type {
   User,
 } from "../../frontend/src/types";
 import { formatTime } from "../../frontend/src/helpers/time";
+import { GAME_SCORES_KEY } from "../../frontend/src/helpers/localGameScores";
 
 export const getGamesViaApi = async (
   request: APIRequestContext,
@@ -264,4 +265,23 @@ export const clickCharacter = async (page: Page, character: GameCharacter) => {
       y: (y + height / 2) * box.height,
     },
   });
+};
+
+export const setLocalGameScore = async (
+  page: Page,
+  gameId: number,
+  time: number,
+) => {
+  await page.evaluate(
+    async ({ key, gameId, time }) => {
+      localStorage.setItem(key, JSON.stringify([{ id: gameId, time }]));
+    },
+    { key: GAME_SCORES_KEY, gameId, time },
+  );
+};
+
+export const getLocalGameScoresCount = async (page: Page): Promise<number> => {
+  return page.evaluate(async (key) => {
+    return JSON.parse(localStorage.getItem(key) || "[]").length;
+  }, GAME_SCORES_KEY);
 };
