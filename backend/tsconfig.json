@@ -2,15 +2,17 @@
   "include": ["src/**/*", "config.ts", "drizzle.config.ts"],
   "compilerOptions": {
     "target": "esnext",
-    "noEmit": true,
+    "outDir": "./build",
     "module": "nodenext",
     "esModuleInterop": true,
     "allowImportingTsExtensions": true,
+    "rewriteRelativeImportExtensions": true,
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
     "types": ["node"]
   }
 }
