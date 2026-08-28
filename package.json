@@ -17,7 +17,9 @@
     "frontend:build": "npm run build -w frontend",
     "frontend:start": "npm run preview -w frontend",
     "frontend:lint": "npm run lint -w frontend",
-    "frontend:test": "npm run test -w frontend"
+    "frontend:test": "npm run test -w frontend",
+    "e2e:test": "playwright test",
+    "e2e:report": "playwright show-report"
   },
   "repository": {
     "type": "git",
@@ -30,5 +32,9 @@
   "bugs": {
     "url": "https://github.com/aarnif/wheres-waldo/issues"
   },
-  "homepage": "https://github.com/aarnif/wheres-waldo#readme"
+  "homepage": "https://github.com/aarnif/wheres-waldo#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.62.1",
+    "@types/node": "^26.3.0"
+  }
 }
