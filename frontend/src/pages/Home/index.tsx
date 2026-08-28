@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import type { GameCardData } from "../../types";
 import { getGames, syncGameScores } from "../../services/games";
 import { clearGameScores, getGameScores } from "../../helpers/localGameScores";
@@ -17,9 +17,8 @@ const placeholders: GameCardData[] = Array.from(
 );
 
 const Home = () => {
-  const { user } = useAuth();
+  const { justAuthenticated, clearJustAuthenticated } = useAuth();
   const { notify } = useNotify();
-  const previousUserRef = useRef(user);
   const [games, setGames] = useState<GameCardData[]>(placeholders);
   const [open, setOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"games" | "leaderboard">("games");
@@ -30,12 +29,14 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    const justLoggedIn = !previousUserRef.current && user;
-    if (justLoggedIn && getGameScores().length > 0) {
+    if (!justAuthenticated) {
+      return;
+    }
+    if (getGameScores().length > 0) {
       setShowSyncModal(true);
     }
-    previousUserRef.current = user;
-  }, [user]);
+    clearJustAuthenticated();
+  }, [justAuthenticated]);
 
   const fetchGames = () => {
     getGames()
