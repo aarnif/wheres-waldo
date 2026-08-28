@@ -299,3 +299,8 @@ export const getLocalGameScoresCount = async (page: Page): Promise<number> => {
     return JSON.parse(localStorage.getItem(key) || "[]").length;
   }, GAME_SCORES_KEY);
 };
+
+export const saveScores = async (page: Page) => {
+  await expect(page.getByText("Save your scores?")).toBeVisible();
+  await page.getByRole("button", { name: "Save Scores" }).click();
+};
