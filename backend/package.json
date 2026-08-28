@@ -7,6 +7,7 @@
     "db:start": "docker compose -f docker-compose.dev.yml up",
     "db:populate": "POPULATE_DB=true node src/db/populateDb.ts",
     "dev": "node --watch src/index.ts",
+    "build": "tsc",
     "start": "node src/index.ts",
     "test": "NODE_ENV=test node --test --test-concurrency=1 src/tests/*.test.ts"
   },
