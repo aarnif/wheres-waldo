@@ -5,6 +5,7 @@ import { formatTime } from "../frontend/src/helpers/time";
 import { player1 } from "./helpers/data";
 import {
   assertGameCards,
+  assertNotificationAndClose,
   createUserViaApi,
   getLocalGameScoresCount,
   logIn,
@@ -30,6 +31,11 @@ test.describe("Sync Scores", () => {
     await expect(page.getByText("Save your scores?")).toBeVisible();
     await page.getByRole("button", { name: "Save Scores" }).click();
 
+    await assertNotificationAndClose(
+      page,
+      "success",
+      "Scores saved successfully!",
+    );
     await expect(page.getByText("Save your scores?")).not.toBeVisible();
     await expect(
       page.getByTestId(`game-card-${game.id}`).getByTestId("user-game-time"),

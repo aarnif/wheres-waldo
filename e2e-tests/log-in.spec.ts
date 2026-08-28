@@ -5,6 +5,7 @@ import {
   logIn,
   createUserViaApi,
   assertErrorNotifyAndClose,
+  assertNotificationAndClose,
 } from "./helpers/funcs";
 
 test.describe("Log In", () => {
@@ -34,6 +35,11 @@ test.describe("Log In", () => {
       page.getByTestId("current-user").getByText(player1.username),
     ).toBeVisible();
     await expect(page.getByRole("button", { name: "Log Out" })).toBeVisible();
+    await assertNotificationAndClose(
+      page,
+      "success",
+      `Welcome back, ${player1.username}!`,
+    );
   });
 
   test("logs out when log out button is clicked", async ({ page, request }) => {
@@ -48,6 +54,11 @@ test.describe("Log In", () => {
 
     await logOutButton.click();
 
+    await assertNotificationAndClose(
+      page,
+      "success",
+      "You have been logged out",
+    );
     await expect(page.getByTestId("current-user")).not.toBeVisible();
     await expect(page.getByRole("button", { name: "Log In" })).toBeVisible();
     await expect(page.getByRole("link", { name: "Sign Up" })).toBeVisible();

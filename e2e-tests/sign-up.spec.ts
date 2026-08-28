@@ -4,6 +4,7 @@ import { player1 } from "./helpers/data";
 import {
   signUp,
   assertErrorNotifyAndClose,
+  assertNotificationAndClose,
   createUserViaApi,
 } from "./helpers/funcs";
 
@@ -50,6 +51,11 @@ test.describe("Sign Up", () => {
       page.getByTestId("current-user").getByText(player1.username),
     ).toBeVisible();
     await expect(page.getByRole("button", { name: "Log Out" })).toBeVisible();
+    await assertNotificationAndClose(
+      page,
+      "success",
+      `Account created for ${player1.username}!`,
+    );
   });
 
   test("prevents sign-up with an existing username", async ({

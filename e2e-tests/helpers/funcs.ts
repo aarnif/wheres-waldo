@@ -166,6 +166,20 @@ export const assertErrorNotifyAndClose = async (
   await expect(page.getByText(message)).not.toBeVisible();
 };
 
+export const assertNotificationAndClose = async (
+  page: Page,
+  type: "success" | "error",
+  message: string,
+) => {
+  const notification = page
+    .getByTestId(`notification-${type}`)
+    .filter({ hasText: message });
+
+  await expect(notification).toBeVisible();
+  await notification.getByTestId("notification-close-button").click();
+  await expect(notification).not.toBeVisible();
+};
+
 export const assertGameCards = async (page: Page, games: Game[]) => {
   for (const game of games) {
     await expect(page.getByRole("img", { name: game.title })).toBeVisible();
