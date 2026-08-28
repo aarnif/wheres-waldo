@@ -35,4 +35,19 @@ app.get("/ping", (_req, res) => {
   res.send("pong");
 });
 
+if (config.NODE_ENV === "production") {
+  const distPath = path.join(__dirname, "../dist");
+
+  app.use(express.static(distPath));
+
+  // Serve index.html so React Router can handle client-side routes.
+  // Paths with a file extension fall through so missing assets 404.
+  app.get("/*splat", (req, res, next) => {
+    if (path.extname(req.path)) {
+      return next();
+    }
+    res.sendFile(path.join(distPath, "index.html"));
+  });
+}
+
 export default app;
