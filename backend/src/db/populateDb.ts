@@ -1,5 +1,5 @@
-import "dotenv/config";
 import { sql } from "drizzle-orm";
+import config from "../../config.ts";
 import { db } from "./index.ts";
 import {
   users,
@@ -78,7 +78,7 @@ const main = async () => {
   console.log("Connection closed!");
 };
 
-if (process.env.POPULATE_DB === "true") {
+if (config.POPULATE_DB) {
   main().catch((error) => {
     console.error("Error during database population:", error);
   });
