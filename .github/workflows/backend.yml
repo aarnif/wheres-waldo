@@ -1,0 +1,46 @@
+name: Backend pipeline
+
+on:
+  workflow_call:
+    secrets:
+      JWT_SECRET:
+        required: true
+
+jobs:
+  backend_pipeline:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:alpine
+        env:
+          POSTGRES_PASSWORD: mysecretpassword
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Run migrations
+        run: npx drizzle-kit migrate
+        working-directory: backend
+        env:
+          DATABASE_URL: postgres://postgres:mysecretpassword@localhost:5432/postgres
+      - name: Lint backend
+        run: npm run backend:lint
+      - name: Build backend
+        run: npm run backend:build
+      - name: Run backend tests
+        run: npm run backend:test
+        env:
+          NODE_ENV: test
+          DATABASE_URL: postgres://postgres:mysecretpassword@localhost:5432/postgres
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
