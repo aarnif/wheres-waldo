@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import type { GameDetails, FoundCharacter } from "../../types";
 import GameStart from "./GameStart";
 import { BASE_URL } from "../../../config";
@@ -26,7 +26,8 @@ const GameView = ({
 }) => {
   const { user } = useAuth();
   const { notify, clearAll } = useNotify();
-  const gameCanvasRef = useRef<HTMLDivElement | null>(null);
+  const [gameCanvasElement, setGameCanvasElement] =
+    useState<HTMLDivElement | null>(null);
   const startTimeRef = useRef<number | null>(null);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const timeoutRef = useRef<number | null>(null);
@@ -197,7 +198,7 @@ const GameView = ({
       <div
         data-testid="game-canvas"
         id="game-canvas"
-        ref={gameCanvasRef}
+        ref={setGameCanvasElement}
         className={`relative ${showAimCursor ? "cursor-none" : "cursor-default"}`}
         style={{
           height: canvasDimensions.height,
@@ -217,7 +218,7 @@ const GameView = ({
         ))}
         {showAimCursor && (
           <AimCursor
-            gameCanvasElement={gameCanvasRef.current}
+            gameCanvasElement={gameCanvasElement}
             image={image}
             aimCoordinates={aimCoordinates}
           />
