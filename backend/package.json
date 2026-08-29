@@ -9,6 +9,7 @@
     "dev": "node --watch src/index.ts",
     "build": "tsc",
     "start": "node src/index.ts",
+    "lint": "oxlint",
     "test": "NODE_ENV=test node --test --test-concurrency=1 src/tests/*.test.ts"
   },
   "keywords": [],
