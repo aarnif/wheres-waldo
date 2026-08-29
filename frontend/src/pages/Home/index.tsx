@@ -24,6 +24,14 @@ const Home = () => {
   const [activeTab, setActiveTab] = useState<"games" | "leaderboard">("games");
   const [showSyncModal, setShowSyncModal] = useState(false);
 
+  const fetchGames = () => {
+    getGames()
+      .then(setGames)
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   useEffect(() => {
     fetchGames();
   }, []);
@@ -33,18 +41,11 @@ const Home = () => {
       return;
     }
     if (getGameScores().length > 0) {
+      // oxlint-disable-next-line react/set-state-in-effect -- syncing with localStorage
       setShowSyncModal(true);
     }
     clearJustAuthenticated();
-  }, [justAuthenticated]);
-
-  const fetchGames = () => {
-    getGames()
-      .then(setGames)
-      .catch((error) => {
-        console.error(error);
-      });
-  };
+  }, [justAuthenticated, clearJustAuthenticated]);
 
   const handleSync = async () => {
     try {

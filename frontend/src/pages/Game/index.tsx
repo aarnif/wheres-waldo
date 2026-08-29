@@ -25,7 +25,7 @@ const Game = () => {
       .catch((error) => {
         console.error(error);
       });
-  }, []);
+  }, [id]);
 
   return (
     <div className="h-screen w-full bg-[url('/background.png')] bg-cover bg-center">
