@@ -57,12 +57,6 @@ const GameView = ({
     height: imageHeight,
   });
 
-  useEffect(() => {
-    if (checkIfGameOver()) {
-      handleEndGame();
-    }
-  }, [foundCharacters]);
-
   const handleStartGame = () => {
     setGameStart(false);
     startTimer();
@@ -148,8 +142,8 @@ const GameView = ({
     return foundCharacter;
   };
 
-  const checkIfGameOver = () =>
-    foundCharacters.every((character) => character.found);
+  const checkIfGameOver = (characters: FoundCharacter[]) =>
+    characters.every((character) => character.found);
 
   const handleCanvasClick = (event: React.MouseEvent<HTMLDivElement>) => {
     const containerRect = event.currentTarget.getBoundingClientRect();
@@ -160,13 +154,13 @@ const GameView = ({
     const foundCharacter = checkIfClickIsOnCharacter(xPercent, yPercent);
 
     if (foundCharacter) {
-      setFoundCharacters((prevFoundCharacters) =>
-        prevFoundCharacters.map((character) =>
-          character.id === foundCharacter.id
-            ? { ...character, found: true }
-            : character,
-        ),
+      const updatedCharacters = foundCharacters.map((character) =>
+        character.id === foundCharacter.id
+          ? { ...character, found: true }
+          : character,
       );
+
+      setFoundCharacters(updatedCharacters);
       setGameMarks((prevMarks) => [...prevMarks, { x: xPercent, y: yPercent }]);
       handleShowFooter();
       notify(
@@ -174,6 +168,10 @@ const GameView = ({
         "success",
         true,
       );
+
+      if (checkIfGameOver(updatedCharacters)) {
+        handleEndGame();
+      }
     }
   };
 
