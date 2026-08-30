@@ -79,7 +79,7 @@ const GameContent = ({
             <img
               loading="lazy"
               alt={title}
-              src={`${BASE_URL}/images/games/${image}`}
+              src={`${BASE_URL}/images/games/thumbnails/${image}`}
               className="grow rounded-lg object-cover transition-all duration-300 ease-in-out group-hover:brightness-50"
             />
             {userGameScore && (
