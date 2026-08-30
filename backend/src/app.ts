@@ -27,7 +27,7 @@ app.use(
 app.use("/api/games", gamesRouter);
 app.use("/api/users", usersRouter);
 
-if (config.NODE_ENV === "test") {
+if (config.NODE_ENV !== "production") {
   app.use("/api/testing", testingRouter);
 }
 
