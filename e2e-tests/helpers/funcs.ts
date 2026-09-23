@@ -279,6 +279,11 @@ export const clickCharacter = async (page: Page, character: GameCharacter) => {
       y: (y + height / 2) * box.height,
     },
   });
+
+  await page
+    .getByTestId("character-menu")
+    .getByRole("button", { name: character.character.displayName })
+    .click();
 };
 
 export const setLocalGameScore = async (

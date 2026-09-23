@@ -1,4 +1,10 @@
-import { render, screen, waitFor, fireEvent } from "@testing-library/react";
+import {
+  render,
+  screen,
+  waitFor,
+  fireEvent,
+  within,
+} from "@testing-library/react";
 import { MemoryRouter } from "react-router";
 import userEvent, { type UserEvent } from "@testing-library/user-event";
 import { vi, describe, expect, test, beforeEach } from "vitest";
@@ -53,7 +59,7 @@ const clickStartGame = async (user: UserEvent) => {
   await user.click(letsPlayButton);
 };
 
-const clickCharacter = (character: GameCharacter) => {
+const openCharacterMenu = (character: GameCharacter) => {
   const gameCanvas = screen.getByTestId("game-canvas");
   vi.spyOn(gameCanvas, "getBoundingClientRect").mockReturnValue(CANVAS_RECT);
 
@@ -62,6 +68,16 @@ const clickCharacter = (character: GameCharacter) => {
   const clientY = (y + height / 2) * CANVAS_RECT.height;
 
   fireEvent.click(gameCanvas, { clientX, clientY });
+};
+
+const selectCharacter = async (user: UserEvent, displayName: string) => {
+  const menu = await screen.findByTestId("character-menu");
+  await user.click(within(menu).getByRole("button", { name: displayName }));
+};
+
+const clickCharacter = async (user: UserEvent, character: GameCharacter) => {
+  openCharacterMenu(character);
+  await selectCharacter(user, character.character.displayName);
 };
 
 describe("<Game />", () => {
@@ -220,7 +236,7 @@ describe("<Game />", () => {
 
     const character = mockGameDetails.characters[0];
 
-    clickCharacter(character);
+    await clickCharacter(user, character);
 
     await waitFor(() => {
       expect(screen.getByTestId("game-mark")).toBeDefined();
@@ -244,9 +260,9 @@ describe("<Game />", () => {
       expect(screen.getByRole("button", { name: "Quit" })).toBeDefined();
     });
 
-    mockGameDetails.characters.forEach((character) => {
-      clickCharacter(character);
-    });
+    for (const character of mockGameDetails.characters) {
+      await clickCharacter(user, character);
+    }
 
     await waitFor(() => {
       expect(
@@ -268,9 +284,9 @@ describe("<Game />", () => {
       expect(screen.getByRole("button", { name: "Quit" })).toBeDefined();
     });
 
-    mockGameDetails.characters.forEach((character) => {
-      clickCharacter(character);
-    });
+    for (const character of mockGameDetails.characters) {
+      await clickCharacter(user, character);
+    }
 
     await waitFor(() => {
       expect(

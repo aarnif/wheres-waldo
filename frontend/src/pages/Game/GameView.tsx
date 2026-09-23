@@ -12,6 +12,7 @@ import { submitGameScore } from "../../services/games";
 import AimCursor from "./AimCursor";
 import GameMark from "./GameMark";
 import GameEnd from "./GameEnd";
+import CharacterMenu from "./CharacterMenu";
 import useAuth from "../../hooks/useAuth";
 import useNotify from "../../hooks/useNotify";
 
@@ -38,6 +39,12 @@ const GameView = ({
   const [aimCoordinates, setAimCoordinates] = useState({ x: 0, y: 0 });
   const [gameMarks, setGameMarks] = useState<{ x: number; y: number }[]>([]);
   const [showFooter, setShowFooter] = useState(false);
+  const [menu, setMenu] = useState<{
+    x: number;
+    y: number;
+    flipX: boolean;
+    flipY: boolean;
+  } | null>(null);
   const {
     title,
     characters,
@@ -129,11 +136,16 @@ const GameView = ({
     });
   };
 
-  const checkIfClickIsOnCharacter = (xPercent: number, yPercent: number) => {
+  const checkIfClickIsOnCharacter = (
+    xPercent: number,
+    yPercent: number,
+    selectedCharacterId: number,
+  ) => {
     const foundCharacter = foundCharacters.find((character) => {
-      const { x, y, width, height, found } = character;
+      const { id, x, y, width, height, found } = character;
       return (
         !found &&
+        id === selectedCharacterId &&
         xPercent >= x &&
         xPercent <= x + width &&
         yPercent >= y &&
@@ -147,32 +159,64 @@ const GameView = ({
     characters.every((character) => character.found);
 
   const handleCanvasClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (menu) {
+      setMenu(null);
+      return;
+    }
+
     const containerRect = event.currentTarget.getBoundingClientRect();
 
     const xPercent = (event.clientX - containerRect.left) / containerRect.width;
     const yPercent = (event.clientY - containerRect.top) / containerRect.height;
 
-    const foundCharacter = checkIfClickIsOnCharacter(xPercent, yPercent);
+    setMenu({
+      x: xPercent,
+      y: yPercent,
+      flipX: event.clientX > window.innerWidth / 2,
+      flipY: event.clientY > window.innerHeight / 2,
+    });
+  };
 
-    if (foundCharacter) {
-      const updatedCharacters = foundCharacters.map((character) =>
-        character.id === foundCharacter.id
-          ? { ...character, found: true }
-          : character,
-      );
+  const handleSelectCharacter = (selectedCharacter: FoundCharacter) => {
+    if (!menu) {
+      return;
+    }
 
-      setFoundCharacters(updatedCharacters);
-      setGameMarks((prevMarks) => [...prevMarks, { x: xPercent, y: yPercent }]);
-      handleShowFooter();
+    const { x: xPercent, y: yPercent } = menu;
+    setMenu(null);
+
+    const foundCharacter = checkIfClickIsOnCharacter(
+      xPercent,
+      yPercent,
+      selectedCharacter.id,
+    );
+
+    if (!foundCharacter) {
       notify(
-        `You found ${foundCharacter.character.displayName}!`,
-        "success",
+        `That is not ${selectedCharacter.character.displayName}!`,
+        "error",
         true,
       );
+      return;
+    }
 
-      if (checkIfGameOver(updatedCharacters)) {
-        handleEndGame();
-      }
+    const updatedCharacters = foundCharacters.map((character) =>
+      character.id === foundCharacter.id
+        ? { ...character, found: true }
+        : character,
+    );
+
+    setFoundCharacters(updatedCharacters);
+    setGameMarks((prevMarks) => [...prevMarks, { x: xPercent, y: yPercent }]);
+    handleShowFooter();
+    notify(
+      `You found ${foundCharacter.character.displayName}!`,
+      "success",
+      true,
+    );
+
+    if (checkIfGameOver(updatedCharacters)) {
+      handleEndGame();
     }
   };
 
@@ -199,7 +243,7 @@ const GameView = ({
         data-testid="game-canvas"
         id="game-canvas"
         ref={setGameCanvasElement}
-        className={`relative ${showAimCursor ? "cursor-none" : "cursor-default"}`}
+        className={`relative ${showAimCursor && !menu ? "cursor-none" : "cursor-default"}`}
         style={{
           height: canvasDimensions.height,
           width: canvasDimensions.width,
@@ -216,11 +260,18 @@ const GameView = ({
         {gameMarks.map((mark, index) => (
           <GameMark key={index} coordinates={mark} />
         ))}
-        {showAimCursor && (
+        {showAimCursor && !menu && (
           <AimCursor
             gameCanvasElement={gameCanvasElement}
             image={image}
             aimCoordinates={aimCoordinates}
+          />
+        )}
+        {menu && (
+          <CharacterMenu
+            characters={foundCharacters}
+            position={menu}
+            onSelect={handleSelectCharacter}
           />
         )}
       </div>
