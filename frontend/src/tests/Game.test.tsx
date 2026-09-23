@@ -249,6 +249,31 @@ describe("<Game />", () => {
     });
   });
 
+  test("rejects the guess when the wrong character is selected", async () => {
+    const user = userEvent.setup();
+    renderComponent();
+
+    await openGameStartModal(user);
+    await clickStartGame(user);
+
+    await waitFor(() => {
+      expect(screen.getByRole("button", { name: "Quit" })).toBeDefined();
+    });
+
+    const [waldo, wenda] = mockGameDetails.characters;
+
+    openCharacterMenu(waldo);
+    await selectCharacter(user, wenda.character.displayName);
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(`That is not ${wenda.character.displayName}!`),
+      ).toBeDefined();
+    });
+
+    expect(screen.queryByTestId("game-mark")).toBeNull();
+  });
+
   test("shows game end modal when all characters are found", async () => {
     const user = userEvent.setup();
     renderComponent();
